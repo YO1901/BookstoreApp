@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,15 @@
 		43331E982B1E5AE20015E70F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 43331E972B1E5AE20015E70F /* SnapKit */; };
 		43331E9A2B1E5AE20015E70F /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 43331E992B1E5AE20015E70F /* SnapKit-Dynamic */; };
 		43331E9D2B1E5AF00015E70F /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 43331E9C2B1E5AF00015E70F /* Kingfisher */; };
+		43331EA52B1F835F0015E70F /* NetworkService in Frameworks */ = {isa = PBXBuildFile; productRef = 43331EA42B1F835F0015E70F /* NetworkService */; };
+		77C3243A2B1E6F9400343476 /* NetworkService in Frameworks */ = {isa = PBXBuildFile; productRef = 77C324392B1E6F9400343476 /* NetworkService */; };
+		77C324422B1E821E00343476 /* SearchBooksEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C324412B1E821E00343476 /* SearchBooksEntity.swift */; };
+		77C324452B1E824F00343476 /* SearchBooksRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C324442B1E824F00343476 /* SearchBooksRequest.swift */; };
+		77E5B9E82B1F6A6F004BA4AA /* SubjectRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E5B9E72B1F6A6F004BA4AA /* SubjectRequest.swift */; };
+		77E5B9EA2B1F6AE8004BA4AA /* SubjectEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E5B9E92B1F6AE8004BA4AA /* SubjectEntity.swift */; };
+		77E5B9EC2B1F6B55004BA4AA /* DocEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E5B9EB2B1F6B55004BA4AA /* DocEntity.swift */; };
+		77E5B9F02B1F7264004BA4AA /* BookRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E5B9EF2B1F7264004BA4AA /* BookRequest.swift */; };
+		77E5B9F22B1F72B2004BA4AA /* BookEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E5B9F12B1F72B2004BA4AA /* BookEntity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +36,14 @@
 		43331E682B1DF36C0015E70F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		43331E6A2B1DF36C0015E70F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		43331E722B1DF9D30015E70F /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		77C324382B1E6F4200343476 /* NetworkService */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = NetworkService; sourceTree = "<group>"; };
+		77C324412B1E821E00343476 /* SearchBooksEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBooksEntity.swift; sourceTree = "<group>"; };
+		77C324442B1E824F00343476 /* SearchBooksRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBooksRequest.swift; sourceTree = "<group>"; };
+		77E5B9E72B1F6A6F004BA4AA /* SubjectRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectRequest.swift; sourceTree = "<group>"; };
+		77E5B9E92B1F6AE8004BA4AA /* SubjectEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectEntity.swift; sourceTree = "<group>"; };
+		77E5B9EB2B1F6B55004BA4AA /* DocEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocEntity.swift; sourceTree = "<group>"; };
+		77E5B9EF2B1F7264004BA4AA /* BookRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookRequest.swift; sourceTree = "<group>"; };
+		77E5B9F12B1F72B2004BA4AA /* BookEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookEntity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,7 +53,9 @@
 			files = (
 				43331E9D2B1E5AF00015E70F /* Kingfisher in Frameworks */,
 				43331E982B1E5AE20015E70F /* SnapKit in Frameworks */,
+				43331EA52B1F835F0015E70F /* NetworkService in Frameworks */,
 				43331E9A2B1E5AE20015E70F /* SnapKit-Dynamic in Frameworks */,
+				77C3243A2B1E6F9400343476 /* NetworkService in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,8 +65,10 @@
 		43331E502B1DF36B0015E70F = {
 			isa = PBXGroup;
 			children = (
+				77C324382B1E6F4200343476 /* NetworkService */,
 				43331E5B2B1DF36B0015E70F /* BookstoreAppChallenge */,
 				43331E5A2B1DF36B0015E70F /* Products */,
+				77C324322B1E6E4400343476 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -70,6 +91,7 @@
 				43331E782B1DFA8C0015E70F /* FavoritesScreen */,
 				43331E792B1DFAB60015E70F /* AccountScreen */,
 				43331E702B1DF4010015E70F /* Supporting Files */,
+				77C3243E2B1E81D700343476 /* Network */,
 			);
 			path = BookstoreAppChallenge;
 			sourceTree = "<group>";
@@ -281,6 +303,43 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		77C324322B1E6E4400343476 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		77C3243E2B1E81D700343476 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				77C324462B1E825200343476 /* Requests */,
+				77C324432B1E824600343476 /* Entity */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		77C324432B1E824600343476 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				77C324412B1E821E00343476 /* SearchBooksEntity.swift */,
+				77E5B9EB2B1F6B55004BA4AA /* DocEntity.swift */,
+				77E5B9F12B1F72B2004BA4AA /* BookEntity.swift */,
+				77E5B9E92B1F6AE8004BA4AA /* SubjectEntity.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		77C324462B1E825200343476 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				77C324442B1E824F00343476 /* SearchBooksRequest.swift */,
+				77E5B9E72B1F6A6F004BA4AA /* SubjectRequest.swift */,
+				77E5B9EF2B1F7264004BA4AA /* BookRequest.swift */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -301,6 +360,8 @@
 				43331E972B1E5AE20015E70F /* SnapKit */,
 				43331E992B1E5AE20015E70F /* SnapKit-Dynamic */,
 				43331E9C2B1E5AF00015E70F /* Kingfisher */,
+				77C324392B1E6F9400343476 /* NetworkService */,
+				43331EA42B1F835F0015E70F /* NetworkService */,
 			);
 			productName = BookstoreAppChallenge;
 			productReference = 43331E592B1DF36B0015E70F /* BookstoreAppChallenge.app */;
@@ -333,6 +394,8 @@
 			packageReferences = (
 				43331E962B1E5AE20015E70F /* XCRemoteSwiftPackageReference "SnapKit" */,
 				43331E9B2B1E5AF00015E70F /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				77C3243B2B1E71BF00343476 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				43331EA32B1F835F0015E70F /* XCLocalSwiftPackageReference "NetworkService" */,
 			);
 			productRefGroup = 43331E5A2B1DF36B0015E70F /* Products */;
 			projectDirPath = "";
@@ -361,8 +424,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				43331E732B1DF9D30015E70F /* Router.swift in Sources */,
+				77E5B9E82B1F6A6F004BA4AA /* SubjectRequest.swift in Sources */,
 				43331E612B1DF36B0015E70F /* MainViewController.swift in Sources */,
+				77E5B9EA2B1F6AE8004BA4AA /* SubjectEntity.swift in Sources */,
+				77E5B9EC2B1F6B55004BA4AA /* DocEntity.swift in Sources */,
+				77C324422B1E821E00343476 /* SearchBooksEntity.swift in Sources */,
+				77E5B9F22B1F72B2004BA4AA /* BookEntity.swift in Sources */,
+				77C324452B1E824F00343476 /* SearchBooksRequest.swift in Sources */,
 				43331E5D2B1DF36B0015E70F /* AppDelegate.swift in Sources */,
+				77E5B9F02B1F7264004BA4AA /* BookRequest.swift in Sources */,
 				43331E5F2B1DF36B0015E70F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -433,7 +503,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -490,7 +560,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -585,6 +655,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		43331EA32B1F835F0015E70F /* XCLocalSwiftPackageReference "NetworkService" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = NetworkService;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		43331E962B1E5AE20015E70F /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -600,6 +677,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 7.10.0;
+			};
+		};
+		77C3243B2B1E71BF00343476 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = exactVersion;
+				version = 5.8.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -619,6 +704,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 43331E9B2B1E5AF00015E70F /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		43331EA42B1F835F0015E70F /* NetworkService */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NetworkService;
+		};
+		77C324392B1E6F9400343476 /* NetworkService */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NetworkService;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
