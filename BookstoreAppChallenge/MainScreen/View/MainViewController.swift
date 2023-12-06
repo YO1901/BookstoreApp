@@ -33,7 +33,20 @@ class MainViewController: UIViewController {
     }
     
     @objc func didTapButton() {
-        self.navigationController?.pushViewController(BooksViewController(), animated: true)
+        self.navigationController?.pushViewController(
+            BookRouter().makeScreen(
+                doc: .init(
+                    key: "/works/OL27448W",
+                    title: "The Lord ot the Rings",
+                    authorName: ["J.R.R. Tolkien"],
+                    subject: ["Fiction"],
+                    firstPublishYear: 1954,
+                    coverI: 9255566,
+                    ratingsAverage: 4.1
+                )
+            ),
+            animated: true
+        )
     }
 }
 
