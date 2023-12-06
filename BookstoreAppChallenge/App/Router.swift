@@ -6,7 +6,3 @@
 //
 
 import UIKit
-
-class AppRouter {
-
-}
