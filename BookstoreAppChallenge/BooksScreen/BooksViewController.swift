@@ -1,18 +1,18 @@
 //
-//  MainViewController.swift
+//  BooksViewController.swift
 //  BookstoreAppChallenge
 //
-//  Created by Yerlan Omarov on 04.12.2023.
+//  Created by Nikita Shirobokov on 06.12.23.
 //
 
 import UIKit
 import SnapKit
 
-class MainViewController: UIViewController {
+class BooksViewController: UIViewController {
     
     lazy var button: UIButton = {
         let button = UIButton()
-        button.setTitle("MainVC", for: .normal)
+        button.setTitle("BooksVC", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
         return button
@@ -33,7 +33,6 @@ class MainViewController: UIViewController {
     }
     
     @objc func didTapButton() {
-        self.navigationController?.pushViewController(BooksViewController(), animated: true)
+        self.navigationController?.pushViewController(FavoritesViewController(), animated: true)
     }
 }
-
