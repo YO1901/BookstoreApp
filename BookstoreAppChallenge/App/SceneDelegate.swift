@@ -16,7 +16,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-//        appRouter.start()
         
         window.rootViewController = UINavigationController(rootViewController: AppTabBarController())
         self.window = window
