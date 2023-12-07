@@ -20,7 +20,6 @@
 		438B63F22B20C28E00B9F04F /* AppTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B63F12B20C28E00B9F04F /* AppTabBarController.swift */; };
 		438B63F62B20C2F500B9F04F /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B63F52B20C2F500B9F04F /* CategoriesViewController.swift */; };
 		438B63F82B20C32D00B9F04F /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B63F72B20C32D00B9F04F /* FavoritesViewController.swift */; };
-		438B63FA2B20C33F00B9F04F /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B63F92B20C33F00B9F04F /* AccountViewController.swift */; };
 		777851272B1FC1A900899704 /* OnboardingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777851262B1FC1A900899704 /* OnboardingPresenter.swift */; };
 		777851292B1FC1B000899704 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777851282B1FC1B000899704 /* OnboardingViewController.swift */; };
 		7778512B2B1FC1B600899704 /* OnboardingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7778512A2B1FC1B600899704 /* OnboardingRouter.swift */; };
@@ -44,6 +43,13 @@
 		77CDA0EB2B21188C00E1A043 /* BookHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CDA0EA2B21188C00E1A043 /* BookHeaderView.swift */; };
 		77CDA0EE2B2119DF00E1A043 /* TableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CDA0ED2B2119DF00E1A043 /* TableCell.swift */; };
 		77CDA0F02B211D0300E1A043 /* SpaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77CDA0EF2B211D0300E1A043 /* SpaceCell.swift */; };
+		77DA2CF52B226A4100BB0233 /* AccountPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DA2CF42B226A4100BB0233 /* AccountPresenter.swift */; };
+		77DA2CF72B226A4600BB0233 /* AccountProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DA2CF62B226A4600BB0233 /* AccountProtocols.swift */; };
+		77DA2CF92B226A4E00BB0233 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DA2CF82B226A4E00BB0233 /* AccountViewController.swift */; };
+		77DA2CFB2B226A5200BB0233 /* AccountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DA2CFA2B226A5200BB0233 /* AccountRouter.swift */; };
+		77DA2CFD2B226C3C00BB0233 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DA2CFC2B226C3C00BB0233 /* AvatarView.swift */; };
+		77DA2D002B226F3400BB0233 /* NamedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DA2CFF2B226F3400BB0233 /* NamedTextField.swift */; };
+		77DA2D022B227B0300BB0233 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DA2D012B227B0300BB0233 /* UIImage+Extension.swift */; };
 		77E5B9E82B1F6A6F004BA4AA /* SubjectRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E5B9E72B1F6A6F004BA4AA /* SubjectRequest.swift */; };
 		77E5B9EA2B1F6AE8004BA4AA /* SubjectEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E5B9E92B1F6AE8004BA4AA /* SubjectEntity.swift */; };
 		77E5B9EC2B1F6B55004BA4AA /* DocEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E5B9EB2B1F6B55004BA4AA /* DocEntity.swift */; };
@@ -63,7 +69,6 @@
 		438B63F12B20C28E00B9F04F /* AppTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTabBarController.swift; sourceTree = "<group>"; };
 		438B63F52B20C2F500B9F04F /* CategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategoriesViewController.swift; path = BookstoreAppChallenge/CategoriesScreen/View/CategoriesViewController.swift; sourceTree = SOURCE_ROOT; };
 		438B63F72B20C32D00B9F04F /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FavoritesViewController.swift; path = BookstoreAppChallenge/FavoritesScreen/FavoritesViewController.swift; sourceTree = SOURCE_ROOT; };
-		438B63F92B20C33F00B9F04F /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccountViewController.swift; path = BookstoreAppChallenge/AccountScreen/AccountViewController.swift; sourceTree = SOURCE_ROOT; };
 		777851262B1FC1A900899704 /* OnboardingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPresenter.swift; sourceTree = "<group>"; };
 		777851282B1FC1B000899704 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		7778512A2B1FC1B600899704 /* OnboardingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRouter.swift; sourceTree = "<group>"; };
@@ -87,6 +92,13 @@
 		77CDA0EA2B21188C00E1A043 /* BookHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookHeaderView.swift; sourceTree = "<group>"; };
 		77CDA0ED2B2119DF00E1A043 /* TableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCell.swift; sourceTree = "<group>"; };
 		77CDA0EF2B211D0300E1A043 /* SpaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceCell.swift; sourceTree = "<group>"; };
+		77DA2CF42B226A4100BB0233 /* AccountPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPresenter.swift; sourceTree = "<group>"; };
+		77DA2CF62B226A4600BB0233 /* AccountProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountProtocols.swift; sourceTree = "<group>"; };
+		77DA2CF82B226A4E00BB0233 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		77DA2CFA2B226A5200BB0233 /* AccountRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRouter.swift; sourceTree = "<group>"; };
+		77DA2CFC2B226C3C00BB0233 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
+		77DA2CFF2B226F3400BB0233 /* NamedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamedTextField.swift; sourceTree = "<group>"; };
+		77DA2D012B227B0300BB0233 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		77E5B9E72B1F6A6F004BA4AA /* SubjectRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectRequest.swift; sourceTree = "<group>"; };
 		77E5B9E92B1F6AE8004BA4AA /* SubjectEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectEntity.swift; sourceTree = "<group>"; };
 		77E5B9EB2B1F6B55004BA4AA /* DocEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocEntity.swift; sourceTree = "<group>"; };
@@ -215,9 +227,11 @@
 		43331E792B1DFAB60015E70F /* AccountScreen */ = {
 			isa = PBXGroup;
 			children = (
-				43331E8B2B1DFBE50015E70F /* Model */,
-				43331E8A2B1DFBDB0015E70F /* View */,
-				43331E892B1DFBD30015E70F /* Presenter */,
+				77DA2CF42B226A4100BB0233 /* AccountPresenter.swift */,
+				77DA2CF82B226A4E00BB0233 /* AccountViewController.swift */,
+				77DA2CFA2B226A5200BB0233 /* AccountRouter.swift */,
+				77DA2CF62B226A4600BB0233 /* AccountProtocols.swift */,
+				77DA2CFE2B226C4200BB0233 /* Views */,
 			);
 			path = AccountScreen;
 			sourceTree = "<group>";
@@ -288,28 +302,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		43331E892B1DFBD30015E70F /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		43331E8A2B1DFBDB0015E70F /* View */ = {
-			isa = PBXGroup;
-			children = (
-				438B63F92B20C33F00B9F04F /* AccountViewController.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		43331E8B2B1DFBE50015E70F /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		7778512E2B1FC22F00899704 /* OnboardingScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -326,6 +318,7 @@
 			children = (
 				777851312B1FC42B00899704 /* UIApplication+Extension.swift */,
 				777851382B1FC93300899704 /* UILabel+Extension.swift */,
+				77DA2D012B227B0300BB0233 /* UIImage+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -392,6 +385,15 @@
 			isa = PBXGroup;
 			children = (
 				77CDA0EA2B21188C00E1A043 /* BookHeaderView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		77DA2CFE2B226C4200BB0233 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				77DA2CFC2B226C3C00BB0233 /* AvatarView.swift */,
+				77DA2CFF2B226F3400BB0233 /* NamedTextField.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -481,10 +483,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				777851302B1FC23F00899704 /* OnboardingProtocols.swift in Sources */,
+				77DA2CF72B226A4600BB0233 /* AccountProtocols.swift in Sources */,
 				438B63F82B20C32D00B9F04F /* FavoritesViewController.swift in Sources */,
-				438B63FA2B20C33F00B9F04F /* AccountViewController.swift in Sources */,
 				777851452B1FD89F00899704 /* Colors.swift in Sources */,
 				777851292B1FC1B000899704 /* OnboardingViewController.swift in Sources */,
+				77DA2CFB2B226A5200BB0233 /* AccountRouter.swift in Sources */,
 				777851322B1FC42B00899704 /* UIApplication+Extension.swift in Sources */,
 				43331E732B1DF9D30015E70F /* Router.swift in Sources */,
 				77E5B9E82B1F6A6F004BA4AA /* SubjectRequest.swift in Sources */,
@@ -506,11 +509,16 @@
 				7778513C2B1FCAEE00899704 /* DefaultButton.swift in Sources */,
 				77CDA0DF2B1FDBAF00E1A043 /* ConfigureProtocol.swift in Sources */,
 				43331E5D2B1DF36B0015E70F /* AppDelegate.swift in Sources */,
+				77DA2D022B227B0300BB0233 /* UIImage+Extension.swift in Sources */,
+				77DA2D002B226F3400BB0233 /* NamedTextField.swift in Sources */,
+				77DA2CFD2B226C3C00BB0233 /* AvatarView.swift in Sources */,
+				77DA2CF92B226A4E00BB0233 /* AccountViewController.swift in Sources */,
 				7778513E2B1FCF1F00899704 /* Images.swift in Sources */,
 				77E5B9F02B1F7264004BA4AA /* BookRequest.swift in Sources */,
 				438B63F22B20C28E00B9F04F /* AppTabBarController.swift in Sources */,
 				777851412B1FD72900899704 /* UserDefaultService.swift in Sources */,
 				77CDA0E52B21165100E1A043 /* BookViewController.swift in Sources */,
+				77DA2CF52B226A4100BB0233 /* AccountPresenter.swift in Sources */,
 				77CDA0E12B21164800E1A043 /* BookProtocols.swift in Sources */,
 				43331E5F2B1DF36B0015E70F /* SceneDelegate.swift in Sources */,
 				77CDA0EB2B21188C00E1A043 /* BookHeaderView.swift in Sources */,

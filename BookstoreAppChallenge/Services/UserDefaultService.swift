@@ -22,7 +22,17 @@ final class UserDefaultsService {
         }
         
         set {
-            UserDefaults.standard.setValue(true, forKey: "wasOnboardingShow")
+            UserDefaults.standard.setValue(newValue, forKey: "wasOnboardingShow")
+        }
+    }
+    
+    var userName: String {
+        get {
+            UserDefaults.standard.string(forKey: "userName") ?? ""
+        }
+        
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: "userName")
         }
     }
 }
