@@ -27,7 +27,7 @@ final class OnboardingPresenter: OnboardingOutput {
                 ],
                 button: .init(
                     title: "Get Started",
-                    fontSize: 20,
+                    font: .systemFont(ofSize: 14, weight: .semibold),
                     type: .fill,
                     tapAction: {
                         [weak self] in

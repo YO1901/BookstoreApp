@@ -14,6 +14,9 @@ public enum NetworkError: Error {
 }
 
 public final class NetworkManager {
+    
+    public init() { }
+    
     public func sendRequest<Request>(request: Request, completionHandler: @escaping (Result<Request.Response, Error>) -> Void) where Request: NetworkRequest {
         AF.request(
             request.url,

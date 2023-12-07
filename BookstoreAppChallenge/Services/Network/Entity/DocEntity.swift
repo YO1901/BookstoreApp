@@ -23,11 +23,16 @@ struct DocEntity: Decodable {
     let subject: [String]?
     let firstPublishYear: Int?
     let coverI: Int?
+    let ratingsAverage: Double?
     
     func coverURL(coverKey: CoverKey = .ID, coverSize: CoverSize = .M) -> URL? {
         guard let coverI, let url = URL(string: "https://covers.openlibrary.org/b/\(coverKey)/\(coverI)-\(coverSize).jpg") else {
             return nil
         }
         return url
+    }
+    
+    var readURL: URL? {
+        URL(string: "https://openlibrary.org\(key)")
     }
 }

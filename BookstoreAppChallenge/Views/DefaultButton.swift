@@ -81,22 +81,23 @@ extension DefaultButton: Configurable {
         
         enum ButtonType {
             case fill
+            case fillGray
             case stroke
         }
         
         let title: String
-        let fontSize: CGFloat
+        let font: UIFont
         let type: ButtonType
         let tapAction: () -> Void
         
         init(
             title: String,
-            fontSize: CGFloat,
+            font: UIFont = .systemFont(ofSize: 20),
             type: ButtonType,
             tapAction: @escaping () -> Void
         ) {
             self.title = title
-            self.fontSize = fontSize
+            self.font = font
             self.type = type
             self.tapAction = tapAction
         }
@@ -105,7 +106,7 @@ extension DefaultButton: Configurable {
     func update(model: Model) {
         tapAction = model.tapAction
         button.setTitle(model.title, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: model.fontSize)
+        button.titleLabel?.font = model.font
         switch model.type {
         case .fill:
             button.backgroundColor = Colors.blackPrimary
@@ -115,6 +116,10 @@ extension DefaultButton: Configurable {
             button.backgroundColor = Colors.whitePrimary
             needBorder = true
             button.setTitleColor(Colors.blackPrimary, for: .normal)
+        case .fillGray:
+            button.backgroundColor = Colors.grayPrimary
+            needBorder = false
+            button.setTitleColor(Colors.whitePrimary, for: .normal)
         }
     }
 }
