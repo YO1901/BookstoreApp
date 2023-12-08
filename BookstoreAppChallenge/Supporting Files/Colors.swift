@@ -11,6 +11,7 @@ enum Colors {
     static let blackPrimary = UIColor(named: "blackPrimary")!
     static let whitePrimary = UIColor(named: "whitePrimary")!
     static let grayPrimary = UIColor(named: "grayPrimary")!
+    static let grayLight = UIColor(named: "grayLight")!
     
     enum Background {
         static let lvl1 = UIColor(named: "Background/lvl1")!
