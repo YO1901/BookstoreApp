@@ -42,6 +42,7 @@ final class BookPresenter: BookOutput {
                 view?.update(
                     with: .init(
                         title: doc.title,
+                        category: doc.subject?.first,
                         header: .init(
                             imageURL: doc.coverURL(),
                             author: doc.authorName?.first,
@@ -60,7 +61,10 @@ final class BookPresenter: BookOutput {
                                 UIApplication.shared.open(url)
                             }
                         ),
-                        description: book.description?.value ?? ""
+                        description: book.description?.value ?? "",
+                        likeBarButtonAction: {
+                            print("like")
+                        }
                     )
                 )
             case .failure(let error):

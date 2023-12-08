@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class MainViewController: UIViewController {
+class MainViewController: ViewController {
     
     lazy var button: UIButton = {
         let button = UIButton()

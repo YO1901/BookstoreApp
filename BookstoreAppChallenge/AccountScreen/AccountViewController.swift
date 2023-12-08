@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class AccountViewController: UIViewController, AccountInput {
+final class AccountViewController: ViewController, AccountInput {
     
     var presenter: AccountOutput!
     
@@ -33,7 +33,7 @@ final class AccountViewController: UIViewController, AccountInput {
                 ),
                 textFieldText: model.name,
                 textFieldFont: .systemFont(ofSize: 16, weight: .semibold),
-                textFieldColor: Colors.blackPrimary,
+                textFieldColor: Colors.blackPrimary.light,
                 didEnterText: model.didChangeName
             )
         )
@@ -43,7 +43,7 @@ final class AccountViewController: UIViewController, AccountInput {
     }
     
     private func configure() {
-        title = "Acccount"
+        title = "Account"
         
         view.backgroundColor = Colors.Background.lvl1
         
@@ -61,14 +61,22 @@ final class AccountViewController: UIViewController, AccountInput {
             $0.top.equalTo(avatar.snp.bottom).offset(26)
         }
         
-        let tapGR = UITapGestureRecognizer(target: self, action: #selector(didTapAvatar))
+        let avatarTapGR = UITapGestureRecognizer(target: self, action: #selector(didTapAvatar))
+        avatarTapGR.cancelsTouchesInView = false
+        avatar.addGestureRecognizer(avatarTapGR)
+        
+        let tapGR = UITapGestureRecognizer(target: self, action: #selector(didTap))
         tapGR.cancelsTouchesInView = false
-        avatar.addGestureRecognizer(tapGR)
+        view.addGestureRecognizer(tapGR)
     }
     
     @objc
     private func didTapAvatar() {
         presenter.didTapAvatar()
+    }
+    
+    @objc func didTap() {
+        nameTextField.endEditing(true)
     }
     
     func showImagePicker() {
@@ -82,7 +90,6 @@ extension AccountViewController : UIImagePickerControllerDelegate, UINavigationC
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        let image = info[.originalImage] as! UIImage
         if let image = info[.originalImage] as? UIImage,
             let imageData = image.resizeImage(minSide: 120)?.jpegData(compressionQuality: 1.0) {
             presenter.didSelectAvatar(imageData)
