@@ -26,7 +26,7 @@ class AppTabBarController: UITabBarController {
         let favoritesViewController = FavoritesViewController()
         favoritesViewController.tabBarItem = UITabBarItem(title: "Likes", image: UIImage(systemName: "heart"), tag: 2)
         
-        let accountViewController = AccountViewController()
+        let accountViewController = AccountRouter().makeScreen()
         accountViewController.tabBarItem = UITabBarItem(title: "Account", image: UIImage(systemName: "person.crop.circle"), tag: 3)
 
         let nav1 = UINavigationController(rootViewController: homeViewController)
