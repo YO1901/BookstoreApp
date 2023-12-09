@@ -50,6 +50,9 @@
 		77DA2CFD2B226C3C00BB0233 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DA2CFC2B226C3C00BB0233 /* AvatarView.swift */; };
 		77DA2D002B226F3400BB0233 /* NamedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DA2CFF2B226F3400BB0233 /* NamedTextField.swift */; };
 		77DA2D022B227B0300BB0233 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DA2D012B227B0300BB0233 /* UIImage+Extension.swift */; };
+		77DA2D122B23C13600BB0233 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DA2D112B23C13600BB0233 /* NavigationController.swift */; };
+		77DA2D142B23C17500BB0233 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DA2D132B23C17500BB0233 /* ViewController.swift */; };
+		77DA2D182B23C4A900BB0233 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DA2D172B23C4A900BB0233 /* UIColor+Extension.swift */; };
 		77E5B9E82B1F6A6F004BA4AA /* SubjectRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E5B9E72B1F6A6F004BA4AA /* SubjectRequest.swift */; };
 		77E5B9EA2B1F6AE8004BA4AA /* SubjectEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E5B9E92B1F6AE8004BA4AA /* SubjectEntity.swift */; };
 		77E5B9EC2B1F6B55004BA4AA /* DocEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E5B9EB2B1F6B55004BA4AA /* DocEntity.swift */; };
@@ -101,6 +104,9 @@
 		77DA2CFC2B226C3C00BB0233 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		77DA2CFF2B226F3400BB0233 /* NamedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NamedTextField.swift; sourceTree = "<group>"; };
 		77DA2D012B227B0300BB0233 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		77DA2D112B23C13600BB0233 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		77DA2D132B23C17500BB0233 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		77DA2D172B23C4A900BB0233 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		77E5B9E72B1F6A6F004BA4AA /* SubjectRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectRequest.swift; sourceTree = "<group>"; };
 		77E5B9E92B1F6AE8004BA4AA /* SubjectEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectEntity.swift; sourceTree = "<group>"; };
 		77E5B9EB2B1F6B55004BA4AA /* DocEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocEntity.swift; sourceTree = "<group>"; };
@@ -158,6 +164,8 @@
 				7778513F2B1FD72000899704 /* Services */,
 				777851332B1FC45000899704 /* Extensions */,
 				7778513A2B1FCADA00899704 /* Views */,
+				77DA2D112B23C13600BB0233 /* NavigationController.swift */,
+				77DA2D132B23C17500BB0233 /* ViewController.swift */,
 			);
 			path = BookstoreAppChallenge;
 			sourceTree = "<group>";
@@ -323,6 +331,7 @@
 			isa = PBXGroup;
 			children = (
 				777851312B1FC42B00899704 /* UIApplication+Extension.swift */,
+				77DA2D172B23C4A900BB0233 /* UIColor+Extension.swift */,
 				777851382B1FC93300899704 /* UILabel+Extension.swift */,
 				77DA2D012B227B0300BB0233 /* UIImage+Extension.swift */,
 			);
@@ -491,6 +500,7 @@
 				FA1AC6292B24DE5200F243A4 /* ModelFavoritesBook.swift in Sources */,
 				777851302B1FC23F00899704 /* OnboardingProtocols.swift in Sources */,
 				77DA2CF72B226A4600BB0233 /* AccountProtocols.swift in Sources */,
+				77DA2D122B23C13600BB0233 /* NavigationController.swift in Sources */,
 				438B63F82B20C32D00B9F04F /* FavoritesViewController.swift in Sources */,
 				777851452B1FD89F00899704 /* Colors.swift in Sources */,
 				777851292B1FC1B000899704 /* OnboardingViewController.swift in Sources */,
@@ -504,8 +514,10 @@
 				777851392B1FC93300899704 /* UILabel+Extension.swift in Sources */,
 				77E5B9EA2B1F6AE8004BA4AA /* SubjectEntity.swift in Sources */,
 				77CDA0E32B21164C00E1A043 /* BookPresenter.swift in Sources */,
+				77DA2D182B23C4A900BB0233 /* UIColor+Extension.swift in Sources */,
 				438B63F62B20C2F500B9F04F /* CategoriesViewController.swift in Sources */,
 				77CDA0E72B21165400E1A043 /* BookRouter.swift in Sources */,
+				77DA2D142B23C17500BB0233 /* ViewController.swift in Sources */,
 				77E5B9EC2B1F6B55004BA4AA /* DocEntity.swift in Sources */,
 				77C324422B1E821E00343476 /* SearchBooksEntity.swift in Sources */,
 				77CDA0F02B211D0300E1A043 /* SpaceCell.swift in Sources */,

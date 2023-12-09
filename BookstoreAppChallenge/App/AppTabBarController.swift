@@ -29,10 +29,10 @@ class AppTabBarController: UITabBarController {
         let accountViewController = AccountRouter().makeScreen()
         accountViewController.tabBarItem = UITabBarItem(title: "Account", image: UIImage(systemName: "person.crop.circle"), tag: 3)
 
-        let nav1 = UINavigationController(rootViewController: homeViewController)
-        let nav2 = UINavigationController(rootViewController: categoriesViewController)
-        let nav3 = UINavigationController(rootViewController: favoritesViewController)
-        let nav4 = UINavigationController(rootViewController: accountViewController)
+        let nav1 = NavigationController(rootViewController: homeViewController)
+        let nav2 = NavigationController(rootViewController: categoriesViewController)
+        let nav3 = NavigationController(rootViewController: favoritesViewController)
+        let nav4 = NavigationController(rootViewController: accountViewController)
 
         self.viewControllers = [nav1, nav2, nav3, nav4]
         
