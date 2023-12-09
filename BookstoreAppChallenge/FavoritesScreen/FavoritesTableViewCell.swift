@@ -15,43 +15,39 @@ final class FavoritesTableViewCell: UITableViewCell {
     
     static let identifier: String = "FavoritesTableViewCell"
     
-    let conteiner = UIView()
+    private let container = UIView()
     
-     let bookImageView: UIImageView = {
+    private let bookImageView: UIImageView = {
         let imageView = UIImageView()
-        //imageView.image = UIImage(named: "book")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
-     let genreLabel: UILabel = {
+    private let genreLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 10)
         label.numberOfLines = 1
         label.textColor = .white
-        //label.text = "Novel"
         return label
     }()
     
-     let bookTitleLabel: UILabel = {
+    private let bookTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.numberOfLines = 0
         label.textColor = .white
-        //label.text = "Tuesday Mooney Talks to Ghosts"
         return label
     }()
     
-     let authorLabel: UILabel = {
+    private let authorLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 10)
         label.numberOfLines = 1
         label.textColor = .white
-        //label.text = "Kate Racculia"
         return label
     }()
     
-     lazy var closeButton: UIButton = {
+    private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .clear
         button.tintColor = .white
@@ -76,11 +72,11 @@ final class FavoritesTableViewCell: UITableViewCell {
     //MARK: - Functions
     
     private func setupViews() {
-        conteiner.backgroundColor = .black
-        conteiner.layer.cornerRadius = 10
+        container.backgroundColor = .black
+        container.layer.cornerRadius = 10
         
-        [bookImageView, genreLabel, bookTitleLabel, authorLabel, closeButton].forEach { conteiner.addSubview($0)}
-        contentView.addSubview(conteiner)
+        [bookImageView, genreLabel, bookTitleLabel, authorLabel, closeButton].forEach { container.addSubview($0)}
+        contentView.addSubview(container)
     }
     
     @objc func closeTapped() {
@@ -89,7 +85,7 @@ final class FavoritesTableViewCell: UITableViewCell {
     
     private func setupLayout() {
         
-        conteiner.snp.makeConstraints { make in
+        container.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.bottom.top.equalToSuperview().inset(8)
         }
@@ -140,7 +136,7 @@ extension FavoritesTableViewCell: Configurable {
         
         bookImageView.kf.setImage(with: imageURL)
     }
-
+    
     struct Model {
         var genre: String?
         var bookTitle: String?
