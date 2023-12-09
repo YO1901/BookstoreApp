@@ -11,4 +11,5 @@ enum Images {
     static let onboardingBackground = UIImage(named: "OnboardingBackground")!
     static let logo = UIImage(named: "Logo")!
     static let avatar = UIImage(named: "Avatar")!
+    static let book = UIColor(named: "book")!
 }

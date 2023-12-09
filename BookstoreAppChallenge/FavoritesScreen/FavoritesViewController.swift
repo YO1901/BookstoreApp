@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 final class FavoritesViewController: UIViewController {
+
+    var model = FavoritesBook.makeModel()
     
     //MARK: - Properties
     
@@ -36,6 +38,7 @@ final class FavoritesViewController: UIViewController {
         favoritesTableView.rowHeight = 140
         favoritesTableView.sectionFooterHeight = 0
         favoritesTableView.backgroundColor = .white
+        favoritesTableView.separatorStyle = .none
     }
     
     private func setupLayout() {
@@ -48,28 +51,21 @@ final class FavoritesViewController: UIViewController {
     }
 }
 
-// MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource, UITableViewDelegate
 
-extension FavoritesViewController: UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
+extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return model.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.identifier, for: indexPath) as? FavoritesTableViewCell else {
-            return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.identifier, for: indexPath) as? FavoritesTableViewCell else { return UITableViewCell()
         }
+        let item = model[indexPath.row]
+        cell.update(model: .init(genre: item.genre, bookTitle: item.bookTitle, author: item.author, bookImage: URL(string: "https://covers.openlibrary.org/b/id/921610-M.jpg")))
+        cell.selectionStyle = .none
         return cell
     }
 }
 
-// MARK: - UITableViewDelegate
-
-extension FavoritesViewController: UITableViewDelegate {
-    
-}
