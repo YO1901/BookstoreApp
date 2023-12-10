@@ -10,8 +10,8 @@ import SnapKit
 
 final class MainViewController: UIViewController {
     
-    typealias TextCell = TableCell<UILabel>
-    typealias HeaderCell = TableCell<BookHeaderView>
+    typealias BookCell = CollectionCell<MainBookView>
+    typealias LabelButtonCell = LabelButtonTableViewCell<UILabel, DefaultButton>
     
     var presenter: MainViewPresenterProtocol!
     
@@ -19,9 +19,9 @@ final class MainViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tv = UITableView()
-        tv.register(TextCell.self, forCellReuseIdentifier: "textCell")
-        tv.register(HeaderCell.self, forCellReuseIdentifier: "headerCell")
+        tv.register(LabelButtonCell.self, forCellReuseIdentifier: "labelButtonCell")
         tv.register(SpaceCell.self, forCellReuseIdentifier: "spaceCell")
+        tv.register(BookCell.self, forCellReuseIdentifier: "bookCell")
         tv.backgroundColor = .clear
         tv.rowHeight = UITableView.automaticDimension
         tv.delegate = self
@@ -31,12 +31,26 @@ final class MainViewController: UIViewController {
         tv.delaysContentTouches = false
         return tv
     }()
+    
+    private lazy var collectionView: UICollectionView = {
+        let cv = UICollectionView()
+        cv.register(BookCell.self, forCellWithReuseIdentifier: "bookCell")
+        cv.dataSource = self
+        cv.delegate = self
+        return cv
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         presenter.activate()
         view.backgroundColor = .white
+        // Регистрация кастомной ячейки для UICollectionView в UITableView
+        tableView.register(BooksCollectionViewCell.self, forCellReuseIdentifier: "BooksCollectionViewCell")
+        view.addSubview(tableView)
+                tableView.snp.makeConstraints { make in
+                    make.edges.equalToSuperview()
+                }
     }
     
     private func makeCollectionCell(categories: String?, title: String?, author: String?) -> NSAttributedString? {
@@ -85,25 +99,29 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         let item = items[indexPath.row]
         
         switch item {
-        case .title(item: let item):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "textCell", for: indexPath) as! TextCell
-            cell.update(with: item)
-            cell.selectionStyle = .none
+        case .wishTitle(item: let item):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "labelButtonCell", for: indexPath) as! LabelButtonCell
+            cell.update(modelView: item.modelView, modelButton: item.modelButton)
             return cell
-        case .description(item: let item):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "textCell", for: indexPath) as! TextCell
-            cell.update(with: item)
-            cell.selectionStyle = .none
+        case .topBooksTitle(item: let item):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "labelButtonCell", for: indexPath) as! LabelButtonCell
+            cell.update(modelView: item.modelView, modelButton: item.modelButton)
             return cell
-        case .space(item: let item):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "spaceCell", for: indexPath) as! SpaceCell
-            cell.update(with: item)
-            cell.selectionStyle = .none
+        case .sortingButtons(item: let item):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "labelButtonCell", for: indexPath) as! LabelButtonCell
+            cell.update(modelView: item.modelView, modelButton: item.modelButton)
             return cell
-        case .header(item: let item):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell", for: indexPath) as! HeaderCell
-            cell.update(with: item)
-            cell.selectionStyle = .none
+        case .topBooks(item: let item):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "BooksCollectionViewCell", for: indexPath) as! BooksCollectionViewCell
+//            cell.update(with: item)
+            return cell
+        case .recentTitle(item: let item):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "labelButtonCell", for: indexPath) as! LabelButtonCell
+            cell.update(modelView: item.modelView, modelButton: item.modelButton)
+            return cell
+        case .recentBooks(item: let item):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "BooksCollectionViewCell", for: indexPath) as! BooksCollectionViewCell
+//            cell.update(with: item)
             return cell
         }
     }
@@ -113,13 +131,44 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bookCell", for: indexPath) as? BookCell else {
+            fatalError("Could not dequeue BookCollectionViewCell")
+        }
+//        cell.update(with: <#T##MainBookView.Model#>)
+        return cell
+    }
+}
+
+ 
+
 extension MainViewController {
     struct ViewModel {
-        struct Item {
-            let book: Book
+        
+        struct HeaderItem {
+        let imageURL: URL?
+        let author: String?
+        let category: String?
+        let rating: String?
+        let seeMoreClosure: (() -> Void)
+        let readClosure: (() -> Void)
+    }
+        
+        enum Item {
+            case wishTitle(modelView: UILabel.Model, modelButton: DefaultButton.Model)
+            case topBooksTitle(modelView: UILabel.Model, modelButton: DefaultButton.Model)
+            case sortingButtons(modelView: UILabel.Model, modelButton: DefaultButton.Model)
+            case topBooks(item: MainBookView.Model)
+            case recentTitle(modelView: UILabel.Model, modelButton: DefaultButton.Model)
+            case recentBooks(item: MainBookView.Model)
         }
         
-        let books: [Book]
-        let button: DefaultButton.Model
+//        let books: [Book]
+//        let button: DefaultButton.Model
     }
 }

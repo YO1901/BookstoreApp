@@ -42,17 +42,7 @@ extension MainViewPresenter: MainViewPresenterProtocol {
     typealias ViewModel = MainViewController.ViewModel
     
     func activate() {
-                view?.update(
-                    with: .init(
-                        books: [Book(
-                            title: "First",
-                            author: "Second",
-                            coverImage: .logo,
-                            category: "Cool")],
-                        button: .init(title: "This Week", font: .systemFont(ofSize: 14), type: .stroke, tapAction: {
-                            print("Sorting Tapped")
-                        }))
-                )
+        view?.update(with: .init())
         }
     }
 

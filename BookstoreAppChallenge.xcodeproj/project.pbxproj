@@ -58,7 +58,10 @@
 		E017433B2B23E8CB00A6D473 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E017433A2B23E8CB00A6D473 /* MainViewModel.swift */; };
 		E017433D2B23F00900A6D473 /* MainViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E017433C2B23F00900A6D473 /* MainViewPresenter.swift */; };
 		E017433F2B24B16D00A6D473 /* MainViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E017433E2B24B16D00A6D473 /* MainViewRouter.swift */; };
-		E01743422B24C6C200A6D473 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01743412B24C6C200A6D473 /* MainView.swift */; };
+		E01743422B24C6C200A6D473 /* MainBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01743412B24C6C200A6D473 /* MainBookView.swift */; };
+		E01743442B26615100A6D473 /* LabelButtonTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01743432B26615100A6D473 /* LabelButtonTableCell.swift */; };
+		E01743462B26825D00A6D473 /* BooksCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01743452B26825D00A6D473 /* BooksCollectionViewCell.swift */; };
+		E01743482B2682F900A6D473 /* BookCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01743472B2682F900A6D473 /* BookCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,7 +114,10 @@
 		E017433A2B23E8CB00A6D473 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		E017433C2B23F00900A6D473 /* MainViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewPresenter.swift; sourceTree = "<group>"; };
 		E017433E2B24B16D00A6D473 /* MainViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewRouter.swift; sourceTree = "<group>"; };
-		E01743412B24C6C200A6D473 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		E01743412B24C6C200A6D473 /* MainBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBookView.swift; sourceTree = "<group>"; };
+		E01743432B26615100A6D473 /* LabelButtonTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelButtonTableCell.swift; sourceTree = "<group>"; };
+		E01743452B26825D00A6D473 /* BooksCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksCollectionViewCell.swift; sourceTree = "<group>"; };
+		E01743472B2682F900A6D473 /* BookCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +204,8 @@
 				43331E7B2B1DFB220015E70F /* View */,
 				43331E7C2B1DFB280015E70F /* Presenter */,
 				E017433E2B24B16D00A6D473 /* MainViewRouter.swift */,
+				E01743452B26825D00A6D473 /* BooksCollectionViewCell.swift */,
+				E01743472B2682F900A6D473 /* BookCollectionViewCell.swift */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -343,6 +351,7 @@
 				77CDA0ED2B2119DF00E1A043 /* TableCell.swift */,
 				7778513B2B1FCAEE00899704 /* DefaultButton.swift */,
 				77CDA0DE2B1FDBAF00E1A043 /* ConfigureProtocol.swift */,
+				E01743432B26615100A6D473 /* LabelButtonTableCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -413,7 +422,7 @@
 		E01743402B24C6A300A6D473 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E01743412B24C6C200A6D473 /* MainView.swift */,
+				E01743412B24C6C200A6D473 /* MainBookView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -505,11 +514,13 @@
 				777851302B1FC23F00899704 /* OnboardingProtocols.swift in Sources */,
 				77DA2CF72B226A4600BB0233 /* AccountProtocols.swift in Sources */,
 				438B63F82B20C32D00B9F04F /* FavoritesViewController.swift in Sources */,
+				E01743462B26825D00A6D473 /* BooksCollectionViewCell.swift in Sources */,
 				777851452B1FD89F00899704 /* Colors.swift in Sources */,
 				777851292B1FC1B000899704 /* OnboardingViewController.swift in Sources */,
 				77DA2CFB2B226A5200BB0233 /* AccountRouter.swift in Sources */,
 				777851322B1FC42B00899704 /* UIApplication+Extension.swift in Sources */,
 				43331E732B1DF9D30015E70F /* Router.swift in Sources */,
+				E01743482B2682F900A6D473 /* BookCollectionViewCell.swift in Sources */,
 				77E5B9E82B1F6A6F004BA4AA /* SubjectRequest.swift in Sources */,
 				7778512B2B1FC1B600899704 /* OnboardingRouter.swift in Sources */,
 				43331E612B1DF36B0015E70F /* MainViewController.swift in Sources */,
@@ -525,13 +536,14 @@
 				77CDA0F02B211D0300E1A043 /* SpaceCell.swift in Sources */,
 				77CDA0EE2B2119DF00E1A043 /* TableCell.swift in Sources */,
 				777851352B1FC54C00899704 /* CollectionCell.swift in Sources */,
+				E01743442B26615100A6D473 /* LabelButtonTableCell.swift in Sources */,
 				77E5B9F22B1F72B2004BA4AA /* BookEntity.swift in Sources */,
 				E017433D2B23F00900A6D473 /* MainViewPresenter.swift in Sources */,
 				77C324452B1E824F00343476 /* SearchBooksRequest.swift in Sources */,
 				7778513C2B1FCAEE00899704 /* DefaultButton.swift in Sources */,
 				77CDA0DF2B1FDBAF00E1A043 /* ConfigureProtocol.swift in Sources */,
 				43331E5D2B1DF36B0015E70F /* AppDelegate.swift in Sources */,
-				E01743422B24C6C200A6D473 /* MainView.swift in Sources */,
+				E01743422B24C6C200A6D473 /* MainBookView.swift in Sources */,
 				77DA2D022B227B0300BB0233 /* UIImage+Extension.swift in Sources */,
 				77DA2D002B226F3400BB0233 /* NamedTextField.swift in Sources */,
 				77DA2CFD2B226C3C00BB0233 /* AvatarView.swift in Sources */,

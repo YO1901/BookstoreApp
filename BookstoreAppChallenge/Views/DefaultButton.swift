@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class DefaultButton: UIView {
+    final class DefaultButton: UIView {
     
     private enum Layout {
         static let cornerRadius: CGFloat = 5
