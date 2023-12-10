@@ -83,6 +83,7 @@ extension DefaultButton: Configurable {
             case fill
             case fillGray
             case stroke
+            case onlyText
         }
         
         let title: String
@@ -120,6 +121,8 @@ extension DefaultButton: Configurable {
             button.backgroundColor = Colors.grayPrimary
             needBorder = false
             button.setTitleColor(Colors.whitePrimary, for: .normal)
+        case .onlyText:
+            button.setTitleColor(Colors.blackPrimary, for: .normal)
         }
     }
 }
