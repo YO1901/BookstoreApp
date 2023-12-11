@@ -56,6 +56,8 @@ final class FavoritesTableViewCell: UITableViewCell {
         return button
     }()
     
+    private var deleteAction: (() -> Void)?
+    
     //MARK: - Life Cycle
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -80,7 +82,7 @@ final class FavoritesTableViewCell: UITableViewCell {
     }
     
     @objc func closeTapped() {
-        printContent("tap")
+        deleteAction?()
     }
     
     private func setupLayout() {
@@ -96,8 +98,8 @@ final class FavoritesTableViewCell: UITableViewCell {
         }
         
         closeButton.snp.makeConstraints { make in
-            make.top.equalTo(15)
-            make.right.equalTo(-15)
+            make.top.equalToSuperview().offset(15)
+            make.right.equalToSuperview().offset(-15)
             make.width.equalTo(20)
             make.height.equalTo(20)
         }
@@ -128,6 +130,7 @@ extension FavoritesTableViewCell: Configurable {
         authorLabel.text = model.author
         genreLabel.text = model.genre
         bookTitleLabel.text = model.bookTitle
+        deleteAction = model.deleteAction
         
         guard let imageURL = model.bookImage else {
             bookImageView.image = nil
@@ -142,6 +145,7 @@ extension FavoritesTableViewCell: Configurable {
         var bookTitle: String?
         var author: String?
         var bookImage: URL?
+        var deleteAction: (() -> Void)?
     }
     
 }
