@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import NetworkService
+import CoreData
 
 final class BookPresenter: BookOutput {
     
@@ -63,7 +64,9 @@ final class BookPresenter: BookOutput {
                         ),
                         description: book.description?.value ?? "",
                         likeBarButtonAction: {
-                            print("like")
+                            [weak self] in
+                            
+                            self?.addToLikeList()
                         }
                     )
                 )
@@ -71,5 +74,27 @@ final class BookPresenter: BookOutput {
                 print(error)
             }
         }
+    }
+    
+    private func addToLikeList() {
+        let list = CoreDataService.shared.getFavoritesList()
+        let books = list.book?.compactMap { $0 as? OpenBook }
+        guard books?.contains(where: { $0.key == doc.key }) == false else {
+            return
+        }
+        
+        let book = OpenBook(context: CoreDataService.shared.managedContext)
+        book.setValue(doc.authorName?.first, forKey: #keyPath(OpenBook.author))
+        book.setValue(doc.title, forKey: #keyPath(OpenBook.title))
+        book.setValue(doc.subject?.first, forKey: #keyPath(OpenBook.subject))
+        book.setValue(doc.coverURL()?.absoluteString, forKey: #keyPath(OpenBook.imageURL))
+        book.setValue(doc.key, forKey: #keyPath(OpenBook.key))
+        book.setValue(list, forKey: #keyPath(OpenBook.bookList))
+        
+        if let rating = doc.ratingsAverage {
+            book.setValue(String(rating), forKey: #keyPath(OpenBook.rating))
+        }
+        
+        CoreDataService.shared.saveContext()
     }
 }

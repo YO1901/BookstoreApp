@@ -16,3 +16,12 @@ extension UIApplication {
             .first(where: \.isKeyWindow)
     }
 }
+
+extension UIApplication {
+    var appDelegate: AppDelegate {
+        guard let delegate = self.delegate as? AppDelegate else {
+            fatalError("could not get app delegate ")
+        }
+        return delegate
+     }
+}

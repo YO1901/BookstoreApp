@@ -23,18 +23,16 @@ class AppTabBarController: UITabBarController {
         let categoriesViewController = CategoriesViewController()
         categoriesViewController.tabBarItem = UITabBarItem(title: "Categories", image: UIImage(systemName: "rectangle.grid.2x2"), tag: 1)
         
-        let favoritesViewController = FavoritesViewController()
+        let favoritesViewController = FavoritesRouter().makeWrappedNavigationScreen()
         favoritesViewController.tabBarItem = UITabBarItem(title: "Likes", image: UIImage(systemName: "heart"), tag: 2)
         
-        let accountViewController = AccountRouter().makeScreen()
+        let accountViewController = AccountRouter().makeWrappedNavigationScreen()
         accountViewController.tabBarItem = UITabBarItem(title: "Account", image: UIImage(systemName: "person.crop.circle"), tag: 3)
 
         let nav1 = NavigationController(rootViewController: homeViewController)
         let nav2 = NavigationController(rootViewController: categoriesViewController)
-        let nav3 = NavigationController(rootViewController: favoritesViewController)
-        let nav4 = NavigationController(rootViewController: accountViewController)
 
-        self.viewControllers = [nav1, nav2, nav3, nav4]
+        self.viewControllers = [nav1, nav2, favoritesViewController, accountViewController]
         
         favoritesViewController.title = "Likes"
 

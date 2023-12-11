@@ -9,8 +9,8 @@ import UIKit
 import SnapKit
 
 final class FavoritesViewController: UIViewController {
-
-    var model = FavoritesBook.makeModel()
+    
+    var presenter: FavoritesPresenter!
     
     //MARK: - Properties
     
@@ -30,7 +30,17 @@ final class FavoritesViewController: UIViewController {
         setupTableView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        presenter.activate()
+    }
+    
     //MARK: - Functions
+    
+    func updateUI() {
+        favoritesTableView.reloadData()
+    }
     
     private func setupTableView() {
         favoritesTableView.delegate = self
@@ -56,14 +66,22 @@ final class FavoritesViewController: UIViewController {
 extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return model.count
+        presenter.items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.identifier, for: indexPath) as? FavoritesTableViewCell else { return UITableViewCell()
         }
-        let item = model[indexPath.row]
-        cell.update(model: .init(genre: item.genre, bookTitle: item.bookTitle, author: item.author, bookImage: URL(string: "https://covers.openlibrary.org/b/id/921610-M.jpg")))
+        let item = presenter.items[indexPath.row]
+        cell.update(
+            model: .init(
+                genre: item.genre,
+                bookTitle: item.bookTitle,
+                author: item.author,
+                bookImage: item.bookImage,
+                deleteAction: item.removeClosure
+            )
+        )
         cell.selectionStyle = .none
         return cell
     }
