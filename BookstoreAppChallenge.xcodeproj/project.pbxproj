@@ -62,6 +62,7 @@
 		E01743442B26615100A6D473 /* LabelButtonTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01743432B26615100A6D473 /* LabelButtonTableCell.swift */; };
 		E01743462B26825D00A6D473 /* BooksCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01743452B26825D00A6D473 /* BooksCollectionViewCell.swift */; };
 		E01743482B2682F900A6D473 /* BookCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01743472B2682F900A6D473 /* BookCollectionViewCell.swift */; };
+		E017434A2B28FD6D00A6D473 /* ButtonStackTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01743492B28FD6D00A6D473 /* ButtonStackTableCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -118,6 +119,7 @@
 		E01743432B26615100A6D473 /* LabelButtonTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelButtonTableCell.swift; sourceTree = "<group>"; };
 		E01743452B26825D00A6D473 /* BooksCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksCollectionViewCell.swift; sourceTree = "<group>"; };
 		E01743472B2682F900A6D473 /* BookCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCollectionViewCell.swift; sourceTree = "<group>"; };
+		E01743492B28FD6D00A6D473 /* ButtonStackTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStackTableCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,6 +354,7 @@
 				7778513B2B1FCAEE00899704 /* DefaultButton.swift */,
 				77CDA0DE2B1FDBAF00E1A043 /* ConfigureProtocol.swift */,
 				E01743432B26615100A6D473 /* LabelButtonTableCell.swift */,
+				E01743492B28FD6D00A6D473 /* ButtonStackTableCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -558,6 +561,7 @@
 				77CDA0E12B21164800E1A043 /* BookProtocols.swift in Sources */,
 				43331E5F2B1DF36B0015E70F /* SceneDelegate.swift in Sources */,
 				77CDA0EB2B21188C00E1A043 /* BookHeaderView.swift in Sources */,
+				E017434A2B28FD6D00A6D473 /* ButtonStackTableCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

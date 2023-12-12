@@ -18,12 +18,6 @@ protocol MainViewPresenterProtocol: AnyObject {
     func activate()
 }
 
-private enum Titles {
-    static let happyTtile = "Happy Reading!"
-    static let topBooksTitle = "Top Books"
-    static let recentTitle = "Recent Books"
-}
-
 final class MainViewPresenter {
     
     var router: MainViewRouter?
@@ -42,7 +36,7 @@ extension MainViewPresenter: MainViewPresenterProtocol {
     typealias ViewModel = MainViewController.ViewModel
     
     func activate() {
-        view?.update(with: .init())
+        view?.update(with: .init(imageURL: doc.coverURL(), author: doc.authorName?.first, title: doc.title, category: doc.subject?.first))
         }
     }
 

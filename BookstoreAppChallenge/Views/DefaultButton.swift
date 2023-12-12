@@ -84,6 +84,7 @@ extension DefaultButton: Configurable {
             case fillGray
             case stroke
             case onlyText
+            case search
         }
         
         let title: String
@@ -92,7 +93,7 @@ extension DefaultButton: Configurable {
         let tapAction: () -> Void
         
         init(
-            title: String,
+            title: String = "",
             font: UIFont = .systemFont(ofSize: 20),
             type: ButtonType,
             tapAction: @escaping () -> Void
@@ -123,6 +124,11 @@ extension DefaultButton: Configurable {
             button.setTitleColor(Colors.whitePrimary, for: .normal)
         case .onlyText:
             button.setTitleColor(Colors.blackPrimary, for: .normal)
+            needBorder = false
+        case .search:
+            button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            button.setTitleColor(Colors.blackPrimary, for: .normal)
+            needBorder = false
         }
     }
 }
