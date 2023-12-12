@@ -6,12 +6,21 @@
 //
 
 import UIKit
+import Combine
 
 final class NavigationController: UINavigationController {
+    
+    private var cancellable = [AnyCancellable]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configure()
+        UserInterfaceStyleService.shared.$userInterfaceStyle.sink {
+            [weak self] style in
+            
+            self?.overrideUserInterfaceStyle = style
+        }.store(in: &cancellable)
     }
     
     private func configure() {

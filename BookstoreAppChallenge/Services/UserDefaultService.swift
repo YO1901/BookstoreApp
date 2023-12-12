@@ -35,4 +35,14 @@ final class UserDefaultsService {
             UserDefaults.standard.setValue(newValue, forKey: "userName")
         }
     }
+    
+    var userInterfaceStyle: String? {
+        get {
+            UserDefaults.standard.string(forKey: "userInterfaceStyle")
+        }
+        
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: "userInterfaceStyle")
+        }
+    }
 }

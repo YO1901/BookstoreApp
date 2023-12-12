@@ -27,7 +27,7 @@ final class FavoritesTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 10)
         label.numberOfLines = 1
-        label.textColor = .white
+        label.textColor = Colors.whitePrimary
         return label
     }()
     
@@ -35,7 +35,7 @@ final class FavoritesTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.numberOfLines = 0
-        label.textColor = .white
+        label.textColor = Colors.whitePrimary
         return label
     }()
     
@@ -43,14 +43,14 @@ final class FavoritesTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 10)
         label.numberOfLines = 1
-        label.textColor = .white
+        label.textColor = Colors.whitePrimary
         return label
     }()
     
     private lazy var closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = .clear
-        button.tintColor = .white
+        button.tintColor = Colors.whitePrimary
         button.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
         return button
@@ -74,7 +74,7 @@ final class FavoritesTableViewCell: UITableViewCell {
     //MARK: - Functions
     
     private func setupViews() {
-        container.backgroundColor = .black
+        container.backgroundColor = Colors.blackPrimary
         container.layer.cornerRadius = 10
         
         [bookImageView, genreLabel, bookTitleLabel, authorLabel, closeButton].forEach { container.addSubview($0)}
@@ -93,7 +93,7 @@ final class FavoritesTableViewCell: UITableViewCell {
         }
         
         bookImageView.snp.makeConstraints { make in
-            make.top.left.bottom.equalToSuperview()
+            make.top.left.bottom.equalToSuperview().inset(5)
             make.width.equalTo(100)
         }
         

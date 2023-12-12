@@ -24,7 +24,7 @@ final class FavoritesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = Colors.Background.lvl1
         view.addSubview(favoritesTableView)
         setupLayout()
         setupTableView()
@@ -47,7 +47,7 @@ final class FavoritesViewController: UIViewController {
         favoritesTableView.dataSource = self
         favoritesTableView.rowHeight = 140
         favoritesTableView.sectionFooterHeight = 0
-        favoritesTableView.backgroundColor = .white
+        favoritesTableView.backgroundColor = .clear
         favoritesTableView.separatorStyle = .none
     }
     
@@ -83,6 +83,7 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
             )
         )
         cell.selectionStyle = .none
+        cell.backgroundColor = .clear
         return cell
     }
 }

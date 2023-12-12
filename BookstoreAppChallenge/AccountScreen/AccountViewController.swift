@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 final class AccountViewController: ViewController, AccountInput {
     
@@ -13,12 +14,23 @@ final class AccountViewController: ViewController, AccountInput {
     
     private let avatar = AvatarView()
     private lazy var nameTextField = NamedTextField()
+    private lazy var styleButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.addTarget(self, action: #selector(didTapStyleButton), for: .touchUpInside)
+        return button
+    }()
+    private var cancellable = [AnyCancellable]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configure()
         presenter.activate()
+        UserInterfaceStyleService.shared.$userInterfaceStyle.sink {
+            [weak self] style in
+            
+            self?.setStyleButtonImage(style)
+        }.store(in: &cancellable)
     }
     
     func update(with model: ViewModel) {
@@ -61,6 +73,13 @@ final class AccountViewController: ViewController, AccountInput {
             $0.top.equalTo(avatar.snp.bottom).offset(26)
         }
         
+        view.addSubview(styleButton)
+        styleButton.snp.makeConstraints {
+            $0.size.equalTo(35)
+            $0.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(15)
+        }
+        setStyleButtonImage(nil)
+        
         let avatarTapGR = UITapGestureRecognizer(target: self, action: #selector(didTapAvatar))
         avatarTapGR.cancelsTouchesInView = false
         avatar.addGestureRecognizer(avatarTapGR)
@@ -70,13 +89,31 @@ final class AccountViewController: ViewController, AccountInput {
         view.addGestureRecognizer(tapGR)
     }
     
+    private func setStyleButtonImage(_ style: UIUserInterfaceStyle?) {
+        let userInterfaceStyle = style ?? overrideUserInterfaceStyle
+        switch userInterfaceStyle {
+        case .dark:
+            styleButton.setImage(Images.sunIconWhite.withRenderingMode(.alwaysOriginal), for: .normal)
+        case .light:
+            styleButton.setImage(Images.sunIconBlack.withRenderingMode(.alwaysOriginal), for: .normal)
+        default:
+            styleButton.setImage(Images.sunIconBlackWhite.withRenderingMode(.alwaysOriginal), for: .normal)
+        }
+    }
+    
     @objc
     private func didTapAvatar() {
         presenter.didTapAvatar()
     }
     
-    @objc func didTap() {
+    @objc 
+    private func didTap() {
         nameTextField.endEditing(true)
+    }
+    
+    @objc
+    private func didTapStyleButton() {
+        UserInterfaceStyleService.shared.changeStyle()
     }
     
     func showImagePicker() {
