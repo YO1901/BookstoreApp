@@ -6,8 +6,12 @@
 //
 
 import UIKit
+import Combine
 
 class ViewController: UIViewController {
+    
+    private var cancellables = [AnyCancellable]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -17,6 +21,13 @@ class ViewController: UIViewController {
             target: nil,
             action: nil
         )
+        
+        overrideUserInterfaceStyle = UserInterfaceStyleService.shared.userInterfaceStyle
+        UserInterfaceStyleService.shared.$userInterfaceStyle.sink {
+            [weak self] style in
+            
+            self?.overrideUserInterfaceStyle = style
+        }.store(in: &cancellables)
 
     }
 }
