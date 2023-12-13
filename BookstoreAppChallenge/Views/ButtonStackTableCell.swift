@@ -13,9 +13,12 @@ final class ButtonStackTableViewCell<Button1: DefaultButton & Configurable, Butt
     let button1 = Button1()
     let button2 = Button2()
     let button3 = Button3()
+    
     let stack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
+        stack.spacing = 20
+        stack.distribution = .fillEqually
         return stack
     }()
     
@@ -37,8 +40,11 @@ final class ButtonStackTableViewCell<Button1: DefaultButton & Configurable, Butt
         stack.addArrangedSubview(button2)
         stack.addArrangedSubview(button3)
         contentView.addSubview(stack)
+        
         stack.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.bottom.equalToSuperview()
+            $0.leading.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(60)
         }
     }
     func update(modelButton1: DefaultButton.Model, modelButton2: DefaultButton.Model, modelButton3: DefaultButton.Model) {

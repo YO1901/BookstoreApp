@@ -63,6 +63,7 @@
 		E01743462B26825D00A6D473 /* BooksCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01743452B26825D00A6D473 /* BooksCollectionViewCell.swift */; };
 		E01743482B2682F900A6D473 /* BookCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01743472B2682F900A6D473 /* BookCollectionViewCell.swift */; };
 		E017434A2B28FD6D00A6D473 /* ButtonStackTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01743492B28FD6D00A6D473 /* ButtonStackTableCell.swift */; };
+		E017434C2B290C9700A6D473 /* MainViewProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = E017434B2B290C9700A6D473 /* MainViewProtocols.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,6 +121,7 @@
 		E01743452B26825D00A6D473 /* BooksCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksCollectionViewCell.swift; sourceTree = "<group>"; };
 		E01743472B2682F900A6D473 /* BookCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCollectionViewCell.swift; sourceTree = "<group>"; };
 		E01743492B28FD6D00A6D473 /* ButtonStackTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStackTableCell.swift; sourceTree = "<group>"; };
+		E017434B2B290C9700A6D473 /* MainViewProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewProtocols.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +208,7 @@
 				43331E7B2B1DFB220015E70F /* View */,
 				43331E7C2B1DFB280015E70F /* Presenter */,
 				E017433E2B24B16D00A6D473 /* MainViewRouter.swift */,
+				E017434B2B290C9700A6D473 /* MainViewProtocols.swift */,
 				E01743452B26825D00A6D473 /* BooksCollectionViewCell.swift */,
 				E01743472B2682F900A6D473 /* BookCollectionViewCell.swift */,
 			);
@@ -542,6 +545,7 @@
 				E01743442B26615100A6D473 /* LabelButtonTableCell.swift in Sources */,
 				77E5B9F22B1F72B2004BA4AA /* BookEntity.swift in Sources */,
 				E017433D2B23F00900A6D473 /* MainViewPresenter.swift in Sources */,
+				E017434C2B290C9700A6D473 /* MainViewProtocols.swift in Sources */,
 				77C324452B1E824F00343476 /* SearchBooksRequest.swift in Sources */,
 				7778513C2B1FCAEE00899704 /* DefaultButton.swift in Sources */,
 				77CDA0DF2B1FDBAF00E1A043 /* ConfigureProtocol.swift in Sources */,

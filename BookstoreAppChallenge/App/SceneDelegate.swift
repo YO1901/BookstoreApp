@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
 //        window.rootViewController = UserDefaultsService.shared.wasOnboardingShow ?  UINavigationController(rootViewController: AppTabBarController()) : OnboardingRouter().makeScreen()
-        window.rootViewController = MainViewController()
+        window.rootViewController = UINavigationController(rootViewController: AppTabBarController())
         self.window = window
         window.makeKeyAndVisible()
     }

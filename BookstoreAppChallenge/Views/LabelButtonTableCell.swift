@@ -12,11 +12,12 @@ final class LabelButtonTableViewCell<View: UIView & Configurable, Button: Defaul
     
     let view = View()
     let button = Button()
-//    let stack: UIStackView = {
-//        let stack = UIStackView()
-//        stack.axis = .horizontal
-//        return stack
-//    }()
+    let stack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+    
+        return stack
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -31,11 +32,13 @@ final class LabelButtonTableViewCell<View: UIView & Configurable, Button: Defaul
     }
     
     private func configure() {
-        contentView.addSubview(view)
-        contentView.addSubview(button)
-//        view.snp.makeConstraints {
-//            $0.edges.equalToSuperview()
-//        }
+        stack.addArrangedSubview(view)
+        stack.addArrangedSubview(button)
+        contentView.addSubview(stack)
+        stack.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(20)
+        }
     }
     func update(modelView: View.Model, modelButton: DefaultButton.Model) {
         view.update(model: modelView)

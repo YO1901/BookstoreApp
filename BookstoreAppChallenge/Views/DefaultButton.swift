@@ -13,9 +13,10 @@ import UIKit
         static let cornerRadius: CGFloat = 5
         static let borderWidth: CGFloat = 2
     }
-    
+        
     private let button = UIButton(type: .system)
     private var tapAction: (() -> Void)?
+        
     private var needBorder = false {
         didSet {
             setNeedsLayout()
@@ -64,6 +65,7 @@ import UIKit
             button.layer.frame = frame
             button.layer.borderColor = Colors.blackPrimary.cgColor
             button.layer.borderWidth = Layout.borderWidth
+            button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         } else {
             button.layer.frame = button.frame
             button.layer.borderWidth = .zero
@@ -85,6 +87,7 @@ extension DefaultButton: Configurable {
             case stroke
             case onlyText
             case search
+            case sorting
         }
         
         let title: String
@@ -109,6 +112,7 @@ extension DefaultButton: Configurable {
         tapAction = model.tapAction
         button.setTitle(model.title, for: .normal)
         button.titleLabel?.font = model.font
+        
         switch model.type {
         case .fill:
             button.backgroundColor = Colors.blackPrimary
@@ -127,8 +131,15 @@ extension DefaultButton: Configurable {
             needBorder = false
         case .search:
             button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
-            button.setTitleColor(Colors.blackPrimary, for: .normal)
+            button.tintColor = Colors.blackPrimary
             needBorder = false
+        case .sorting:
+            button.backgroundColor = Colors.whitePrimary
+            needBorder = true
+            button.setTitleColor(Colors.blackPrimary, for: .normal)
+//            button.snp.updateConstraints { make in
+//                make.edges.equalToSuperview().inset(UIEdgeInsets(top: 5, left: 25, bottom: 5, right: 25))
+//            }
         }
     }
 }
