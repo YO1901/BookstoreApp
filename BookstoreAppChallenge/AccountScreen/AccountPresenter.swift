@@ -33,6 +33,11 @@ final class AccountPresenter: AccountOutput {
                     name in
                     
                     UserDefaultsService.shared.userName = name
+                },
+                didTapListButton: {
+                    [weak self] in
+                    
+                    self?.router?.openListsScreen()
                 }
             )
         )
@@ -53,6 +58,11 @@ final class AccountPresenter: AccountOutput {
                     name in
                     
                     UserDefaultsService.shared.userName = name
+                },
+                didTapListButton: {
+                    [weak self] in
+                    
+                    self?.router?.openListsScreen()
                 }
             )
         )

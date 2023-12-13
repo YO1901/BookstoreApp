@@ -37,15 +37,40 @@ class CoreDataService {
         }
     }
     
-    func getFavoritesList() -> OpenBookList {
+    func getLikesList() -> OpenBookList {
         let bookList: NSFetchRequest<OpenBookList> = OpenBookList.fetchRequest()
         if let results = try? managedContext.fetch(bookList),
-           let list = results.first(where: { $0.title == "favorites" }) {
+           let list = results.first(where: { $0.title == "Likes" }) {
             return list
         }
         let favoritesList = OpenBookList(context: managedContext)
-        favoritesList.setValue("favorites", forKey: #keyPath(OpenBookList.title))
+        favoritesList.setValue("Likes", forKey: #keyPath(OpenBookList.title))
         saveContext()
         return favoritesList
+    }
+    
+    func getLists() -> [OpenBookList] {
+        let bookList: NSFetchRequest<OpenBookList> = OpenBookList.fetchRequest()
+        return (try? managedContext.fetch(bookList)) ?? []
+    }
+    
+    @discardableResult
+    func createNewList(title: String) -> Bool {
+        guard !getLists().map({ $0.title }).contains(title) else {
+            return false
+        }
+        let newList = OpenBookList(context: managedContext)
+        newList.setValue(title, forKey: #keyPath(OpenBookList.title))
+        saveContext()
+        return true
+    }
+    
+    @discardableResult
+    func deleteList(title: String) -> Bool {
+        guard let list = getLists().first(where: { $0.title == title }) else {
+            return false
+        }
+        managedContext.delete(list)
+        return true
     }
 }

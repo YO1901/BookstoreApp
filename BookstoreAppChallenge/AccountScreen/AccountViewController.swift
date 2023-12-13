@@ -19,6 +19,7 @@ final class AccountViewController: ViewController, AccountInput {
         button.addTarget(self, action: #selector(didTapStyleButton), for: .touchUpInside)
         return button
     }()
+    private lazy var listButton = ListButton()
     private var cancellable = [AnyCancellable]()
     
     override func viewDidLoad() {
@@ -52,6 +53,8 @@ final class AccountViewController: ViewController, AccountInput {
         if let imageData = model.image {
             avatar.update(model: .init(image: UIImage(data: imageData)))
         }
+        
+        listButton.update(model: .init(title: "My Lists", image: Images.arrowRight, didTapClosure: model.didTapListButton))
     }
     
     private func configure() {
@@ -79,6 +82,13 @@ final class AccountViewController: ViewController, AccountInput {
             $0.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(15)
         }
         setStyleButtonImage(nil)
+        
+        view.addSubview(listButton)
+        listButton.snp.makeConstraints {
+            $0.height.equalTo(56)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.top.equalTo(nameTextField.snp.bottom).offset(25)
+        }
         
         let avatarTapGR = UITapGestureRecognizer(target: self, action: #selector(didTapAvatar))
         avatarTapGR.cancelsTouchesInView = false
@@ -145,5 +155,6 @@ extension AccountViewController {
         let image: Data?
         let name: String
         let didChangeName: (String) -> Void
+        let didTapListButton: () -> Void
     }
 }

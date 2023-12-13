@@ -13,6 +13,19 @@ final class FavoritesPresenter {
     weak var view: FavoritesViewController?
     
     var items = [FavoritesBook]()
+    var title = "Likes"
+    
+    private var books = [OpenBook]()
+    private var listTitle = ""
+    
+    init(_ listTitle: String? = nil) {
+        if let listTitle {
+            self.listTitle = listTitle
+            self.title = listTitle
+        } else {
+            self.listTitle = "Likes"
+        }
+    }
     
     func activate() {
         loadBooks()
@@ -20,9 +33,12 @@ final class FavoritesPresenter {
     }
     
     private func loadBooks() {
-        guard let books = CoreDataService.shared.getFavoritesList().book?.array as? [OpenBook] else {
+        guard let books = CoreDataService.shared.getLists()
+            .first(where: { $0.title == self.listTitle })?
+            .book?.array as? [OpenBook] else {
             return
         }
+        self.books = books
         items = books.map {
             let openBook = $0
             return FavoritesBook(
@@ -40,5 +56,20 @@ final class FavoritesPresenter {
                 }
             )
         }
+    }
+    
+    func didSelect(_ index: Int) {
+        let book = books[index]
+        router?.openBookScreen(
+            doc: .init(
+                key: book.key,
+                title: book.title ?? "",
+                authorName: [book.author ?? ""],
+                subject: [book.subject ?? ""],
+                firstPublishYear: nil,
+                coverI: book.coverI != nil ? Int(book.coverI!) : 0,
+                ratingsAverage: book.ratingAverage
+            )
+        )
     }
 }

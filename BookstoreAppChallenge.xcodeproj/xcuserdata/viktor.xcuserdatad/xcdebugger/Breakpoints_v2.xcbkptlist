@@ -7,38 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1FE6A872-F5A1-47F9-87E3-E828CF91262B"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BookstoreAppChallenge/FavoritesScreen/View/FavoritesTableViewCell.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
-            landmarkName = "closeTapped()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "19D3831F-F180-4D8F-B0E2-68E5FE9C3662"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BookstoreAppChallenge/AccountScreen/AccountViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "94"
-            endingLineNumber = "94"
-            landmarkName = "setStyleButtonImage(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "68F7CDD3-EBC6-4CD8-8FCF-DCF8E0DB4245"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -50,6 +18,85 @@
             endingLineNumber = "26"
             landmarkName = "changeStyle()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A54D778C-078F-47A9-BBDA-F95A7E208C99"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BookstoreAppChallenge/ListsScreen/ListsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "deleteItem(at:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "48148DE3-FA19-4083-973B-ADE62493E69A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BookstoreAppChallenge/ListsScreen/ListsRouter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "openListScreen(listName:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "48148DE3-FA19-4083-973B-ADE62493E69A - cc40babaf52d50aa"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BookstoreAppChallenge.ListsRouter.openListScreen(listName: Swift.String) -&gt; ()"
+                  moduleName = "BookstoreAppChallenge"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/viktor/BookstoreApp/BookstoreAppChallenge/ListsScreen/ListsRouter.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "26"
+                  endingLineNumber = "26"
+                  offsetFromSymbolStart = "164">
+               </Location>
+               <Location
+                  uuid = "48148DE3-FA19-4083-973B-ADE62493E69A - cc40babaf52d5089"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BookstoreAppChallenge.ListsRouter.openListScreen(listName: Swift.String) -&gt; ()"
+                  moduleName = "BookstoreAppChallenge"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/viktor/BookstoreApp/BookstoreAppChallenge/ListsScreen/ListsRouter.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "27"
+                  endingLineNumber = "27"
+                  offsetFromSymbolStart = "468">
+               </Location>
+               <Location
+                  uuid = "48148DE3-FA19-4083-973B-ADE62493E69A - cc40babaf52d5089"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BookstoreAppChallenge.ListsRouter.openListScreen(listName: Swift.String) -&gt; ()"
+                  moduleName = "BookstoreAppChallenge"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/viktor/BookstoreApp/BookstoreAppChallenge/ListsScreen/ListsRouter.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "27"
+                  endingLineNumber = "27"
+                  offsetFromSymbolStart = "504">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

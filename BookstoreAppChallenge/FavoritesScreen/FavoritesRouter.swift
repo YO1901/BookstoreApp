@@ -9,10 +9,10 @@ import UIKit
 
 final class FavoritesRouter {
     
-    private var controller: UIViewController?
+    private weak var controller: UIViewController?
     
-    func makeScreen() -> UIViewController {
-        let presenter = FavoritesPresenter()
+    func makeScreen(listTitle: String? = nil) -> UIViewController {
+        let presenter = FavoritesPresenter(listTitle)
         let controller = FavoritesViewController()
         controller.presenter = presenter
         presenter.view = controller
