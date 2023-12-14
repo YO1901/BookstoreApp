@@ -50,7 +50,15 @@ final class BookPresenter: BookOutput {
                             category: doc.subject?.first,
                             rating: rating,
                             addToListClosure: {
-                                print("add to list")
+                                [weak self] in
+                                
+                                guard let self else { return }
+                                router?.openListsScreen(selectListClosure: {
+                                    [weak self] title in
+                                    
+                                    self?.addToList(title)
+                                    self?.router?.dissmissPresented()
+                                })
                             },
                             readClosure: {
                                 [weak self] in
@@ -66,7 +74,7 @@ final class BookPresenter: BookOutput {
                         likeBarButtonAction: {
                             [weak self] in
                             
-                            self?.addToLikeList()
+                            self?.addToLikes()
                         }
                     )
                 )
@@ -76,18 +84,13 @@ final class BookPresenter: BookOutput {
         }
     }
     
-    private func addToLikeList() {
-        let list = CoreDataService.shared.getFavoritesList()
-        let books = list.book?.compactMap { $0 as? OpenBook }
-        guard books?.contains(where: { $0.key == doc.key }) == false else {
-            return
-        }
-        
+    private func saveBook(list: OpenBookList) {
         let book = OpenBook(context: CoreDataService.shared.managedContext)
         book.setValue(doc.authorName?.first, forKey: #keyPath(OpenBook.author))
         book.setValue(doc.title, forKey: #keyPath(OpenBook.title))
         book.setValue(doc.subject?.first, forKey: #keyPath(OpenBook.subject))
         book.setValue(doc.coverURL()?.absoluteString, forKey: #keyPath(OpenBook.imageURL))
+        book.setValue(doc.coverI != nil ? String(doc.coverI!) : nil, forKey: #keyPath(OpenBook.coverI))
         book.setValue(doc.key, forKey: #keyPath(OpenBook.key))
         book.setValue(list, forKey: #keyPath(OpenBook.bookList))
         
@@ -96,5 +99,27 @@ final class BookPresenter: BookOutput {
         }
         
         CoreDataService.shared.saveContext()
+    }
+    
+    private func addToLikes() {
+        let list = CoreDataService.shared.getLikesList()
+        let books = list.book?.compactMap { $0 as? OpenBook }
+        guard books?.contains(where: { $0.key == doc.key }) == false else {
+            return
+        }
+        
+        saveBook(list: list)
+    }
+    
+    private func addToList(_ title: String) {
+        guard let list = CoreDataService.shared.getLists().first(where: { $0.title == title }) else {
+            return
+        }
+        let books = list.book?.compactMap { $0 as? OpenBook }
+        guard books?.contains(where: { $0.key == doc.key }) == false else {
+            return
+        }
+        
+        saveBook(list: list)
     }
 }

@@ -21,6 +21,7 @@ extension OpenBook {
     @NSManaged public var author: String?
     @NSManaged public var subject: String?
     @NSManaged public var imageURL: String?
+    @NSManaged public var coverI: String?
     @NSManaged public var rating: String?
     @NSManaged public var bookList: OpenBookList?
     

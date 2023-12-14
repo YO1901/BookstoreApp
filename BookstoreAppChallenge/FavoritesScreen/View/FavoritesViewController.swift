@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class FavoritesViewController: UIViewController {
+final class FavoritesViewController: ViewController {
     
     var presenter: FavoritesPresenter!
     
@@ -20,12 +20,22 @@ final class FavoritesViewController: UIViewController {
         return table
     }()
     
+    private let emptyLabel: UILabel = {
+        let label = UILabel()
+        label.update(model: .init(text: "No books yet"))
+        return label
+    }()
+    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = presenter.title
+        
         view.backgroundColor = Colors.Background.lvl1
         view.addSubview(favoritesTableView)
+        view.addSubview(emptyLabel)
         setupLayout()
         setupTableView()
     }
@@ -40,6 +50,8 @@ final class FavoritesViewController: UIViewController {
     
     func updateUI() {
         favoritesTableView.reloadData()
+        favoritesTableView.isHidden = presenter.items.isEmpty
+        emptyLabel.isHidden = !presenter.items.isEmpty
     }
     
     private func setupTableView() {
@@ -57,6 +69,10 @@ final class FavoritesViewController: UIViewController {
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().inset(20)
             make.bottom.equalToSuperview()
+        }
+        
+        emptyLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
     }
 }
@@ -85,6 +101,10 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
         cell.selectionStyle = .none
         cell.backgroundColor = .clear
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presenter.didSelect(indexPath.row)
     }
 }
 

@@ -29,6 +29,7 @@ final class BookViewController: ViewController, BookInput {
         tv.showsVerticalScrollIndicator = false
         tv.separatorStyle = .none
         tv.delaysContentTouches = false
+        tv.contentInset = .init(top: 16, left: 0, bottom: 0, right: 0)
         return tv
     }()
     

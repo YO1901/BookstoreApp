@@ -41,8 +41,14 @@ final class TableCell<View>: UITableViewCell where View: UIView & Configurable {
         didSelectHandler?()
     }
     
-    func update(with model: View.Model, didSelectHandler: (() -> Void)? = nil) {
+    func update(with model: View.Model, height: CGFloat? = nil, didSelectHandler: (() -> Void)? = nil) {
         view.update(model: model)
         self.didSelectHandler = didSelectHandler
+        
+        if let height {
+            view.snp.makeConstraints {
+                $0.height.equalTo(height)
+            }
+        }
     }
 }
