@@ -59,12 +59,28 @@ final class MainViewController: UIViewController {
         presenter.activate()
         view.backgroundColor = .white
         // Регистрация кастомной ячейки для UICollectionView в UITableView
-//        tableView.register(BooksCollectionViewCell.self, forCellReuseIdentifier: "BooksCollectionViewCell")
+        tableView.register(BooksCollectionViewCell.self, forCellReuseIdentifier: "BooksCollectionViewCell")
         view.addSubview(tableView)
                 tableView.snp.makeConstraints { make in
-                    make.edges.equalToSuperview()
+                    make.bottom.leading.trailing.equalToSuperview()
+                    make.top.equalToSuperview().inset(70)
                 }
+        if #available(iOS 11.0, *) {
+            tableView.contentInsetAdjustmentBehavior = .never
+        }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+            // To hide the navigation bar when the view is about to appear
+            self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        }
+        
+        override func viewWillDisappear(_ animated: Bool) {
+            super.viewWillDisappear(animated)
+            // If you want to show the navigation bar on other screens when leaving this screen
+            self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        }
     
     @objc func didTapButton() {
         self.navigationController?.pushViewController(
@@ -82,26 +98,37 @@ final class MainViewController: UIViewController {
             animated: true
         )
     }
+    private func makeColonText(text: String?) -> NSAttributedString? {
+        guard let text else {
+            return nil
+        }
+        let result = NSMutableAttributedString()
+        let title = NSAttributedString(string: text, attributes: [.foregroundColor: Colors.whitePrimary])
+        result.append(title)
+        return result
+    }
 }
 
 extension MainViewController: MainViewProtocol {
-    func update() {
+    func update(with model: ViewModel) {
 
-//        items.removeAll()
+        items.removeAll()
         
         items.append(.wishTitle(
             modelView: .init(text: Titles.happyTitle, textFont: .systemFont(ofSize: 16)),
             modelButton: .init(type: .search, tapAction: didTapButton)))
-        items.append(.space1(item: .init(height: 15)))
+        items.append(.space(item: .init(height: 15)))
         items.append(.topBooksTitle(
             modelView: .init(text: Titles.topBooksTitle, textFont: .systemFont(ofSize: 20)),
-            modelButton: .init(title: Titles.seeMoreBtn, font: .systemFont(ofSize: 14), type: .onlyText, tapAction: didTapButton)))
-        items.append(.space2(item: .init(height: 10)))
-        items.append(.sortingButtons(modelButton1: .init(title: Titles.thisWeekBtn, font: .systemFont(ofSize: 14), type: .sorting, tapAction: didTapButton), modelButton2: .init(title: Titles.thisMonthBtn, font: .systemFont(ofSize: 14), type: .sorting, tapAction: didTapButton), modelButton3: .init(title: Titles.thisYearBtn, font: .systemFont(ofSize: 14), type: .sorting, tapAction: didTapButton)))
+            modelButton: .init(title: Titles.seeMoreBtn, font: .systemFont(ofSize: 16), type: .onlyText, tapAction: didTapButton)))
+        items.append(.sortingButtons(modelButton1: .init(title: Titles.thisWeekBtn, font: .systemFont(ofSize: 16), type: .sorting, tapAction: didTapButton), modelButton2: .init(title: Titles.thisMonthBtn, font: .systemFont(ofSize: 16), type: .sorting, tapAction: didTapButton), modelButton3: .init(title: Titles.thisYearBtn, font: .systemFont(ofSize: 16), type: .sorting, tapAction: didTapButton)))
+        items.append(.topBooks(item: .init(imageURL: model.topBooks.imageURL, category: makeColonText(text: model.topBooks.category), title: makeColonText(text: model.topBooks.title), author: makeColonText(text: model.topBooks.author))))
         items.append(.recentTitle(
             modelView: .init(text: Titles.recentTitle, textFont: .systemFont(ofSize: 20)),
-            modelButton: .init(title: Titles.seeMoreBtn, font: .systemFont(ofSize: 14), type: .onlyText, tapAction: didTapButton)))
-
+            modelButton: .init(title: Titles.seeMoreBtn, font: .systemFont(ofSize: 16), type: .onlyText, tapAction: didTapButton)))
+        items.append(.recentBooks(item: .init(imageURL: model.recentBooks.imageURL, category: makeColonText(text: model.recentBooks.category), title: makeColonText(text: model.recentBooks.title), author: makeColonText(text: model.recentBooks.author))))
+        
+        tableView.reloadData()
     }
 }
 
@@ -115,7 +142,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "labelButtonCell", for: indexPath) as! LabelButtonCell
             cell.update(modelView: item.modelView, modelButton: item.modelButton)
             return cell
-        case .space1(item: let item):
+        case .space(item: let item):
             let cell = tableView.dequeueReusableCell(withIdentifier: "spaceCell", for: indexPath) as! SpaceCell
             cell.update(with: item)
             cell.selectionStyle = .none
@@ -124,32 +151,38 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "labelButtonCell", for: indexPath) as! LabelButtonCell
             cell.update(modelView: item.modelView, modelButton: item.modelButton)
             return cell
-        case .space2(item: let item):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "spaceCell", for: indexPath) as! SpaceCell
-            cell.update(with: item)
-            cell.selectionStyle = .none
-            return cell
         case .sortingButtons(item: let item):
             let cell = tableView.dequeueReusableCell(withIdentifier: "buttonStackCell", for: indexPath) as! ButtonStackTableViewCell
             cell.update(modelButton1: item.modelButton1, modelButton2: item.modelButton2, modelButton3: item.modelButton2)
             return cell
-//        case .topBooks(item: let item):
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "BooksCollectionViewCell", for: indexPath) as! BooksCollectionViewCell
-//            cell.update(with: item)
-//            return cell
+        case .topBooks(let books):
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "BooksCollectionViewCell", for: indexPath) as! BooksCollectionViewCell
+                    cell.configure(with: [books])
+                    return cell
         case .recentTitle(item: let item):
             let cell = tableView.dequeueReusableCell(withIdentifier: "labelButtonCell", for: indexPath) as! LabelButtonCell
             cell.update(modelView: item.modelView, modelButton: item.modelButton)
             return cell
-//        case .recentBooks(item: let item):
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "BooksCollectionViewCell", for: indexPath) as! BooksCollectionViewCell
-////            cell.update(with: item)
-//            return cell
+        case .recentBooks(let books):
+            let cell = tableView.dequeueReusableCell(withIdentifier: "BooksCollectionViewCell", for: indexPath) as! BooksCollectionViewCell
+            cell.configure(with: [books])
+            return cell
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         items.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch items[indexPath.row] {
+        case .topBooks:
+            return 270 // Высота BooksCollectionViewCell
+        case .recentBooks:
+            return 270
+        default:
+            return UITableView.automaticDimension
+        }
     }
 }
 
@@ -172,25 +205,24 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 extension MainViewController {
     struct ViewModel {
         
-//        struct BookItem {
+        struct BookItem {
             let imageURL: URL?
-            let author: String?
-            let title: String?
             let category: String?
-//        }
+            let title: String?
+            let author: String?
+        }
         
         enum Item {
             case wishTitle(modelView: UILabel.Model, modelButton: DefaultButton.Model)
             case topBooksTitle(modelView: UILabel.Model, modelButton: DefaultButton.Model)
             case sortingButtons(modelButton1: DefaultButton.Model, modelButton2: DefaultButton.Model, modelButton3: DefaultButton.Model)
-//            case topBooks(item: MainBookView.Model)
+            case topBooks(item: MainBookView.Model)
             case recentTitle(modelView: UILabel.Model, modelButton: DefaultButton.Model)
-//            case recentBooks(item: MainBookView.Model)
-            case space1(item: SpaceView.Model)
-            case space2(item: SpaceView.Model)
+            case recentBooks(item: MainBookView.Model)
+            case space(item: SpaceView.Model)
         }
         
-//        let books: [Book]
-//        let button: DefaultButton.Model
+        let topBooks: BookItem
+        let recentBooks: BookItem
     }
 }

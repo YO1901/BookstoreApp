@@ -7,7 +7,7 @@
 
 // Input protocol
 protocol MainViewProtocol: AnyObject {
-    func update()
+    func update(with model: MainViewController.ViewModel)
 }
 
 // Output protocol

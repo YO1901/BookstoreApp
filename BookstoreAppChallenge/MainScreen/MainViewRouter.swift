@@ -8,9 +8,9 @@
 import UIKit
 
 final class MainViewRouter {
-    func makeScreen() -> UIViewController {
+    func makeScreen(doc: DocEntity) -> UIViewController {
         let controller = MainViewController()
-        let presenter = MainViewPresenter()
+        let presenter = MainViewPresenter(doc)
         
         controller.presenter = presenter
         presenter.view = controller

@@ -14,5 +14,5 @@ enum Images {
     static let account = UIImage(named: "Account")!
     static let home = UIImage(named: "Home")!
     static let categories = UIImage(named: "Categories")!
-    static let likes = UIImage(named: "Likes")!
+    static let likes = UIImage(named: "likes")!
 }

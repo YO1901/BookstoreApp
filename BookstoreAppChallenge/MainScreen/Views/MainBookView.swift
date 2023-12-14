@@ -24,6 +24,14 @@ final class MainBookView: UIView {
         return sv
     }()
     
+    private let colorImage: UIImageView = {
+        let cv = UIImageView()
+        cv.contentMode = .scaleAspectFit
+        cv.backgroundColor = .black
+        cv.clipsToBounds = true
+        return cv
+    }()
+    
     private let categoryLabel = UILabel()
     private let titleLabel = UILabel()
     private let authorLabel = UILabel()
@@ -41,28 +49,43 @@ final class MainBookView: UIView {
     }
     
     private func configure() {
-        [imageView, textStack].forEach {addSubview($0)}
+
+        addSubview(imageView)
+        addSubview(colorImage)
+        addSubview(textStack)
         
         [categoryLabel, titleLabel, authorLabel].forEach {
             textStack.addArrangedSubview($0)
         }
         
         categoryLabel.font = .systemFont(ofSize: 12)
+        categoryLabel.textColor = .blackPrimary
         titleLabel.font = .boldSystemFont(ofSize: 16)
+        titleLabel.numberOfLines = 0
         authorLabel.font = .systemFont(ofSize: 14)
     }
     private func setupConstraints() {
             // Assuming the imageView is the book cover and should take the full height of the view
             imageView.snp.makeConstraints { make in
-                make.leading.top.bottom.equalToSuperview().inset(8) // Adjust inset as needed
-                make.width.equalTo(imageView.snp.height) // Assuming a square aspect ratio for the book cover
+                make.top.equalTo(12) // Adjust inset as needed
+                make.width.equalTo(91)
+                make.height.equalTo(134)
+                make.centerX.equalToSuperview()
             }
             
             textStack.snp.makeConstraints { make in
-                make.leading.equalTo(imageView.snp.trailing).offset(8)
-                make.top.bottom.equalToSuperview().inset(8)
-                make.trailing.equalToSuperview().inset(8)
+                make.top.equalTo(imageView.snp.bottom).inset(-10)
+//                make.width.equalToSuperview().inset(3)
+                make.height.width.equalTo(colorImage).inset(8)
+                make.centerX.equalTo(colorImage)
             }
+        
+        colorImage.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.height.equalTo(imageView).multipliedBy(0.65)
+            make.top.equalTo(imageView.snp.bottom)
+        }
+        colorImage.clipsToBounds = false
     }
 }
 

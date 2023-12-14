@@ -42,9 +42,10 @@ final class ButtonStackTableViewCell<Button1: DefaultButton & Configurable, Butt
         contentView.addSubview(stack)
         
         stack.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview()
+            $0.top.equalToSuperview().inset(10)
+            $0.bottom.equalToSuperview().inset(2)
             $0.leading.equalToSuperview().inset(20)
-            $0.trailing.equalToSuperview().inset(60)
+            $0.trailing.equalToSuperview().inset(50)
         }
     }
     func update(modelButton1: DefaultButton.Model, modelButton2: DefaultButton.Model, modelButton3: DefaultButton.Model) {
