@@ -20,6 +20,7 @@
 		438B63F22B20C28E00B9F04F /* AppTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B63F12B20C28E00B9F04F /* AppTabBarController.swift */; };
 		438B63F62B20C2F500B9F04F /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B63F52B20C2F500B9F04F /* CategoriesViewController.swift */; };
 		438B63F82B20C32D00B9F04F /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B63F72B20C32D00B9F04F /* FavoritesViewController.swift */; };
+		7704B8332B2BA2E8005CCA01 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7704B8322B2BA2E8005CCA01 /* LoadingView.swift */; };
 		777851272B1FC1A900899704 /* OnboardingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777851262B1FC1A900899704 /* OnboardingPresenter.swift */; };
 		777851292B1FC1B000899704 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777851282B1FC1B000899704 /* OnboardingViewController.swift */; };
 		7778512B2B1FC1B600899704 /* OnboardingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7778512A2B1FC1B600899704 /* OnboardingRouter.swift */; };
@@ -88,6 +89,7 @@
 		438B63F12B20C28E00B9F04F /* AppTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTabBarController.swift; sourceTree = "<group>"; };
 		438B63F52B20C2F500B9F04F /* CategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategoriesViewController.swift; path = BookstoreAppChallenge/CategoriesScreen/View/CategoriesViewController.swift; sourceTree = SOURCE_ROOT; };
 		438B63F72B20C32D00B9F04F /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FavoritesViewController.swift; path = BookstoreAppChallenge/FavoritesScreen/View/FavoritesViewController.swift; sourceTree = SOURCE_ROOT; };
+		7704B8322B2BA2E8005CCA01 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		777851262B1FC1A900899704 /* OnboardingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPresenter.swift; sourceTree = "<group>"; };
 		777851282B1FC1B000899704 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		7778512A2B1FC1B600899704 /* OnboardingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRouter.swift; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 			isa = PBXGroup;
 			children = (
 				777851342B1FC54C00899704 /* CollectionCell.swift */,
+				7704B8322B2BA2E8005CCA01 /* LoadingView.swift */,
 				77CDA0EF2B211D0300E1A043 /* SpaceCell.swift */,
 				77CDA0ED2B2119DF00E1A043 /* TableCell.swift */,
 				7778513B2B1FCAEE00899704 /* DefaultButton.swift */,
@@ -608,6 +611,7 @@
 				438B63F22B20C28E00B9F04F /* AppTabBarController.swift in Sources */,
 				777851412B1FD72900899704 /* UserDefaultService.swift in Sources */,
 				77DA2D242B27A32F00BB0233 /* BookstoreDataModel.xcdatamodeld in Sources */,
+				7704B8332B2BA2E8005CCA01 /* LoadingView.swift in Sources */,
 				77CDA0E52B21165100E1A043 /* BookViewController.swift in Sources */,
 				77DA2CF52B226A4100BB0233 /* AccountPresenter.swift in Sources */,
 				77CDA0E12B21164800E1A043 /* BookProtocols.swift in Sources */,
