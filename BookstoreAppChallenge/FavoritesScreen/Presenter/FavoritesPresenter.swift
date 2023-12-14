@@ -67,8 +67,8 @@ final class FavoritesPresenter {
                 authorName: [book.author ?? ""],
                 subject: [book.subject ?? ""],
                 firstPublishYear: nil,
-                coverI: book.coverI != nil ? Int(book.coverI!) : 0,
-                ratingsAverage: book.ratingAverage
+                coverI: book.coverI != 0 ? Int(book.coverI) : nil,
+                ratingsAverage: book.rating != 0 ? book.rating : nil
             )
         )
     }
