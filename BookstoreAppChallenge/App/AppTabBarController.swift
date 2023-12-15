@@ -19,14 +19,16 @@ class AppTabBarController: UITabBarController {
     }
     
     private func setupTabBarController() {
-        let homeViewController = MainViewRouter().makeScreen(doc: .init(
-            key: "/works/OL27448W",
-            title: "The Lord ot the Rings",
-            authorName: ["J.R.R. Tolkien"],
-            subject: ["Fiction"],
-            firstPublishYear: 1954,
-            coverI: 9255566,
-            ratingsAverage: 4.1))
+//        let homeViewController = MainViewRouter().makeScreen(doc: .init(
+//            key: "/works/OL27448W",
+//            title: "The Lord ot the Rings",
+//            authorName: ["J.R.R. Tolkien"],
+//            subject: ["Fiction"],
+//            firstPublishYear: 1954,
+//            coverI: 9255566,
+//            ratingsAverage: 4.1))
+        
+        let homeViewController = MainViewRouter().makeScreen()
         
         homeViewController.tabBarItem = UITabBarItem(
             title: "Home",

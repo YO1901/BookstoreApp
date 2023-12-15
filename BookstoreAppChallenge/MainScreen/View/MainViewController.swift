@@ -27,6 +27,7 @@ final class MainViewController: UIViewController {
     var presenter: MainViewPresenterProtocol!
     
     private var items = [ViewModel.Item]()
+    private var books = [DocsEntity]()
     
     private lazy var tableView: UITableView = {
         let tv = UITableView()
@@ -56,7 +57,6 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        presenter.activate()
         view.backgroundColor = .white
         // Регистрация кастомной ячейки для UICollectionView в UITableView
         tableView.register(BooksCollectionViewCell.self, forCellReuseIdentifier: "BooksCollectionViewCell")
@@ -68,6 +68,7 @@ final class MainViewController: UIViewController {
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
         }
+        presenter.fetchBooksList(for: .week)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -99,18 +100,15 @@ final class MainViewController: UIViewController {
         )
     }
     private func makeColonText(text: String?) -> NSAttributedString? {
-        guard let text else {
-            return nil
-        }
-        let result = NSMutableAttributedString()
-        let title = NSAttributedString(string: text, attributes: [.foregroundColor: Colors.whitePrimary])
-        result.append(title)
-        return result
-    }
-}
+           guard let text = text else {
+               return nil
+           }
+           return NSAttributedString(string: text, attributes: [.foregroundColor: Colors.whitePrimary])
+       }
+   }
 
 extension MainViewController: MainViewProtocol {
-    func update(with model: ViewModel) {
+    func update(with viewModel: ViewModel) {
 
         items.removeAll()
         
@@ -122,13 +120,17 @@ extension MainViewController: MainViewProtocol {
             modelView: .init(text: Titles.topBooksTitle, textFont: .systemFont(ofSize: 20)),
             modelButton: .init(title: Titles.seeMoreBtn, font: .systemFont(ofSize: 16), type: .onlyText, tapAction: didTapButton)))
         items.append(.sortingButtons(modelButton1: .init(title: Titles.thisWeekBtn, font: .systemFont(ofSize: 16), type: .sorting, tapAction: didTapButton), modelButton2: .init(title: Titles.thisMonthBtn, font: .systemFont(ofSize: 16), type: .sorting, tapAction: didTapButton), modelButton3: .init(title: Titles.thisYearBtn, font: .systemFont(ofSize: 16), type: .sorting, tapAction: didTapButton)))
-        items.append(.topBooks(item: .init(imageURL: model.topBooks.imageURL, category: makeColonText(text: model.topBooks.category), title: makeColonText(text: model.topBooks.title), author: makeColonText(text: model.topBooks.author))))
+//        items.append(.topBooks(item: .init(imageURL: model.topBooks.imageURL, category: makeColonText(text: model.topBooks.category), title: makeColonText(text: model.topBooks.title), author: makeColonText(text: model.topBooks.author))))
         items.append(.recentTitle(
             modelView: .init(text: Titles.recentTitle, textFont: .systemFont(ofSize: 20)),
             modelButton: .init(title: Titles.seeMoreBtn, font: .systemFont(ofSize: 16), type: .onlyText, tapAction: didTapButton)))
-        items.append(.recentBooks(item: .init(imageURL: model.recentBooks.imageURL, category: makeColonText(text: model.recentBooks.category), title: makeColonText(text: model.recentBooks.title), author: makeColonText(text: model.recentBooks.author))))
+//        items.append(.recentBooks(item: .init(imageURL: model.recentBooks.imageURL, category: makeColonText(text: model.recentBooks.category), title: makeColonText(text: model.recentBooks.title), author: makeColonText(text: model.recentBooks.author))))
         
-        tableView.reloadData()
+        // Обновление данных книг
+               books = viewModel.books
+        
+        // Перезагрузка tableView, чтобы отобразить новые данные
+                tableView.reloadData()
     }
 }
 
@@ -155,17 +157,19 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "buttonStackCell", for: indexPath) as! ButtonStackTableViewCell
             cell.update(modelButton1: item.modelButton1, modelButton2: item.modelButton2, modelButton3: item.modelButton2)
             return cell
-        case .topBooks(let books):
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "BooksCollectionViewCell", for: indexPath) as! BooksCollectionViewCell
-                    cell.configure(with: [books])
-                    return cell
+        case .topBooks:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "BooksCollectionViewCell", for: indexPath) as! BooksCollectionViewCell
+                           let bookModels = books.map { MainBookView.Model(imageURL: $0.coverURL(), category: NSAttributedString(string: $0.subject?.first ?? ""), title: NSAttributedString(string: $0.title), author: NSAttributedString(string: $0.authorName?.first ?? "")) }
+                           cell.configure(with: bookModels)
+                           return cell
         case .recentTitle(item: let item):
             let cell = tableView.dequeueReusableCell(withIdentifier: "labelButtonCell", for: indexPath) as! LabelButtonCell
             cell.update(modelView: item.modelView, modelButton: item.modelButton)
             return cell
-        case .recentBooks(let books):
+        case .recentBooks:
             let cell = tableView.dequeueReusableCell(withIdentifier: "BooksCollectionViewCell", for: indexPath) as! BooksCollectionViewCell
-            cell.configure(with: [books])
+            let bookModels = books.map { MainBookView.Model(imageURL: $0.coverURL(), category: NSAttributedString(string: $0.subject?.first ?? ""), title: NSAttributedString(string: $0.title), author: NSAttributedString(string: $0.authorName?.first ?? "")) }
+            cell.configure(with: bookModels)
             return cell
         }
     }
@@ -188,15 +192,17 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return books.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bookCell", for: indexPath) as? BookCell else {
             fatalError("Could not dequeue BookCollectionViewCell")
         }
-//        cell.update(with: )
-        return cell
+        let book = books[indexPath.row]
+                let model = MainBookView.Model(imageURL: book.coverURL(), category: NSAttributedString(string: book.subject?.first ?? ""), title: NSAttributedString(string: book.title), author: NSAttributedString(string: book.authorName?.first ?? ""))
+        cell.update(with: model)
+                return cell
     }
 }
 
@@ -222,7 +228,8 @@ extension MainViewController {
             case space(item: SpaceView.Model)
         }
         
-        let topBooks: BookItem
-        let recentBooks: BookItem
+        let topBooks: [BookItem]
+        let recentBooks: [BookItem]
+        let books: [DocsEntity]
     }
 }

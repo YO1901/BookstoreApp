@@ -7,10 +7,10 @@
 
 // Input protocol
 protocol MainViewProtocol: AnyObject {
-    func update(with model: MainViewController.ViewModel)
+    func update(with viewModel: MainViewController.ViewModel)
 }
 
 // Output protocol
 protocol MainViewPresenterProtocol: AnyObject {
-    func activate()
+    func fetchBooksList(for timePeriod: BooksListRequest.Timeframe)
 }

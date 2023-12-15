@@ -8,45 +8,40 @@
 import UIKit
 import NetworkService
 
-final class MainViewPresenter {
-    
+final class MainViewPresenter: MainViewPresenterProtocol {
+
     var router: MainViewRouter?
     weak var view: MainViewProtocol?
     
-    private let doc: DocEntity
     private let networkManager = NetworkManager()
-    
-    init(_ doc: DocEntity) {
-        self.doc = doc
-    }
-}
 
-extension MainViewPresenter: MainViewPresenterProtocol {
-    
-    typealias ViewModel = MainViewController.ViewModel
-    
+    // Возможно, метод activate() больше не нужен, если он не используется
     func activate() {
-        networkManager.sendRequest(request: BookRequest(key: doc.key)) {
-            [weak self] result in
-            
-            guard let self else {
-                return
-            }
-            
-            switch result {
-            case .success:
-                view?.update(
-                    with: .init(
-                        topBooks: .init(imageURL: doc.coverURL(), category: doc.subject?.first, title: doc.title, author: doc.authorName?.first),
-                        recentBooks: .init(imageURL: doc.coverURL(), category: doc.subject?.first, title: doc.title, author: doc.authorName?.first))
-                )
-            case .failure(let error):
-                print(error)
+        // Здесь могла быть ваша логика, если метод все еще нужен
+    }
+
+    func fetchBooksList(for timePeriod: BooksListRequest.Timeframe) {
+            networkManager.sendRequest(request: BooksListRequest(timeframe: timePeriod)) { [weak self] result in
+                switch result {
+                case .success(let booksList):
+                    let bookItems = booksList.docs.map { doc -> MainViewController.ViewModel.BookItem in
+                        return MainViewController.ViewModel.BookItem(
+                            imageURL: doc.coverURL(),
+                            category: doc.subject?.first,
+                            title: doc.title,
+                            author: doc.authorName?.first)
+                    }
+                    // Передаем список книг в ViewModel
+                    let viewModel = MainViewController.ViewModel(
+                        topBooks: bookItems,
+                        recentBooks: bookItems,
+                        books: booksList.docs)
+                    self?.view?.update(with: viewModel)
+                case .failure(let error):
+                    print(error)
+                }
             }
         }
     }
-//    func activate() {
-//        networkManager.sendRequest(request: SearchBookRequest(query: <#T##String#>, sort: <#T##SearchBookRequest.SortKey?#>), completionHandler: <#T##(Result<Decodable, Error>) -> Void#>)
-//    }
-}
+
 
