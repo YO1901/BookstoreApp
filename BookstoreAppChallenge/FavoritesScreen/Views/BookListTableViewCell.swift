@@ -130,6 +130,8 @@ extension BookListTableViewCell: Configurable {
         bookTitleLabel.text = model.bookTitle
         deleteAction = model.deleteAction
         
+        closeButton.isHidden = deleteAction == nil
+        
         guard let imageURL = model.bookImage else {
             bookImageView.image = nil
             return

@@ -19,4 +19,5 @@ enum Images {
     static let sunIconBlackWhite = UIImage(named: "sunIconBlackWhite")!
     static let plus = UIImage(named: "plus")!
     static let loading = UIImage(named: "loading")!
+    static let category = UIImage(named: "Category")!
 }

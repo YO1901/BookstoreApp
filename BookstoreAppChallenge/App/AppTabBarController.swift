@@ -20,7 +20,7 @@ class AppTabBarController: UITabBarController {
         let homeViewController = MainViewController()
         homeViewController.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         
-        let categoriesViewController = CategoriesViewController()
+        let categoriesViewController = CategoriesRouter().makeWrappedNavigationScreen()
         categoriesViewController.tabBarItem = UITabBarItem(title: "Categories", image: UIImage(systemName: "rectangle.grid.2x2"), tag: 1)
         
         let favoritesViewController = BookListRouter(flow: .likes).makeWrappedNavigationScreen()
@@ -30,9 +30,8 @@ class AppTabBarController: UITabBarController {
         accountViewController.tabBarItem = UITabBarItem(title: "Account", image: UIImage(systemName: "person.crop.circle"), tag: 3)
 
         let nav1 = NavigationController(rootViewController: homeViewController)
-        let nav2 = NavigationController(rootViewController: categoriesViewController)
 
-        self.viewControllers = [nav1, nav2, favoritesViewController, accountViewController]
+        self.viewControllers = [nav1, categoriesViewController, favoritesViewController, accountViewController]
         
         favoritesViewController.title = "Likes"
 
