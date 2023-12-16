@@ -10,5 +10,6 @@ import NetworkService
 import Alamofire
 
 struct BooksListEntity: Decodable {
-    let docs: [DocsEntity]
+    let query: String
+    let works: [DocsEntity]
 }

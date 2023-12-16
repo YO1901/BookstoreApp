@@ -121,11 +121,12 @@ extension MainViewController: MainViewProtocol {
             modelButton: .init(title: Titles.seeMoreBtn, font: .systemFont(ofSize: 16), type: .onlyText, tapAction: didTapButton)))
         items.append(.sortingButtons(modelButton1: .init(title: Titles.thisWeekBtn, font: .systemFont(ofSize: 16), type: .sorting, tapAction: didTapButton), modelButton2: .init(title: Titles.thisMonthBtn, font: .systemFont(ofSize: 16), type: .sorting, tapAction: didTapButton), modelButton3: .init(title: Titles.thisYearBtn, font: .systemFont(ofSize: 16), type: .sorting, tapAction: didTapButton)))
 //        items.append(.topBooks(item: .init(imageURL: model.topBooks.imageURL, category: makeColonText(text: model.topBooks.category), title: makeColonText(text: model.topBooks.title), author: makeColonText(text: model.topBooks.author))))
+        items.append(.topBooks)
         items.append(.recentTitle(
             modelView: .init(text: Titles.recentTitle, textFont: .systemFont(ofSize: 20)),
             modelButton: .init(title: Titles.seeMoreBtn, font: .systemFont(ofSize: 16), type: .onlyText, tapAction: didTapButton)))
 //        items.append(.recentBooks(item: .init(imageURL: model.recentBooks.imageURL, category: makeColonText(text: model.recentBooks.category), title: makeColonText(text: model.recentBooks.title), author: makeColonText(text: model.recentBooks.author))))
-        
+        items.append(.recentBooks)
         // Обновление данных книг
                books = viewModel.books
         
@@ -159,7 +160,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         case .topBooks:
             let cell = tableView.dequeueReusableCell(withIdentifier: "BooksCollectionViewCell", for: indexPath) as! BooksCollectionViewCell
-                           let bookModels = books.map { MainBookView.Model(imageURL: $0.coverURL(), category: NSAttributedString(string: $0.subject?.first ?? ""), title: NSAttributedString(string: $0.title), author: NSAttributedString(string: $0.authorName?.first ?? "")) }
+                           let bookModels = books.map { MainBookView.Model(imageURL: $0.coverURL(), category: NSAttributedString(string: $0.subject?.first ?? "doesnt"), title: NSAttributedString(string: $0.title), author: NSAttributedString(string: $0.authorName?.first ?? "")) }
                            cell.configure(with: bookModels)
                            return cell
         case .recentTitle(item: let item):
@@ -222,9 +223,9 @@ extension MainViewController {
             case wishTitle(modelView: UILabel.Model, modelButton: DefaultButton.Model)
             case topBooksTitle(modelView: UILabel.Model, modelButton: DefaultButton.Model)
             case sortingButtons(modelButton1: DefaultButton.Model, modelButton2: DefaultButton.Model, modelButton3: DefaultButton.Model)
-            case topBooks(item: MainBookView.Model)
+            case topBooks
             case recentTitle(modelView: UILabel.Model, modelButton: DefaultButton.Model)
-            case recentBooks(item: MainBookView.Model)
+            case recentBooks
             case space(item: SpaceView.Model)
         }
         

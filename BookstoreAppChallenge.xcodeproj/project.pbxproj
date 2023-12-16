@@ -67,6 +67,7 @@
 		E017434E2B2B598000A6D473 /* BooksListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E017434D2B2B598000A6D473 /* BooksListRequest.swift */; };
 		E01743502B2B5B3000A6D473 /* BooksListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E017434F2B2B5B3000A6D473 /* BooksListEntity.swift */; };
 		E01743522B2D05FA00A6D473 /* DocsEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01743512B2D05FA00A6D473 /* DocsEntity.swift */; };
+		E01743542B2D24C800A6D473 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01743532B2D24C800A6D473 /* CustomTabBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -128,6 +129,7 @@
 		E017434D2B2B598000A6D473 /* BooksListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksListRequest.swift; sourceTree = "<group>"; };
 		E017434F2B2B5B3000A6D473 /* BooksListEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksListEntity.swift; sourceTree = "<group>"; };
 		E01743512B2D05FA00A6D473 /* DocsEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocsEntity.swift; sourceTree = "<group>"; };
+		E01743532B2D24C800A6D473 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +204,7 @@
 				43331E5E2B1DF36B0015E70F /* SceneDelegate.swift */,
 				43331E722B1DF9D30015E70F /* Router.swift */,
 				438B63F12B20C28E00B9F04F /* AppTabBarController.swift */,
+				E01743532B2D24C800A6D473 /* CustomTabBar.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -568,6 +571,7 @@
 				77DA2CFD2B226C3C00BB0233 /* AvatarView.swift in Sources */,
 				E017433B2B23E8CB00A6D473 /* MainViewModel.swift in Sources */,
 				77DA2CF92B226A4E00BB0233 /* AccountViewController.swift in Sources */,
+				E01743542B2D24C800A6D473 /* CustomTabBar.swift in Sources */,
 				7778513E2B1FCF1F00899704 /* Images.swift in Sources */,
 				77E5B9F02B1F7264004BA4AA /* BookRequest.swift in Sources */,
 				438B63F22B20C28E00B9F04F /* AppTabBarController.swift in Sources */,

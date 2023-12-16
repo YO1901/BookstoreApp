@@ -14,6 +14,8 @@ class AppTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.setValue(CustomTabBar(), forKey: "tabBar")
+        
         setupTabBarController()
         setupSelectionIndicatorImage()
     }
@@ -73,29 +75,27 @@ class AppTabBarController: UITabBarController {
     
     // OLD
     private func setupSelectionIndicatorImage() {
-            guard let numberOfItems = tabBar.items?.count, numberOfItems > 0 else { return }
-            let tabBarItemSize = CGSize(width: tabBar.frame.width / CGFloat(numberOfItems), height: tabBar.frame.height)
-            let indicatorHeight: CGFloat = 30 // Height of the indicator
-            let indicatorWidth: CGFloat = 60 // Width of the indicator - adjust as necessary
-            let cornerRadius: CGFloat = indicatorHeight / 2 // Corner radius for rounded corners
+        guard let numberOfItems = tabBar.items?.count, numberOfItems > 0 else { return }
+        
+        let tabBarItemSize = CGSize(width: tabBar.frame.width / CGFloat(numberOfItems), height: tabBar.frame.height)
+        let indicatorHeight: CGFloat = 32 // Высота индикатора
+        let indicatorWidth: CGFloat = 64 // Ширина индикатора
+        let cornerRadius: CGFloat = 16 // Радиус скругления
 
-            // Create an image with a rounded rectangle selection indicator
-            let selectionIndicatorImage = UIGraphicsImageRenderer(size: tabBarItemSize).image { _ in
-                let path = UIBezierPath(
-                    roundedRect: CGRect(
-                        x: (tabBarItemSize.width - indicatorWidth) - 22,
-                        y: tabBarItemSize.height - indicatorHeight - 32, // Adjust this to position the indicator right below the icon
-                        width: indicatorWidth,
-                        height: indicatorHeight),
-                    cornerRadius: cornerRadius
-                )
-                UIColor.black.setFill()
-                path.fill()
-            }
-            
-            // Set a resizable image with the indicator as the selection indicator
-            tabBar.selectionIndicatorImage = selectionIndicatorImage.resizableImage(withCapInsets: .zero)
+        let selectionIndicatorImage = UIGraphicsImageRenderer(size: tabBarItemSize).image { _ in
+            let path = UIBezierPath(
+                roundedRect: CGRect(
+                    x: (tabBarItemSize.width - indicatorWidth) / 2, // Центрирование по горизонтали
+                    y: tabBarItemSize.height - indicatorHeight - 50, // Высота tabBar - высота индикатора - отступ снизу
+                    width: indicatorWidth,
+                    height: indicatorHeight),
+                cornerRadius: cornerRadius
+            )
+            UIColor.black.setFill()
+            path.fill()
         }
-
+        
+        tabBar.selectionIndicatorImage = selectionIndicatorImage.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: indicatorWidth / 2, bottom: 0, right: indicatorWidth / 2))
+    }
 }
 

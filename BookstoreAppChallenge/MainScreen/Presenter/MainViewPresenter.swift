@@ -24,7 +24,7 @@ final class MainViewPresenter: MainViewPresenterProtocol {
             networkManager.sendRequest(request: BooksListRequest(timeframe: timePeriod)) { [weak self] result in
                 switch result {
                 case .success(let booksList):
-                    let bookItems = booksList.docs.map { doc -> MainViewController.ViewModel.BookItem in
+                    let bookItems = booksList.works.map { doc -> MainViewController.ViewModel.BookItem in
                         return MainViewController.ViewModel.BookItem(
                             imageURL: doc.coverURL(),
                             category: doc.subject?.first,
@@ -35,7 +35,7 @@ final class MainViewPresenter: MainViewPresenterProtocol {
                     let viewModel = MainViewController.ViewModel(
                         topBooks: bookItems,
                         recentBooks: bookItems,
-                        books: booksList.docs)
+                        books: booksList.works)
                     self?.view?.update(with: viewModel)
                 case .failure(let error):
                     print(error)
