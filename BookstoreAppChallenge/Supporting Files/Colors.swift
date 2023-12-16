@@ -15,5 +15,6 @@ enum Colors {
     
     enum Background {
         static let lvl1 = UIColor(named: "Background/lvl1")!
+        static let lvl2 = UIColor(named: "Background/lvl2")!
     }
 }

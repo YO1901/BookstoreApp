@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import Combine
 
 class AppTabBarController: UITabBarController {
     
     private let selectionIndicatorImageView = UIImageView()
+    private var cancellable = [AnyCancellable]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,9 +20,22 @@ class AppTabBarController: UITabBarController {
         
         setupTabBarController()
         setupSelectionIndicatorImage()
+        
+        UserInterfaceStyleService.shared.$userInterfaceStyle.sink {
+            [weak self] style in
+            
+            self?.overrideUserInterfaceStyle = style
+        }.store(in: &cancellable)
     }
     
     private func setupTabBarController() {
+        
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = Colors.Background.lvl2
+        tabBar.standardAppearance = appearance
+        tabBar.scrollEdgeAppearance = appearance
+        
         let homeViewController = MainViewRouter().makeScreen()
         
         homeViewController.tabBarItem = UITabBarItem(
@@ -58,9 +73,18 @@ class AppTabBarController: UITabBarController {
         
         favoritesViewController.title = "Likes"
 
-        self.tabBar.tintColor = .black
+        self.tabBar.tintColor = Colors.blackPrimary
         self.tabBar.unselectedItemTintColor = Colors.blackPrimary
         self.tabBar.backgroundColor = Colors.grayLight
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        guard traitCollection != previousTraitCollection else {
+            return
+        }
+        setupSelectionIndicatorImage()
     }
     
     // OLD
@@ -81,7 +105,7 @@ class AppTabBarController: UITabBarController {
                     height: indicatorHeight),
                 cornerRadius: cornerRadius
             )
-            UIColor.black.setFill()
+            Colors.blackPrimary.setFill()
             path.fill()
         }
         

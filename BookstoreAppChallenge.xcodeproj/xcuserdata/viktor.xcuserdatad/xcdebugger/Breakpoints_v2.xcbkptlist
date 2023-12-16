@@ -23,69 +23,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "48148DE3-FA19-4083-973B-ADE62493E69A"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BookstoreAppChallenge/ListsScreen/ListsRouter.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "openListScreen(listName:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "48148DE3-FA19-4083-973B-ADE62493E69A - cc40babaf52d50aa"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "BookstoreAppChallenge.ListsRouter.openListScreen(listName: Swift.String) -&gt; ()"
-                  moduleName = "BookstoreAppChallenge"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/viktor/BookstoreApp/BookstoreAppChallenge/ListsScreen/ListsRouter.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "26"
-                  endingLineNumber = "26"
-                  offsetFromSymbolStart = "164">
-               </Location>
-               <Location
-                  uuid = "48148DE3-FA19-4083-973B-ADE62493E69A - cc40babaf52d5089"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "BookstoreAppChallenge.ListsRouter.openListScreen(listName: Swift.String) -&gt; ()"
-                  moduleName = "BookstoreAppChallenge"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/viktor/BookstoreApp/BookstoreAppChallenge/ListsScreen/ListsRouter.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "27"
-                  endingLineNumber = "27"
-                  offsetFromSymbolStart = "468">
-               </Location>
-               <Location
-                  uuid = "48148DE3-FA19-4083-973B-ADE62493E69A - cc40babaf52d5089"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "BookstoreAppChallenge.ListsRouter.openListScreen(listName: Swift.String) -&gt; ()"
-                  moduleName = "BookstoreAppChallenge"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/viktor/BookstoreApp/BookstoreAppChallenge/ListsScreen/ListsRouter.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "27"
-                  endingLineNumber = "27"
-                  offsetFromSymbolStart = "504">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "CA66D864-1E24-4F8D-9BA2-44690A4EDD02"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -145,6 +82,38 @@
             endingLineNumber = "35"
             landmarkName = "sendRequest(request:completionHandler:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "CCA405D8-748A-4F2B-A6FE-E3103904872A - c6895f88c325827b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Swift.Optional&lt;Foundation.Data&gt;, Alamofire.AFError&gt;) -&gt; () in NetworkService.NetworkManager.sendRequest&lt;&#x3c4;_0_0 where &#x3c4;_0_0: NetworkService.NetworkRequest&gt;(request: &#x3c4;_0_0, completionHandler: (Swift.Result&lt;&#x3c4;_0_0.Response, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "BookstoreAppChallenge"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/viktor/BookstoreApp/NetworkService/Sources/NetworkManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "35"
+                  endingLineNumber = "35"
+                  offsetFromSymbolStart = "1136">
+               </Location>
+               <Location
+                  uuid = "CCA405D8-748A-4F2B-A6FE-E3103904872A - c6895f88c325827b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Swift.Optional&lt;Foundation.Data&gt;, Alamofire.AFError&gt;) -&gt; () in NetworkService.NetworkManager.sendRequest&lt;&#x3c4;_0_0 where &#x3c4;_0_0: NetworkService.NetworkRequest&gt;(request: &#x3c4;_0_0, completionHandler: (Swift.Result&lt;&#x3c4;_0_0.Response, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "BookstoreAppChallenge"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/viktor/BookstoreApp/NetworkService/Sources/NetworkManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "35"
+                  endingLineNumber = "35"
+                  offsetFromSymbolStart = "728">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
