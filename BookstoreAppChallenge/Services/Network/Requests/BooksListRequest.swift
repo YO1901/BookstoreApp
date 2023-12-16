@@ -29,8 +29,8 @@ struct BooksListRequest: NetworkRequest {
 
 extension BooksListRequest {
     enum Timeframe: String {
-        case week = "week"
-        case month = "month"
-        case year = "year"
+        case week = "weekly"
+        case month = "monthly"
+        case year = "yearly"
     }
 }

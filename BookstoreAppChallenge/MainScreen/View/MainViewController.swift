@@ -8,6 +8,10 @@
 import UIKit
 import SnapKit
 
+private extension CGFloat {
+    static let loaderDimention: CGFloat = 128
+}
+
 final class MainViewController: UIViewController {
     
     private enum Titles {
@@ -29,6 +33,18 @@ final class MainViewController: UIViewController {
     private var items = [ViewModel.Item]()
     private var books = [DocsEntity]()
     private var viewModel: ViewModel?
+    
+    private lazy var button: DefaultButton = {
+        let btn = DefaultButton()
+        return btn
+    }()
+    
+    private lazy var loader: UIActivityIndicatorView = {
+        let loader = UIActivityIndicatorView()
+        loader.style = .large
+        loader.color = .blue
+        return loader
+    }()
     
     private lazy var tableView: UITableView = {
         let tv = UITableView()
@@ -59,6 +75,7 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        setupLoader()
         // Регистрация кастомной ячейки для UICollectionView в UITableView
         tableView.register(BooksCollectionViewCell.self, forCellReuseIdentifier: "BooksCollectionViewCell")
         view.addSubview(tableView)
@@ -69,7 +86,8 @@ final class MainViewController: UIViewController {
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
         }
-        presenter.fetchBooksList(for: .week)
+//        presenter.fetchBooksList(for: .week)
+        presenter.activate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,28 +103,60 @@ final class MainViewController: UIViewController {
         }
     
     @objc func didTapButton() {
-//        self.navigationController?.pushViewController(
-//            BookRouter().makeScreen(
-//                doc: .init(
-//                    key: "/works/OL27448W",
-//                    title: "The Lord ot the Rings",
-//                    authorName: ["J.R.R. Tolkien"],
-//                    subject: ["Fiction"],
-//                    firstPublishYear: 1954,
-//                    coverI: 9255566,
-//                    ratingsAverage: 4.1
-//                )
-//            ),
-//            animated: true
-//        )
-        self.presenter.fetchBooksList(for: .year)
+        self.navigationController?.pushViewController(
+            BookRouter().makeScreen(
+                doc: .init(
+                    key: "/works/OL27448W",
+                    title: "The Lord ot the Rings",
+                    authorName: ["J.R.R. Tolkien"],
+                    subject: ["Fiction"],
+                    firstPublishYear: 1954,
+                    coverI: 9255566,
+                    ratingsAverage: 4.1
+                )
+            ),
+            animated: true
+        )
     }
+    
+    @objc func didTapButtonWeek() {
+        self.presenter.switchToTimePeriod(.week)
+    }
+    
+    @objc func didTapButtonMonth() {
+        self.presenter.switchToTimePeriod(.week)
+    }
+    @objc func didTapButtonYear() {
+        self.presenter.switchToTimePeriod(.year)
+    }
+    
+    private func setupLoader() {
+        view.addSubview(loader)
+        loader.snp.makeConstraints { make in
+            make.size.equalTo(CGFloat.loaderDimention)
+            make.center.equalToSuperview()
+        }
+    }
+    
     private func makeColonText(text: String?) -> NSAttributedString? {
            guard let text = text else {
                return nil
            }
            return NSAttributedString(string: text, attributes: [.foregroundColor: Colors.whitePrimary])
        }
+    
+    func startLoader() {
+        loader.startAnimating()
+        loader.isHidden = false
+        tableView.isHidden = true
+    }
+    
+    func stopLoader() {
+        loader.stopAnimating()
+        tableView.isHidden = false
+        tableView.reloadData()
+    }
+    
    }
 
 extension MainViewController: MainViewProtocol {
@@ -122,7 +172,7 @@ extension MainViewController: MainViewProtocol {
         items.append(.topBooksTitle(
             modelView: .init(text: Titles.topBooksTitle, textFont: .systemFont(ofSize: 20)),
             modelButton: .init(title: Titles.seeMoreBtn, font: .systemFont(ofSize: 16), type: .onlyText, tapAction: didTapButton)))
-        items.append(.sortingButtons(modelButton1: .init(title: Titles.thisWeekBtn, font: .systemFont(ofSize: 16), type: .sorting, tapAction: didTapButton), modelButton2: .init(title: Titles.thisMonthBtn, font: .systemFont(ofSize: 16), type: .sorting, tapAction: didTapButton), modelButton3: .init(title: Titles.thisYearBtn, font: .systemFont(ofSize: 16), type: .sorting, tapAction: didTapButton)))
+        items.append(.sortingButtons(modelButton1: .init(title: Titles.thisWeekBtn, font: .systemFont(ofSize: 16), type: .sorting, tapAction: didTapButtonWeek), modelButton2: .init(title: Titles.thisMonthBtn, font: .systemFont(ofSize: 16), type: .sorting, tapAction: didTapButtonMonth), modelButton3: .init(title: Titles.thisYearBtn, font: .systemFont(ofSize: 16), type: .sorting, tapAction: didTapButtonYear)))
         items.append(.topBooks)
         items.append(.recentTitle(
             modelView: .init(text: Titles.recentTitle, textFont: .systemFont(ofSize: 20)),
@@ -157,7 +207,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         case .sortingButtons(item: let item):
             let cell = tableView.dequeueReusableCell(withIdentifier: "buttonStackCell", for: indexPath) as! ButtonStackTableViewCell
-            cell.update(modelButton1: item.modelButton1, modelButton2: item.modelButton2, modelButton3: item.modelButton2)
+            cell.update(modelButton1: item.modelButton1, modelButton2: item.modelButton2, modelButton3: item.modelButton3)
             return cell
         case .topBooks:
                     let cell = tableView.dequeueReusableCell(withIdentifier: "BooksCollectionViewCell", for: indexPath) as! BooksCollectionViewCell
