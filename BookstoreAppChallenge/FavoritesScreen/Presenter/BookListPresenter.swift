@@ -37,8 +37,8 @@ final class BookListPresenter {
         case let .seeMore(title: title, books: docs):
             self.title = title
             self.docs = docs
-        default:
-            break
+        case let .category(category: subject):
+            self.title = subject.rawValue
         }
     }
     

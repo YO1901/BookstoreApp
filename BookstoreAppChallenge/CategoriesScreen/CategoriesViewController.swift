@@ -2,7 +2,7 @@
 //  CategoriesViewController.swift
 //  BookstoreAppChallenge
 //
-//  Created by Victor Rubenko on 16.12.2023.
+//  Created by Victor on 16.12.2023.
 //
 
 import UIKit
@@ -10,7 +10,7 @@ import SnapKit
 
 final class CategoriesViewController: ViewController, CategoriesScreenInput {
     
-    typealias CategoryCell = CollectionCell<UILabel>
+    typealias CategoryCell = CollectionCell<CategoryView>
     
     var presenter: CategoriesPresenter!
     
@@ -61,8 +61,7 @@ final class CategoriesViewController: ViewController, CategoriesScreenInput {
 extension CategoriesViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
-        cell.update(with: .init(text: presenter.items[indexPath.row].title))
-        cell.backgroundColor = .red
+        cell.update(with: .init(name: presenter.items[indexPath.row].title))
         return cell
     }
     

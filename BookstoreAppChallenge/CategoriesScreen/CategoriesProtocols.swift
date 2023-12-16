@@ -2,7 +2,7 @@
 //  CategoriesProtocols.swift
 //  BookstoreAppChallenge
 //
-//  Created by Victor Rubenko on 16.12.2023.
+//  Created by Victor on 16.12.2023.
 //
 
 import Foundation

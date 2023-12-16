@@ -86,16 +86,64 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "104BAB71-B8C4-46FE-BC80-28641B8BCD67"
+            uuid = "CA66D864-1E24-4F8D-9BA2-44690A4EDD02"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BookstoreAppChallenge/FavoritesScreen/Presenter/BookListPresenter.swift"
+            filePath = "BookstoreAppChallenge/BooksScreen/BookPresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
-            landmarkName = "loadBooks()"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "activate()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "CA66D864-1E24-4F8D-9BA2-44690A4EDD02 - bc3ba9167ceb246c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;BookstoreAppChallenge.BookEntity, Swift.Error&gt;) -&gt; () in BookstoreAppChallenge.BookPresenter.activate() -&gt; ()"
+                  moduleName = "BookstoreAppChallenge"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/viktor/BookstoreApp/BookstoreAppChallenge/BooksScreen/BookPresenter.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "84"
+                  endingLineNumber = "84"
+                  offsetFromSymbolStart = "2812">
+               </Location>
+               <Location
+                  uuid = "CA66D864-1E24-4F8D-9BA2-44690A4EDD02 - bc3ba9167ceb246c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;BookstoreAppChallenge.BookEntity, Swift.Error&gt;) -&gt; () in BookstoreAppChallenge.BookPresenter.activate() -&gt; ()"
+                  moduleName = "BookstoreAppChallenge"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/viktor/BookstoreApp/BookstoreAppChallenge/BooksScreen/BookPresenter.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "84"
+                  endingLineNumber = "84"
+                  offsetFromSymbolStart = "2680">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CCA405D8-748A-4F2B-A6FE-E3103904872A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NetworkService/Sources/NetworkManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "sendRequest(request:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

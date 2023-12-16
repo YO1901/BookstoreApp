@@ -2,7 +2,7 @@
 //  CategoriesRouter.swift
 //  BookstoreAppChallenge
 //
-//  Created by Victor Rubenko on 16.12.2023.
+//  Created by Victor on 16.12.2023.
 //
 
 import UIKit
@@ -24,7 +24,7 @@ final class CategoriesRouter {
     
     func openListBookScreen(_ category: SubjectRequest.Subject) {
         let vc = BookListRouter(flow: .category(category: category)).makeScreen()
-        if let navController = controller?.navigationController {
+        if let navController = controller as? UINavigationController {
             navController.pushViewController(vc, animated: true)
         } else {
             controller?.present(vc, animated: true)

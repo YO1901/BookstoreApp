@@ -2,7 +2,7 @@
 //  CategoryView.swift
 //  BookstoreAppChallenge
 //
-//  Created by Victor Rubenko on 16.12.2023.
+//  Created by Victor on 16.12.2023.
 //
 
 import UIKit
@@ -13,15 +13,15 @@ final class CategoryView: UIView {
         let view = UIImageView()
         view.image = Images.category
         view.contentMode = .scaleToFill
+        view.image = Images.category
         return view
     }()
     
-    private let gradientView = {
-        let view = GradientView()
-        view.startPoint = .init(x: 0.5, y: 0)
-        view.startPoint = .init(x: 0.5, y: 1)
-        view.colors = [Colors.blackPrimary.light, .clear]
-        return view
+    private let label = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 16, weight: .semibold)
+        label.textColor = Colors.whitePrimary.light
+        return label
     }()
     
     override init(frame: CGRect) {
@@ -36,14 +36,29 @@ final class CategoryView: UIView {
     
     private func configure() {
         addSubview(backgroundView)
-        addSubview(gradientView)
+        addSubview(label)
         
         backgroundView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         
-        gradientView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+        label.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.size.lessThanOrEqualToSuperview()
         }
+        
+        layer.cornerRadius = 5
+        layer.masksToBounds = true
+    }
+}
+
+
+extension CategoryView: Configurable {
+    struct Model {
+        let name: String
+    }
+    
+    func update(model: Model) {
+        label.text = model.name
     }
 }
