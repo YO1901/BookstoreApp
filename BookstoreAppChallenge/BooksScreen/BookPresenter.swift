@@ -96,6 +96,7 @@ final class BookPresenter: BookOutput {
         book.setValue(doc.key, forKey: #keyPath(OpenBook.key))
         book.setValue(list, forKey: #keyPath(OpenBook.bookList))
         book.setValue(doc.ratingsAverage ?? 0, forKey: #keyPath(OpenBook.rating))
+        book.setValue(Date(), forKey: #keyPath(OpenBook.addedDate))
         
         CoreDataService.shared.saveContext()
     }

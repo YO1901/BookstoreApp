@@ -1,19 +1,17 @@
 //
-//  FavoritesTableViewCell.swift
+//  BookListTableViewCell.swift
 //  BookstoreAppChallenge
 //
 //  Created by Мой Macbook on 08.12.2023.
 //
 
 import UIKit
-import SnapKit
 
-
-final class FavoritesTableViewCell: UITableViewCell {
+final class BookListTableViewCell: UITableViewCell {
     
     //MARK: - Properties
     
-    static let identifier: String = "FavoritesTableViewCell"
+    static let identifier: String = "BookListTableViewCell"
     
     private let container = UIView()
     
@@ -124,7 +122,7 @@ final class FavoritesTableViewCell: UITableViewCell {
     }
 }
 
-extension FavoritesTableViewCell: Configurable {
+extension BookListTableViewCell: Configurable {
     
     func update(model: Model) {
         authorLabel.text = model.author

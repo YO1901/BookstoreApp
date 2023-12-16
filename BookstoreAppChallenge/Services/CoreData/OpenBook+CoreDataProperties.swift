@@ -24,6 +24,7 @@ extension OpenBook {
     @NSManaged public var coverI: Int32
     @NSManaged public var rating: Double
     @NSManaged public var bookList: OpenBookList?
+    @NSManaged public var addedDate: Date
     
 }
 

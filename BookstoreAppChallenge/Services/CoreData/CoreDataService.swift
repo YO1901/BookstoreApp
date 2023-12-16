@@ -38,11 +38,11 @@ class CoreDataService {
     }
     
     func getRecentList() -> OpenBookList {
-        getListWithCreataion("Recent")
+        getListWithCreation("Recent")
     }
     
     func getLikesList() -> OpenBookList {
-        getListWithCreataion("Likes")
+        getListWithCreation("Likes")
     }
     
     func getLists() -> [OpenBookList] {
@@ -70,7 +70,7 @@ class CoreDataService {
         return true
     }
     
-    private func getListWithCreataion(_ title: String) -> OpenBookList {
+    private func getListWithCreation(_ title: String) -> OpenBookList {
         let bookList: NSFetchRequest<OpenBookList> = OpenBookList.fetchRequest()
         if let results = try? managedContext.fetch(bookList),
            let list = results.first(where: { $0.title == title }) {

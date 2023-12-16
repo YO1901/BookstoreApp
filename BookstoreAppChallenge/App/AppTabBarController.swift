@@ -23,7 +23,7 @@ class AppTabBarController: UITabBarController {
         let categoriesViewController = CategoriesViewController()
         categoriesViewController.tabBarItem = UITabBarItem(title: "Categories", image: UIImage(systemName: "rectangle.grid.2x2"), tag: 1)
         
-        let favoritesViewController = FavoritesRouter().makeWrappedNavigationScreen()
+        let favoritesViewController = BookListRouter(flow: .likes).makeWrappedNavigationScreen()
         favoritesViewController.tabBarItem = UITabBarItem(title: "Likes", image: UIImage(systemName: "heart"), tag: 2)
         
         let accountViewController = AccountRouter().makeWrappedNavigationScreen()

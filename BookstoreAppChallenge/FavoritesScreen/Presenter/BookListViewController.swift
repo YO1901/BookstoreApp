@@ -1,22 +1,21 @@
 //
-//  FavoritesViewController.swift
+//  BookListViewController.swift
 //  BookstoreAppChallenge
 //
 //  Created by Nikita Shirobokov on 06.12.23.
 //
 
 import UIKit
-import SnapKit
 
-final class FavoritesViewController: ViewController {
+final class BookListViewController: ViewController {
     
-    var presenter: FavoritesPresenter!
+    var presenter: BookListPresenter!
     
     //MARK: - Properties
     
-    private let favoritesTableView: UITableView = {
+    private let tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
-        table.register(FavoritesTableViewCell.self, forCellReuseIdentifier: FavoritesTableViewCell.identifier)
+        table.register(BookListTableViewCell.self, forCellReuseIdentifier: BookListTableViewCell.identifier)
         return table
     }()
     
@@ -34,7 +33,7 @@ final class FavoritesViewController: ViewController {
         title = presenter.title
         
         view.backgroundColor = Colors.Background.lvl1
-        view.addSubview(favoritesTableView)
+        view.addSubview(tableView)
         view.addSubview(emptyLabel)
         setupLayout()
         setupTableView()
@@ -49,22 +48,22 @@ final class FavoritesViewController: ViewController {
     //MARK: - Functions
     
     func updateUI() {
-        favoritesTableView.reloadData()
-        favoritesTableView.isHidden = presenter.items.isEmpty
+        tableView.reloadData()
+        tableView.isHidden = presenter.items.isEmpty
         emptyLabel.isHidden = !presenter.items.isEmpty
     }
     
     private func setupTableView() {
-        favoritesTableView.delegate = self
-        favoritesTableView.dataSource = self
-        favoritesTableView.rowHeight = 140
-        favoritesTableView.sectionFooterHeight = 0
-        favoritesTableView.backgroundColor = .clear
-        favoritesTableView.separatorStyle = .none
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.rowHeight = 140
+        tableView.sectionFooterHeight = 0
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
     }
     
     private func setupLayout() {
-        favoritesTableView.snp.makeConstraints { make in
+        tableView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(20)
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().inset(20)
@@ -79,14 +78,15 @@ final class FavoritesViewController: ViewController {
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
 
-extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
+extension BookListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         presenter.items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: FavoritesTableViewCell.identifier, for: indexPath) as? FavoritesTableViewCell else { return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookListTableViewCell.identifier, for: indexPath) as? BookListTableViewCell else {
+            return UITableViewCell()
         }
         let item = presenter.items[indexPath.row]
         cell.update(
@@ -108,3 +108,12 @@ extension FavoritesViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+extension BookListViewController {
+    struct Book {
+        var genre: String?
+        var bookTitle: String?
+        var author: String?
+        var bookImage: URL?
+        var removeClosure: (() -> Void)?
+    }
+}

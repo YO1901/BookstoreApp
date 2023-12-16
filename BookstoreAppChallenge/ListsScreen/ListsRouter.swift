@@ -25,7 +25,7 @@ final class ListsRouter {
     
     func openListScreen(listName: String) {
         guard let controller else { return }
-        let vc = NavigationController(rootViewController: FavoritesRouter().makeScreen(listTitle: listName))
+        let vc = NavigationController(rootViewController: BookListRouter(flow: .list(title: listName)).makeScreen())
         if let navController = controller as? UINavigationController {
             navController.pushViewController(vc, animated: true)
         } else {

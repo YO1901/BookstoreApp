@@ -1,5 +1,5 @@
 //
-//  FavoritesRouter.swift
+//  BookListRouter.swift
 //  BookstoreAppChallenge
 //
 //  Created by Victor on 12.12.2023.
@@ -7,13 +7,24 @@
 
 import UIKit
 
-final class FavoritesRouter {
+final class BookListRouter {
     
+    enum Flow {
+        case likes
+        case list(title: String)
+        case seeMore(title: String, books: [DocEntity])
+    }
+    
+    private let flow: Flow
     private weak var controller: UIViewController?
     
-    func makeScreen(listTitle: String? = nil) -> UIViewController {
-        let presenter = FavoritesPresenter(listTitle)
-        let controller = FavoritesViewController()
+    init(flow: Flow) {
+        self.flow = flow
+    }
+    
+    func makeScreen() -> UIViewController {
+        let presenter = BookListPresenter(flow)
+        let controller = BookListViewController()
         controller.presenter = presenter
         presenter.view = controller
         presenter.router = self
