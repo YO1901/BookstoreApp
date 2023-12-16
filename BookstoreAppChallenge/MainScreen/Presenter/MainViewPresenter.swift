@@ -69,7 +69,9 @@ final class MainViewPresenter: MainViewPresenterProtocol {
                 let group = DispatchGroup()
                 var bookItems: [MainViewController.ViewModel.BookItem] = []
 
-                for doc in booksListEntity.works {
+                let works = booksListEntity.works
+                let upper = works.count > 10 ? 10 : works.count
+                for doc in works[..<upper] {
                     group.enter()
                     self?.fetchBookDetails(bookKey: doc.key) { category in
                         let bookItem = MainViewController.ViewModel.BookItem(

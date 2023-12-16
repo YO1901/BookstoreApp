@@ -42,20 +42,14 @@ final class BookListRouter {
     }
     
     func openBookScreen(doc: DocEntity) {
-        if let controller = controller as? UINavigationController {
-            controller.pushViewController(
-                BookRouter().makeScreen(
-                    doc: doc
-                ),
-                animated: true
-            )
+        let vc =  BookRouter().makeScreen(doc: doc)
+        if let navController = controller?.navigationController {
+            navController.pushViewController(vc, animated: true)
+        }
+        else if let controller = controller as? UINavigationController {
+            controller.pushViewController(vc, animated: true)
         } else {
-            controller?.present(
-                BookRouter().makeScreen(
-                    doc: doc
-                ),
-                animated: true
-            )
+            controller?.present(vc, animated: true)
         }
     }
 }
