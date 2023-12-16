@@ -9,9 +9,9 @@ final class MainViewPresenter: MainViewPresenterProtocol {
     private let networkManager = NetworkManager()
     
     // Данные для каждого временного периода
-    private var weekData: ([MainViewController.ViewModel.BookItem], [DocsEntity]) = ([], [])
-    private var monthData: ([MainViewController.ViewModel.BookItem], [DocsEntity]) = ([], [])
-    private var yearData: ([MainViewController.ViewModel.BookItem], [DocsEntity]) = ([], [])
+    private var weekData: ([MainViewController.ViewModel.BookItem], [DocEntity]) = ([], [])
+    private var monthData: ([MainViewController.ViewModel.BookItem], [DocEntity]) = ([], [])
+    private var yearData: ([MainViewController.ViewModel.BookItem], [DocEntity]) = ([], [])
 
     // Запуск первоначальной загрузки данных
     func activate() {
@@ -20,26 +20,26 @@ final class MainViewPresenter: MainViewPresenterProtocol {
         let dispatchGroup = DispatchGroup()
 
         dispatchGroup.enter()
-        fetchBooksList(for: .week) { [weak self] (items, docs) in
-            self?.weekData = (items, docs)
+        fetchBooksList(for: .week) { [weak self] (items, Doc) in
+            self?.weekData = (items, Doc)
             dispatchGroup.leave()
         }
 
         dispatchGroup.enter()
-        fetchBooksList(for: .month) { [weak self] (items, docs) in
-            self?.monthData = (items, docs)
+        fetchBooksList(for: .month) { [weak self] (items, Doc) in
+            self?.monthData = (items, Doc)
             dispatchGroup.leave()
         }
 
         dispatchGroup.enter()
-        fetchBooksList(for: .year) { [weak self] (items, docs) in
-            self?.yearData = (items, docs)
+        fetchBooksList(for: .year) { [weak self] (items, Doc) in
+            self?.yearData = (items, Doc)
             dispatchGroup.leave()
         }
 
         dispatchGroup.notify(queue: .main) {
             self.view?.stopLoader()
-            self.updateView(with: self.weekData.0 , docsEntities: self.weekData.1 )
+            self.updateView(with: self.weekData.0 , DocEntities: self.weekData.1 )
         }
     }
 
@@ -48,21 +48,21 @@ final class MainViewPresenter: MainViewPresenterProtocol {
     func switchToTimePeriod(_ timePeriod: BooksListRequest.Timeframe) {
         switch timePeriod {
         case .week:
-            updateView(with: weekData.0, docsEntities: weekData.1)
+            updateView(with: weekData.0, DocEntities: weekData.1)
         case .month:
-            updateView(with: monthData.0, docsEntities: monthData.1)
+            updateView(with: monthData.0, DocEntities: monthData.1)
         case .year:
-            updateView(with: yearData.0, docsEntities: yearData.1)
+            updateView(with: yearData.0, DocEntities: yearData.1)
         }
     }
     
     func fetchBooksList(for timePeriod: BooksListRequest.Timeframe) {
-           fetchBooksList(for: timePeriod) { [weak self] bookItems, docsEntities in
-               self?.updateView(with: bookItems, docsEntities: docsEntities)
+           fetchBooksList(for: timePeriod) { [weak self] bookItems, DocEntities in
+               self?.updateView(with: bookItems, DocEntities: DocEntities)
            }
        }
     
-    func fetchBooksList(for timePeriod: BooksListRequest.Timeframe, completion: @escaping ([MainViewController.ViewModel.BookItem], [DocsEntity]) -> Void) {
+    func fetchBooksList(for timePeriod: BooksListRequest.Timeframe, completion: @escaping ([MainViewController.ViewModel.BookItem], [DocEntity]) -> Void) {
         networkManager.sendRequest(request: BooksListRequest(timeframe: timePeriod)) { [weak self] result in
             switch result {
             case .success(let booksListEntity):
@@ -105,11 +105,11 @@ final class MainViewPresenter: MainViewPresenterProtocol {
         }
     }
 
-    private func updateView(with bookItems: [MainViewController.ViewModel.BookItem], docsEntities: [DocsEntity]) {
+    private func updateView(with bookItems: [MainViewController.ViewModel.BookItem], DocEntities: [DocEntity]) {
         let viewModel = MainViewController.ViewModel(
             topBooks: bookItems,
             recentBooks: bookItems,
-            books: docsEntities
+            books: DocEntities
         )
         self.view?.update(with: viewModel)
     }

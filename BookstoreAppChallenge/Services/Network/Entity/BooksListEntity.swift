@@ -11,5 +11,5 @@ import Alamofire
 
 struct BooksListEntity: Decodable {
     let query: String
-    let works: [DocsEntity]
+    let works: [DocEntity]
 }

@@ -31,7 +31,7 @@ final class MainViewController: UIViewController {
     var presenter: MainViewPresenterProtocol!
     
     private var items = [ViewModel.Item]()
-    private var books = [DocsEntity]()
+    private var books = [DocEntity]()
     private var viewModel: ViewModel?
     
     private lazy var button: DefaultButton = {
@@ -124,7 +124,7 @@ final class MainViewController: UIViewController {
     }
     
     @objc func didTapButtonMonth() {
-        self.presenter.switchToTimePeriod(.week)
+        self.presenter.switchToTimePeriod(.month)
     }
     @objc func didTapButtonYear() {
         self.presenter.switchToTimePeriod(.year)
@@ -283,6 +283,6 @@ extension MainViewController {
         
         let topBooks: [BookItem]
         let recentBooks: [BookItem]
-        let books: [DocsEntity]
+        let books: [DocEntity]
     }
 }
