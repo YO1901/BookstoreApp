@@ -24,7 +24,7 @@ final class ListsRouter {
     }
     
     func openListScreen(listName: String) {
-        let vc = NavigationController(rootViewController: BookListRouter(flow: .list(title: listName)).makeScreen())
+        let vc = BookListRouter(flow: .list(title: listName)).makeScreen()
         if let navController = controller?.navigationController {
             navController.pushViewController(vc, animated: true)
         }
