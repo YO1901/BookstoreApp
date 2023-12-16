@@ -31,12 +31,15 @@ public final class NetworkManager {
                 return
             }
             
-            guard let decoded = try? request.decoder.decode(Request.Response.self, from: data) else {
+            do {
+                let decoded = try request.decoder.decode(Request.Response.self, from: data)
+                completionHandler(.success(decoded))
+            } catch {
+                print("Decoding error: \(error)")
                 completionHandler(.failure(NetworkError.decodingError))
-                return
             }
             
-            completionHandler(.success(decoded))
+//            completionHandler(.success(decoded))
         }
     }
 }
