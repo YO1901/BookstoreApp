@@ -23,10 +23,31 @@ struct DocEntity: Decodable {
     let subject: [String]?
     let firstPublishYear: Int?
     let coverI: Int?
+    let coverId: Int?
     let ratingsAverage: Double?
     
+    init(
+        key: String,
+        title: String,
+        authorName: [String]?,
+        subject: [String]?,
+        firstPublishYear: Int?,
+        coverI: Int?,
+        coverId: Int? = nil,
+        ratingsAverage: Double?
+    ) {
+        self.key = key
+        self.title = title
+        self.authorName = authorName
+        self.subject = subject
+        self.firstPublishYear = firstPublishYear
+        self.coverI = coverI
+        self.coverId = coverId
+        self.ratingsAverage = ratingsAverage
+    }
+    
     func coverURL(coverKey: CoverKey = .ID, coverSize: CoverSize = .M) -> URL? {
-        guard let coverI, let url = URL(string: "https://covers.openlibrary.org/b/\(coverKey)/\(coverI)-\(coverSize).jpg") else {
+        guard let cover, let url = URL(string: "https://covers.openlibrary.org/b/\(coverKey)/\(cover)-\(coverSize).jpg") else {
             return nil
         }
         return url
@@ -34,5 +55,9 @@ struct DocEntity: Decodable {
     
     var readURL: URL? {
         URL(string: "https://openlibrary.org\(key)")
+    }
+    
+    var cover: Int? {
+        coverI ?? coverId
     }
 }

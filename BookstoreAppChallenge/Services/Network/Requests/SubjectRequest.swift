@@ -15,7 +15,7 @@ struct SubjectRequest: NetworkRequest {
     let subject: Subject
     
     var url: Alamofire.URLConvertible {
-        "http://openlibrary.org/subjects/\(subject.rawValue).json"
+        "https://openlibrary.org/subjects/\(subject.rawValue.lowercased()).json"
     }
     
     var method: Alamofire.HTTPMethod {

@@ -60,6 +60,7 @@ final class BookListViewController: ViewController {
         tableView.sectionFooterHeight = 0
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
     }
     
     private func setupLayout() {

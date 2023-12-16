@@ -23,4 +23,5 @@ enum Images {
     static let home = UIImage(named: "Home")!
     static let categories = UIImage(named: "categories")!
     static let likes = UIImage(named: "likes")!
+    static let category = UIImage(named: "Category")!
 }

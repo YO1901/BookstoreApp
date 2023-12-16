@@ -30,7 +30,7 @@ class AppTabBarController: UITabBarController {
                 Colors.whitePrimary,
                 renderingMode: .alwaysOriginal))
         
-        let categoriesViewController = CategoriesViewController()
+        let categoriesViewController = CategoriesRouter().makeWrappedNavigationScreen()
         categoriesViewController.tabBarItem = UITabBarItem(
             title: "Categories", 
             image: Images.categories,
@@ -53,9 +53,8 @@ class AppTabBarController: UITabBarController {
                 renderingMode: .alwaysOriginal))
 
         let nav1 = NavigationController(rootViewController: homeViewController)
-        let nav2 = NavigationController(rootViewController: categoriesViewController)
 
-        self.viewControllers = [nav1, nav2, favoritesViewController, accountViewController]
+        self.viewControllers = [nav1, categoriesViewController, favoritesViewController, accountViewController]
         
         favoritesViewController.title = "Likes"
 

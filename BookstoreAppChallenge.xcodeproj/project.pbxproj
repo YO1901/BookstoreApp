@@ -17,7 +17,6 @@
 		43331E9D2B1E5AF00015E70F /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 43331E9C2B1E5AF00015E70F /* Kingfisher */; };
 		43331EA52B1F835F0015E70F /* NetworkService in Frameworks */ = {isa = PBXBuildFile; productRef = 43331EA42B1F835F0015E70F /* NetworkService */; };
 		438B63F22B20C28E00B9F04F /* AppTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B63F12B20C28E00B9F04F /* AppTabBarController.swift */; };
-		438B63F62B20C2F500B9F04F /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B63F52B20C2F500B9F04F /* CategoriesViewController.swift */; };
 		438B63F82B20C32D00B9F04F /* BookListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438B63F72B20C32D00B9F04F /* BookListViewController.swift */; };
 		7704B8332B2BA2E8005CCA01 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7704B8322B2BA2E8005CCA01 /* LoadingView.swift */; };
 		7767CEC42B2E2D2400F2CFD4 /* BookListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7767CEC32B2E2D2400F2CFD4 /* BookListTableViewCell.swift */; };
@@ -87,6 +86,12 @@
 		E01743522B2D05FA00A6D473 /* DocsEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01743512B2D05FA00A6D473 /* DocsEntity.swift */; };
 		E01743542B2D24C800A6D473 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01743532B2D24C800A6D473 /* CustomTabBar.swift */; };
 		E01743562B2DEBDF00A6D473 /* BookDetailRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01743552B2DEBDF00A6D473 /* BookDetailRequest.swift */; };
+		77FC571B2B2E31FF00BFA2D4 /* CategoriesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FC571A2B2E31FF00BFA2D4 /* CategoriesRouter.swift */; };
+		77FC571D2B2E320500BFA2D4 /* CategoriesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FC571C2B2E320500BFA2D4 /* CategoriesPresenter.swift */; };
+		77FC571F2B2E321100BFA2D4 /* CategoriesProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FC571E2B2E321100BFA2D4 /* CategoriesProtocols.swift */; };
+		77FC57212B2E321800BFA2D4 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FC57202B2E321800BFA2D4 /* CategoriesViewController.swift */; };
+		77FC57232B2E3D5500BFA2D4 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FC57222B2E3D5500BFA2D4 /* CategoryView.swift */; };
+		77FC57252B2E3DC900BFA2D4 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FC57242B2E3DC900BFA2D4 /* GradientView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,7 +104,6 @@
 		43331E6A2B1DF36C0015E70F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		43331E722B1DF9D30015E70F /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		438B63F12B20C28E00B9F04F /* AppTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppTabBarController.swift; sourceTree = "<group>"; };
-		438B63F52B20C2F500B9F04F /* CategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategoriesViewController.swift; path = BookstoreAppChallenge/CategoriesScreen/View/CategoriesViewController.swift; sourceTree = SOURCE_ROOT; };
 		438B63F72B20C32D00B9F04F /* BookListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BookListViewController.swift; path = BookstoreAppChallenge/FavoritesScreen/Presenter/BookListViewController.swift; sourceTree = SOURCE_ROOT; };
 		7704B8322B2BA2E8005CCA01 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		7767CEC32B2E2D2400F2CFD4 /* BookListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookListTableViewCell.swift; sourceTree = "<group>"; };
@@ -169,6 +173,12 @@
 		E01743512B2D05FA00A6D473 /* DocsEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocsEntity.swift; sourceTree = "<group>"; };
 		E01743532B2D24C800A6D473 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		E01743552B2DEBDF00A6D473 /* BookDetailRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailRequest.swift; sourceTree = "<group>"; };
+		77FC571A2B2E31FF00BFA2D4 /* CategoriesRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesRouter.swift; sourceTree = "<group>"; };
+		77FC571C2B2E320500BFA2D4 /* CategoriesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesPresenter.swift; sourceTree = "<group>"; };
+		77FC571E2B2E321100BFA2D4 /* CategoriesProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesProtocols.swift; sourceTree = "<group>"; };
+		77FC57202B2E321800BFA2D4 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
+		77FC57222B2E3D5500BFA2D4 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
+		77FC57242B2E3DC900BFA2D4 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,9 +278,11 @@
 		43331E752B1DFA170015E70F /* CategoriesScreen */ = {
 			isa = PBXGroup;
 			children = (
-				43331E822B1DFB890015E70F /* Model */,
-				43331E812B1DFB830015E70F /* View */,
-				43331E802B1DFB7C0015E70F /* Presenter */,
+				77FC571E2B2E321100BFA2D4 /* CategoriesProtocols.swift */,
+				77FC571A2B2E31FF00BFA2D4 /* CategoriesRouter.swift */,
+				77FC571C2B2E320500BFA2D4 /* CategoriesPresenter.swift */,
+				77FC57202B2E321800BFA2D4 /* CategoriesViewController.swift */,
+				77FC57222B2E3D5500BFA2D4 /* CategoryView.swift */,
 			);
 			path = CategoriesScreen;
 			sourceTree = "<group>";
@@ -332,28 +344,6 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
-		43331E802B1DFB7C0015E70F /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		43331E812B1DFB830015E70F /* View */ = {
-			isa = PBXGroup;
-			children = (
-				438B63F52B20C2F500B9F04F /* CategoriesViewController.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		43331E822B1DFB890015E70F /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		43331E872B1DFBAF0015E70F /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -390,6 +380,7 @@
 				777851342B1FC54C00899704 /* CollectionCell.swift */,
 				7704B8322B2BA2E8005CCA01 /* LoadingView.swift */,
 				77CDA0EF2B211D0300E1A043 /* SpaceCell.swift */,
+				77FC57242B2E3DC900BFA2D4 /* GradientView.swift */,
 				77CDA0ED2B2119DF00E1A043 /* TableCell.swift */,
 				7778513B2B1FCAEE00899704 /* DefaultButton.swift */,
 				77E909D62B2A526600A44042 /* ListButton.swift */,
@@ -599,8 +590,10 @@
 				77E909D72B2A526600A44042 /* ListButton.swift in Sources */,
 				77E909DE2B2A56E100A44042 /* ListsRouter.swift in Sources */,
 				77DA2D522B27B42600BB0233 /* BookListPresenter.swift in Sources */,
+				77FC571F2B2E321100BFA2D4 /* CategoriesProtocols.swift in Sources */,
 				777851302B1FC23F00899704 /* OnboardingProtocols.swift in Sources */,
 				77DA2CF72B226A4600BB0233 /* AccountProtocols.swift in Sources */,
+				77FC57232B2E3D5500BFA2D4 /* CategoryView.swift in Sources */,
 				77E909E02B2A578D00A44042 /* ListsProtocols.swift in Sources */,
 				77E909D92B2A56CD00A44042 /* ListsPresenter.swift in Sources */,
 				77DA2D122B23C13600BB0233 /* NavigationController.swift in Sources */,
@@ -625,7 +618,6 @@
 				E017433F2B24B16D00A6D473 /* MainViewRouter.swift in Sources */,
 				77CDA0E32B21164C00E1A043 /* BookPresenter.swift in Sources */,
 				77DA2D182B23C4A900BB0233 /* UIColor+Extension.swift in Sources */,
-				438B63F62B20C2F500B9F04F /* CategoriesViewController.swift in Sources */,
 				77CDA0E72B21165400E1A043 /* BookRouter.swift in Sources */,
 				7767CEC42B2E2D2400F2CFD4 /* BookListTableViewCell.swift in Sources */,
 				77DA2D142B23C17500BB0233 /* ViewController.swift in Sources */,
@@ -649,8 +641,10 @@
 				E01743422B24C6C200A6D473 /* MainBookView.swift in Sources */,
 				77DA2D022B227B0300BB0233 /* UIImage+Extension.swift in Sources */,
 				77DA2D4D2B27AA0A00BB0233 /* OpenBook+CoreDataClass.swift in Sources */,
+				77FC571B2B2E31FF00BFA2D4 /* CategoriesRouter.swift in Sources */,
 				77DA2D002B226F3400BB0233 /* NamedTextField.swift in Sources */,
 				E01743502B2B5B3000A6D473 /* BooksListEntity.swift in Sources */,
+				77FC57212B2E321800BFA2D4 /* CategoriesViewController.swift in Sources */,
 				77DA2CFD2B226C3C00BB0233 /* AvatarView.swift in Sources */,
 				E017433B2B23E8CB00A6D473 /* MainViewModel.swift in Sources */,
 				77DA2CF92B226A4E00BB0233 /* AccountViewController.swift in Sources */,
@@ -659,6 +653,8 @@
 				77E5B9F02B1F7264004BA4AA /* BookRequest.swift in Sources */,
 				438B63F22B20C28E00B9F04F /* AppTabBarController.swift in Sources */,
 				777851412B1FD72900899704 /* UserDefaultService.swift in Sources */,
+				77FC57252B2E3DC900BFA2D4 /* GradientView.swift in Sources */,
+				77FC571D2B2E320500BFA2D4 /* CategoriesPresenter.swift in Sources */,
 				77DA2D242B27A32F00BB0233 /* BookstoreDataModel.xcdatamodeld in Sources */,
 				7704B8332B2BA2E8005CCA01 /* LoadingView.swift in Sources */,
 				77CDA0E52B21165100E1A043 /* BookViewController.swift in Sources */,

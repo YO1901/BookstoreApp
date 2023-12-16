@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import NetworkService
 
 final class BookListPresenter {
     
@@ -21,6 +22,7 @@ final class BookListPresenter {
     private var docs = [DocEntity]()
     private var listTitle = ""
     private let flow: BookListRouter.Flow
+    private let networkManager = NetworkManager()
     
     init(_ flow: BookListRouter.Flow) {
         self.flow = flow
@@ -35,6 +37,37 @@ final class BookListPresenter {
         case let .seeMore(title: title, books: docs):
             self.title = title
             self.docs = docs
+        case let .category(category: subject):
+            self.title = subject.rawValue
+        }
+    }
+    
+    func activate() {
+        switch flow {
+        case .likes, .list, .seeMore:
+            loadBooks()
+        case let .category(category: subject):
+            view?.showLoading()
+            networkManager.sendRequest(request: SubjectRequest(subject: subject)) {
+                [weak self] result in
+                
+                switch result {
+                case let .success(response):
+                    self?.docs = response.works
+                    self?.loadBooks()
+                case .failure:
+                    break
+                }
+            }
+        }
+    }
+    
+    private func loadBooks() {
+        
+        view?.hideLoading()
+        
+        switch flow {
+        case .seeMore, .category :
             self.items = docs.map {
                 .init(
                     genre: $0.subject?.first,
@@ -43,46 +76,32 @@ final class BookListPresenter {
                     bookImage: $0.coverURL()
                 )
             }
-        }
-    }
-    
-    func activate() {
-        switch flow {
         case .likes, .list:
-            loadBooks()
-        case .seeMore:
-            view?.updateUI()
+            guard let books = CoreDataService.shared.getLists()
+                .first(where: { $0.title == self.listTitle })?
+                .book?.array as? [OpenBook] else {
+                return
+            }
+            self.books = books
+            items = books.sorted(by: { $0.addedDate < $1.addedDate }).map {
+                let openBook = $0
+                return Book(
+                    genre: $0.subject,
+                    bookTitle: $0.title,
+                    author: $0.author,
+                    bookImage: URL(string: $0.imageURL ?? ""),
+                    removeClosure: {
+                        [weak self] in
+                        
+                        CoreDataService.shared.managedContext.delete(openBook)
+                        CoreDataService.shared.saveContext()
+                        self?.loadBooks()
+                        self?.view?.updateUI()
+                    }
+                )
+            }
         }
-    }
-    
-    private func showBooks() {
-        
-    }
-    
-    private func loadBooks() {
-        guard let books = CoreDataService.shared.getLists()
-            .first(where: { $0.title == self.listTitle })?
-            .book?.array as? [OpenBook] else {
-            return
-        }
-        self.books = books
-        items = books.sorted(by: { $0.addedDate < $1.addedDate }).map {
-            let openBook = $0
-            return Book(
-                genre: $0.subject,
-                bookTitle: $0.title,
-                author: $0.author,
-                bookImage: URL(string: $0.imageURL ?? ""),
-                removeClosure: {
-                    [weak self] in
-                    
-                    CoreDataService.shared.managedContext.delete(openBook)
-                    CoreDataService.shared.saveContext()
-                    self?.loadBooks()
-                    self?.view?.updateUI()
-                }
-            )
-        }
+        view?.updateUI()
     }
     
     func didSelect(_ index: Int) {
@@ -100,7 +119,7 @@ final class BookListPresenter {
                     ratingsAverage: book.rating != 0 ? book.rating : nil
                 )
             )
-        case .seeMore:
+        case .seeMore, .category:
             let doc = docs[index]
             router?.openBookScreen(
                 doc: doc

@@ -72,7 +72,7 @@ final class BookPresenter: BookOutput {
                                 UIApplication.shared.open(url)
                             }
                         ),
-                        description: book.description?.value ?? "",
+                        description: book.description ?? "",
                         likeBarButtonAction: {
                             [weak self] in
                             

@@ -13,6 +13,7 @@ final class BookListRouter {
         case likes
         case list(title: String)
         case seeMore(title: String, books: [DocEntity])
+        case category(category: SubjectRequest.Subject)
     }
     
     private let flow: Flow
