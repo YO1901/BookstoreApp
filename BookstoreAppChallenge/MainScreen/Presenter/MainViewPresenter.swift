@@ -15,7 +15,7 @@ final class MainViewPresenter: MainViewPresenterProtocol {
 
     // Запуск первоначальной загрузки данных
     func activate() {
-        view?.startLoader()
+        view?.showLoading()
 
         let dispatchGroup = DispatchGroup()
 
@@ -38,7 +38,7 @@ final class MainViewPresenter: MainViewPresenterProtocol {
         }
 
         dispatchGroup.notify(queue: .main) {
-            self.view?.stopLoader()
+            self.view?.hideLoading()
             self.updateView(with: self.weekData.0 , DocEntities: self.weekData.1 )
         }
     }

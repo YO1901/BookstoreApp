@@ -23,6 +23,6 @@ final class OnboardingRouter {
     }
     
     func openMainScreen() {
-        UIApplication.shared.keyWindow?.rootViewController = MainViewController()
+        UIApplication.shared.keyWindow?.rootViewController = AppTabBarController()
     }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class BookViewController: UIViewController, BookInput {
+final class BookViewController: ViewController, BookInput {
     
     typealias TextCell = TableCell<UILabel>
     typealias HeaderCell = TableCell<BookHeaderView>
@@ -15,6 +15,7 @@ final class BookViewController: UIViewController, BookInput {
     var presenter: BookOutput!
     
     private var items = [ViewModel.Item]()
+    private var likeBarButtonAction: (() -> Void)?
     
     private lazy var tableView: UITableView = {
         let tv = UITableView()
@@ -28,6 +29,7 @@ final class BookViewController: UIViewController, BookInput {
         tv.showsVerticalScrollIndicator = false
         tv.separatorStyle = .none
         tv.delaysContentTouches = false
+        tv.contentInset = .init(top: 16, left: 0, bottom: 0, right: 0)
         return tv
     }()
     
@@ -38,6 +40,16 @@ final class BookViewController: UIViewController, BookInput {
     }
     
     func update(with model: ViewModel) {
+        
+        title = model.category
+        
+        self.likeBarButtonAction = model.likeBarButtonAction
+        if model.likeBarButtonAction != nil {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: Images.heart.withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(didTapLikeBarButton))
+        } else {
+            navigationItem.rightBarButtonItem = nil
+        }
+        
         items.removeAll()
         items.append(
             .title(
@@ -88,6 +100,11 @@ final class BookViewController: UIViewController, BookInput {
         result.append(leftPart)
         result.append(rightPart)
         return result
+    }
+    
+    @objc
+    private func didTapLikeBarButton() {
+        likeBarButtonAction?()
     }
 }
 
@@ -144,8 +161,10 @@ extension BookViewController {
         }
         
         let title: String
+        let category: String?
         let header: HeaderItem
         let description: String
+        let likeBarButtonAction: (() -> Void)?
     }
 }
 

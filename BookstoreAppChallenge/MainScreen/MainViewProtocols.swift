@@ -8,8 +8,8 @@
 // Input protocol
 protocol MainViewProtocol: AnyObject {
     func update(with viewModel: MainViewController.ViewModel)
-    func startLoader()
-    func stopLoader()
+    func showLoading()
+    func hideLoading()
 }
 
 // Output protocol

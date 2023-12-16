@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import NetworkService
+import CoreData
 
 final class BookPresenter: BookOutput {
     
@@ -22,6 +23,7 @@ final class BookPresenter: BookOutput {
     }
     
     func activate() {
+        view?.showLoading()
         networkManager.sendRequest(request: BookRequest(key: doc.key)) {
             [weak self] result in
             
@@ -39,16 +41,26 @@ final class BookPresenter: BookOutput {
                     return "\(Double(Int(ratings * 100)) / 100) / 5"
                 }()
                 
+                view?.hideLoading()
                 view?.update(
                     with: .init(
                         title: doc.title,
+                        category: doc.subject?.first,
                         header: .init(
                             imageURL: doc.coverURL(),
                             author: doc.authorName?.first,
                             category: doc.subject?.first,
                             rating: rating,
                             addToListClosure: {
-                                print("add to list")
+                                [weak self] in
+                                
+                                guard let self else { return }
+                                router?.openListsScreen(selectListClosure: {
+                                    [weak self] title in
+                                    
+                                    self?.addToList(title)
+                                    self?.router?.dissmissPresented()
+                                })
                             },
                             readClosure: {
                                 [weak self] in
@@ -60,12 +72,54 @@ final class BookPresenter: BookOutput {
                                 UIApplication.shared.open(url)
                             }
                         ),
-                        description: book.description?.value ?? ""
+                        description: book.description?.value ?? "",
+                        likeBarButtonAction: {
+                            [weak self] in
+                            
+                            self?.addToLikes()
+                        }
                     )
                 )
             case .failure(let error):
                 print(error)
             }
         }
+    }
+    
+    private func saveBook(list: OpenBookList) {
+        let book = OpenBook(context: CoreDataService.shared.managedContext)
+        book.setValue(doc.authorName?.first, forKey: #keyPath(OpenBook.author))
+        book.setValue(doc.title, forKey: #keyPath(OpenBook.title))
+        book.setValue(doc.subject?.first, forKey: #keyPath(OpenBook.subject))
+        book.setValue(doc.coverURL()?.absoluteString, forKey: #keyPath(OpenBook.imageURL))
+        book.setValue(doc.coverI ?? 0, forKey: #keyPath(OpenBook.coverI))
+        book.setValue(doc.key, forKey: #keyPath(OpenBook.key))
+        book.setValue(list, forKey: #keyPath(OpenBook.bookList))
+        book.setValue(doc.ratingsAverage ?? 0, forKey: #keyPath(OpenBook.rating))
+        book.setValue(Date(), forKey: #keyPath(OpenBook.addedDate))
+        
+        CoreDataService.shared.saveContext()
+    }
+    
+    private func addToLikes() {
+        let list = CoreDataService.shared.getLikesList()
+        let books = list.book?.compactMap { $0 as? OpenBook }
+        guard books?.contains(where: { $0.key == doc.key }) == false else {
+            return
+        }
+        
+        saveBook(list: list)
+    }
+    
+    private func addToList(_ title: String) {
+        guard let list = CoreDataService.shared.getLists().first(where: { $0.title == title }) else {
+            return
+        }
+        let books = list.book?.compactMap { $0 as? OpenBook }
+        guard books?.contains(where: { $0.key == doc.key }) == false else {
+            return
+        }
+        
+        saveBook(list: list)
     }
 }

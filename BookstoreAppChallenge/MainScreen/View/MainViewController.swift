@@ -12,7 +12,7 @@ private extension CGFloat {
     static let loaderDimention: CGFloat = 128
 }
 
-final class MainViewController: UIViewController {
+final class MainViewController: ViewController {
     
     private enum Titles {
         static let happyTitle = "Happy Reading!"
@@ -74,7 +74,7 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = Colors.Background.lvl1
         setupLoader()
         // Регистрация кастомной ячейки для UICollectionView в UITableView
         tableView.register(BooksCollectionViewCell.self, forCellReuseIdentifier: "BooksCollectionViewCell")

@@ -3,4 +3,85 @@
    uuid = "A1ED0EAB-76D1-4956-A6C2-B157A450E830"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "68F7CDD3-EBC6-4CD8-8FCF-DCF8E0DB4245"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BookstoreAppChallenge/Services/UserInterfaceStyleService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "changeStyle()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "48148DE3-FA19-4083-973B-ADE62493E69A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BookstoreAppChallenge/ListsScreen/ListsRouter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "openListScreen(listName:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "48148DE3-FA19-4083-973B-ADE62493E69A - cc40babaf52d50aa"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BookstoreAppChallenge.ListsRouter.openListScreen(listName: Swift.String) -&gt; ()"
+                  moduleName = "BookstoreAppChallenge"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/viktor/BookstoreApp/BookstoreAppChallenge/ListsScreen/ListsRouter.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "26"
+                  endingLineNumber = "26"
+                  offsetFromSymbolStart = "164">
+               </Location>
+               <Location
+                  uuid = "48148DE3-FA19-4083-973B-ADE62493E69A - cc40babaf52d5089"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BookstoreAppChallenge.ListsRouter.openListScreen(listName: Swift.String) -&gt; ()"
+                  moduleName = "BookstoreAppChallenge"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/viktor/BookstoreApp/BookstoreAppChallenge/ListsScreen/ListsRouter.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "27"
+                  endingLineNumber = "27"
+                  offsetFromSymbolStart = "468">
+               </Location>
+               <Location
+                  uuid = "48148DE3-FA19-4083-973B-ADE62493E69A - cc40babaf52d5089"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BookstoreAppChallenge.ListsRouter.openListScreen(listName: Swift.String) -&gt; ()"
+                  moduleName = "BookstoreAppChallenge"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/viktor/BookstoreApp/BookstoreAppChallenge/ListsScreen/ListsRouter.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "27"
+                  endingLineNumber = "27"
+                  offsetFromSymbolStart = "504">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

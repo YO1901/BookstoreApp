@@ -6,19 +6,32 @@
 //
 
 import UIKit
+import Combine
 
-final class AccountViewController: UIViewController, AccountInput {
+final class AccountViewController: ViewController, AccountInput {
     
     var presenter: AccountOutput!
     
     private let avatar = AvatarView()
     private lazy var nameTextField = NamedTextField()
+    private lazy var styleButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.addTarget(self, action: #selector(didTapStyleButton), for: .touchUpInside)
+        return button
+    }()
+    private lazy var listButton = ListButton()
+    private var cancellable = [AnyCancellable]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configure()
         presenter.activate()
+        UserInterfaceStyleService.shared.$userInterfaceStyle.sink {
+            [weak self] style in
+            
+            self?.setStyleButtonImage(style)
+        }.store(in: &cancellable)
     }
     
     func update(with model: ViewModel) {
@@ -33,17 +46,19 @@ final class AccountViewController: UIViewController, AccountInput {
                 ),
                 textFieldText: model.name,
                 textFieldFont: .systemFont(ofSize: 16, weight: .semibold),
-                textFieldColor: Colors.blackPrimary,
+                textFieldColor: Colors.blackPrimary.light,
                 didEnterText: model.didChangeName
             )
         )
         if let imageData = model.image {
             avatar.update(model: .init(image: UIImage(data: imageData)))
         }
+        
+        listButton.update(model: .init(title: "My Lists", image: Images.arrowRight, didTapClosure: model.didTapListButton))
     }
     
     private func configure() {
-        title = "Acccount"
+        title = "Account"
         
         view.backgroundColor = Colors.Background.lvl1
         
@@ -61,14 +76,54 @@ final class AccountViewController: UIViewController, AccountInput {
             $0.top.equalTo(avatar.snp.bottom).offset(26)
         }
         
-        let tapGR = UITapGestureRecognizer(target: self, action: #selector(didTapAvatar))
+        view.addSubview(styleButton)
+        styleButton.snp.makeConstraints {
+            $0.size.equalTo(35)
+            $0.trailing.bottom.equalTo(view.safeAreaLayoutGuide).inset(15)
+        }
+        setStyleButtonImage(nil)
+        
+        view.addSubview(listButton)
+        listButton.snp.makeConstraints {
+            $0.height.equalTo(56)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.top.equalTo(nameTextField.snp.bottom).offset(25)
+        }
+        
+        let avatarTapGR = UITapGestureRecognizer(target: self, action: #selector(didTapAvatar))
+        avatarTapGR.cancelsTouchesInView = false
+        avatar.addGestureRecognizer(avatarTapGR)
+        
+        let tapGR = UITapGestureRecognizer(target: self, action: #selector(didTap))
         tapGR.cancelsTouchesInView = false
-        avatar.addGestureRecognizer(tapGR)
+        view.addGestureRecognizer(tapGR)
+    }
+    
+    private func setStyleButtonImage(_ style: UIUserInterfaceStyle?) {
+        let userInterfaceStyle = style ?? overrideUserInterfaceStyle
+        switch userInterfaceStyle {
+        case .dark:
+            styleButton.setImage(Images.sunIconWhite.withRenderingMode(.alwaysOriginal), for: .normal)
+        case .light:
+            styleButton.setImage(Images.sunIconBlack.withRenderingMode(.alwaysOriginal), for: .normal)
+        default:
+            styleButton.setImage(Images.sunIconBlackWhite.withRenderingMode(.alwaysOriginal), for: .normal)
+        }
     }
     
     @objc
     private func didTapAvatar() {
         presenter.didTapAvatar()
+    }
+    
+    @objc 
+    private func didTap() {
+        nameTextField.endEditing(true)
+    }
+    
+    @objc
+    private func didTapStyleButton() {
+        UserInterfaceStyleService.shared.changeStyle()
     }
     
     func showImagePicker() {
@@ -82,7 +137,6 @@ extension AccountViewController : UIImagePickerControllerDelegate, UINavigationC
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        let image = info[.originalImage] as! UIImage
         if let image = info[.originalImage] as? UIImage,
             let imageData = image.resizeImage(minSide: 120)?.jpegData(compressionQuality: 1.0) {
             presenter.didSelectAvatar(imageData)
@@ -101,5 +155,6 @@ extension AccountViewController {
         let image: Data?
         let name: String
         let didChangeName: (String) -> Void
+        let didTapListButton: () -> Void
     }
 }

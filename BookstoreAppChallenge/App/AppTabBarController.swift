@@ -21,15 +21,6 @@ class AppTabBarController: UITabBarController {
     }
     
     private func setupTabBarController() {
-//        let homeViewController = MainViewRouter().makeScreen(doc: .init(
-//            key: "/works/OL27448W",
-//            title: "The Lord ot the Rings",
-//            authorName: ["J.R.R. Tolkien"],
-//            subject: ["Fiction"],
-//            firstPublishYear: 1954,
-//            coverI: 9255566,
-//            ratingsAverage: 4.1))
-        
         let homeViewController = MainViewRouter().makeScreen()
         
         homeViewController.tabBarItem = UITabBarItem(
@@ -46,7 +37,7 @@ class AppTabBarController: UITabBarController {
             selectedImage: Images.categories.withTintColor(
                 Colors.whitePrimary,
                 renderingMode: .alwaysOriginal))
-        let favoritesViewController = FavoritesViewController()
+        let favoritesViewController = BookListRouter(flow: .likes).makeWrappedNavigationScreen()
         favoritesViewController.tabBarItem = UITabBarItem(
             title: "Likes",
             image: Images.likes,
@@ -54,19 +45,19 @@ class AppTabBarController: UITabBarController {
                 Colors.whitePrimary,
                 renderingMode: .alwaysOriginal))
         
-        let accountViewController = AccountRouter().makeScreen()
+        let accountViewController = AccountRouter().makeWrappedNavigationScreen()
         accountViewController.tabBarItem = UITabBarItem(
             title: "Account", image: Images.account,
             selectedImage: Images.account.withTintColor(
                 Colors.whitePrimary,
                 renderingMode: .alwaysOriginal))
 
-        let nav1 = UINavigationController(rootViewController: homeViewController)
-        let nav2 = UINavigationController(rootViewController: categoriesViewController)
-        let nav3 = UINavigationController(rootViewController: favoritesViewController)
-        let nav4 = UINavigationController(rootViewController: accountViewController)
+        let nav1 = NavigationController(rootViewController: homeViewController)
+        let nav2 = NavigationController(rootViewController: categoriesViewController)
 
-        self.viewControllers = [nav1, nav2, nav3, nav4]
+        self.viewControllers = [nav1, nav2, favoritesViewController, accountViewController]
+        
+        favoritesViewController.title = "Likes"
 
         self.tabBar.tintColor = .black
         self.tabBar.unselectedItemTintColor = Colors.blackPrimary

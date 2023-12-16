@@ -8,7 +8,7 @@
 import UIKit
 
 final class AccountRouter {
-    private var controller: UIViewController?
+    private weak var controller: UIViewController?
     
     func makeScreen() -> UIViewController {
         let controller = AccountViewController()
@@ -18,6 +18,17 @@ final class AccountRouter {
         presenter.view = controller
         presenter.router = self
         
+        self.controller = controller
         return controller
+    }
+    
+    func makeWrappedNavigationScreen() -> UIViewController {
+        let controller = NavigationController(rootViewController: makeScreen())
+        self.controller = controller
+        return controller
+    }
+    
+    func openListsScreen() {
+        controller?.present(NavigationController(rootViewController: ListsRouter().makeScreen()), animated: true)
     }
 }

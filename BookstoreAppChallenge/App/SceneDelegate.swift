@@ -15,9 +15,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
-//        window.rootViewController = UserDefaultsService.shared.wasOnboardingShow ?  UINavigationController(rootViewController: AppTabBarController()) : OnboardingRouter().makeScreen()
-        window.rootViewController = UINavigationController(rootViewController: AppTabBarController())
+        window.rootViewController = UserDefaultsService.shared.wasOnboardingShow ?  AppTabBarController() : OnboardingRouter().makeScreen()
         self.window = window
         window.makeKeyAndVisible()
+    }
+    
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        CoreDataService.shared.saveContext()
     }
 }
