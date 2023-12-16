@@ -28,6 +28,7 @@ final class MainViewController: UIViewController {
     
     private var items = [ViewModel.Item]()
     private var books = [DocsEntity]()
+    private var viewModel: ViewModel?
     
     private lazy var tableView: UITableView = {
         let tv = UITableView()
@@ -84,20 +85,21 @@ final class MainViewController: UIViewController {
         }
     
     @objc func didTapButton() {
-        self.navigationController?.pushViewController(
-            BookRouter().makeScreen(
-                doc: .init(
-                    key: "/works/OL27448W",
-                    title: "The Lord ot the Rings",
-                    authorName: ["J.R.R. Tolkien"],
-                    subject: ["Fiction"],
-                    firstPublishYear: 1954,
-                    coverI: 9255566,
-                    ratingsAverage: 4.1
-                )
-            ),
-            animated: true
-        )
+//        self.navigationController?.pushViewController(
+//            BookRouter().makeScreen(
+//                doc: .init(
+//                    key: "/works/OL27448W",
+//                    title: "The Lord ot the Rings",
+//                    authorName: ["J.R.R. Tolkien"],
+//                    subject: ["Fiction"],
+//                    firstPublishYear: 1954,
+//                    coverI: 9255566,
+//                    ratingsAverage: 4.1
+//                )
+//            ),
+//            animated: true
+//        )
+        self.presenter.fetchBooksList(for: .year)
     }
     private func makeColonText(text: String?) -> NSAttributedString? {
            guard let text = text else {
@@ -110,6 +112,7 @@ final class MainViewController: UIViewController {
 extension MainViewController: MainViewProtocol {
     func update(with viewModel: ViewModel) {
 
+        self.viewModel = viewModel
         items.removeAll()
         
         items.append(.wishTitle(
@@ -120,15 +123,13 @@ extension MainViewController: MainViewProtocol {
             modelView: .init(text: Titles.topBooksTitle, textFont: .systemFont(ofSize: 20)),
             modelButton: .init(title: Titles.seeMoreBtn, font: .systemFont(ofSize: 16), type: .onlyText, tapAction: didTapButton)))
         items.append(.sortingButtons(modelButton1: .init(title: Titles.thisWeekBtn, font: .systemFont(ofSize: 16), type: .sorting, tapAction: didTapButton), modelButton2: .init(title: Titles.thisMonthBtn, font: .systemFont(ofSize: 16), type: .sorting, tapAction: didTapButton), modelButton3: .init(title: Titles.thisYearBtn, font: .systemFont(ofSize: 16), type: .sorting, tapAction: didTapButton)))
-//        items.append(.topBooks(item: .init(imageURL: model.topBooks.imageURL, category: makeColonText(text: model.topBooks.category), title: makeColonText(text: model.topBooks.title), author: makeColonText(text: model.topBooks.author))))
         items.append(.topBooks)
         items.append(.recentTitle(
             modelView: .init(text: Titles.recentTitle, textFont: .systemFont(ofSize: 20)),
             modelButton: .init(title: Titles.seeMoreBtn, font: .systemFont(ofSize: 16), type: .onlyText, tapAction: didTapButton)))
-//        items.append(.recentBooks(item: .init(imageURL: model.recentBooks.imageURL, category: makeColonText(text: model.recentBooks.category), title: makeColonText(text: model.recentBooks.title), author: makeColonText(text: model.recentBooks.author))))
         items.append(.recentBooks)
         // Обновление данных книг
-               books = viewModel.books
+        books = viewModel.books
         
         // Перезагрузка tableView, чтобы отобразить новые данные
                 tableView.reloadData()
@@ -159,10 +160,11 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
             cell.update(modelButton1: item.modelButton1, modelButton2: item.modelButton2, modelButton3: item.modelButton2)
             return cell
         case .topBooks:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "BooksCollectionViewCell", for: indexPath) as! BooksCollectionViewCell
-                           let bookModels = books.map { MainBookView.Model(imageURL: $0.coverURL(), category: NSAttributedString(string: $0.subject?.first ?? "doesnt"), title: NSAttributedString(string: $0.title), author: NSAttributedString(string: $0.authorName?.first ?? "")) }
-                           cell.configure(with: bookModels)
-                           return cell
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "BooksCollectionViewCell", for: indexPath) as! BooksCollectionViewCell
+                    if let bookModels = viewModel?.topBooks.map({ MainBookView.Model(imageURL: $0.imageURL, category: NSAttributedString(string: $0.category ?? "No Category"), title: NSAttributedString(string: $0.title ?? ""), author: NSAttributedString(string: $0.author ?? "")) }) {
+                        cell.configure(with: bookModels)
+                    }
+                    return cell
         case .recentTitle(item: let item):
             let cell = tableView.dequeueReusableCell(withIdentifier: "labelButtonCell", for: indexPath) as! LabelButtonCell
             cell.update(modelView: item.modelView, modelButton: item.modelButton)

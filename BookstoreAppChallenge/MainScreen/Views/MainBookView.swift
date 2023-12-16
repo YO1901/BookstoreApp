@@ -56,10 +56,11 @@ final class MainBookView: UIView {
         
         [categoryLabel, titleLabel, authorLabel].forEach {
             textStack.addArrangedSubview($0)
+            $0.textColor = .whitePrimary
         }
         
         categoryLabel.font = .systemFont(ofSize: 12)
-        categoryLabel.textColor = .blackPrimary
+//        categoryLabel.textColor = .whitePrimary
         titleLabel.font = .boldSystemFont(ofSize: 16)
         titleLabel.numberOfLines = 0
         authorLabel.font = .systemFont(ofSize: 14)

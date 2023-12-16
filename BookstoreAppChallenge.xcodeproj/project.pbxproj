@@ -68,6 +68,7 @@
 		E01743502B2B5B3000A6D473 /* BooksListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E017434F2B2B5B3000A6D473 /* BooksListEntity.swift */; };
 		E01743522B2D05FA00A6D473 /* DocsEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01743512B2D05FA00A6D473 /* DocsEntity.swift */; };
 		E01743542B2D24C800A6D473 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01743532B2D24C800A6D473 /* CustomTabBar.swift */; };
+		E01743562B2DEBDF00A6D473 /* BookDetailRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01743552B2DEBDF00A6D473 /* BookDetailRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -130,6 +131,7 @@
 		E017434F2B2B5B3000A6D473 /* BooksListEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksListEntity.swift; sourceTree = "<group>"; };
 		E01743512B2D05FA00A6D473 /* DocsEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocsEntity.swift; sourceTree = "<group>"; };
 		E01743532B2D24C800A6D473 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
+		E01743552B2DEBDF00A6D473 /* BookDetailRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -416,6 +418,7 @@
 				77E5B9E72B1F6A6F004BA4AA /* SubjectRequest.swift */,
 				77E5B9EF2B1F7264004BA4AA /* BookRequest.swift */,
 				E017434D2B2B598000A6D473 /* BooksListRequest.swift */,
+				E01743552B2DEBDF00A6D473 /* BookDetailRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -542,6 +545,7 @@
 				77E5B9E82B1F6A6F004BA4AA /* SubjectRequest.swift in Sources */,
 				7778512B2B1FC1B600899704 /* OnboardingRouter.swift in Sources */,
 				43331E612B1DF36B0015E70F /* MainViewController.swift in Sources */,
+				E01743562B2DEBDF00A6D473 /* BookDetailRequest.swift in Sources */,
 				777851272B1FC1A900899704 /* OnboardingPresenter.swift in Sources */,
 				777851392B1FC93300899704 /* UILabel+Extension.swift in Sources */,
 				77E5B9EA2B1F6AE8004BA4AA /* SubjectEntity.swift in Sources */,

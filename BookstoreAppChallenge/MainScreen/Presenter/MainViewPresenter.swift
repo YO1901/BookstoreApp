@@ -1,10 +1,3 @@
-//
-//  MainViewPresenter.swift
-//  BookstoreAppChallenge
-//
-//  Created by Nikita Shirobokov on 09.12.23.
-//
-
 import UIKit
 import NetworkService
 
@@ -14,34 +7,86 @@ final class MainViewPresenter: MainViewPresenterProtocol {
     weak var view: MainViewProtocol?
     
     private let networkManager = NetworkManager()
+    
+    // Данные для каждого временного периода
+    private var weekData: [MainViewController.ViewModel.BookItem] = []
+    private var monthData: [MainViewController.ViewModel.BookItem] = []
+    private var yearData: [MainViewController.ViewModel.BookItem] = []
 
-    // Возможно, метод activate() больше не нужен, если он не используется
+    // Запуск первоначальной загрузки данных
     func activate() {
-        // Здесь могла быть ваша логика, если метод все еще нужен
+        fetchBooksList(for: .week) { [weak self] items in
+            self?.weekData = items
+            self?.updateView(with: items)
+        }
+        fetchBooksList(for: .month) { [weak self] items in
+            self?.monthData = items
+        }
+        fetchBooksList(for: .year) { [weak self] items in
+            self?.yearData = items
+        }
     }
 
-    func fetchBooksList(for timePeriod: BooksListRequest.Timeframe) {
-            networkManager.sendRequest(request: BooksListRequest(timeframe: timePeriod)) { [weak self] result in
-                switch result {
-                case .success(let booksList):
-                    let bookItems = booksList.works.map { doc -> MainViewController.ViewModel.BookItem in
-                        return MainViewController.ViewModel.BookItem(
+    // Обработка переключения между временными периодами
+    func switchToTimePeriod(_ timePeriod: BooksListRequest.Timeframe) {
+        switch timePeriod {
+        case .week:
+            updateView(with: weekData)
+        case .month:
+            updateView(with: monthData)
+        case .year:
+            updateView(with: yearData)
+        }
+    }
+
+    func fetchBooksList(for timePeriod: BooksListRequest.Timeframe, completion: @escaping ([MainViewController.ViewModel.BookItem]) -> Void) {
+        networkManager.sendRequest(request: BooksListRequest(timeframe: timePeriod)) { [weak self] result in
+            switch result {
+            case .success(let booksListEntity):
+                let group = DispatchGroup()
+                var bookItems: [MainViewController.ViewModel.BookItem] = []
+
+                for doc in booksListEntity.works {
+                    group.enter()
+                    self?.fetchBookDetails(bookKey: doc.key) { category in
+                        let bookItem = MainViewController.ViewModel.BookItem(
                             imageURL: doc.coverURL(),
-                            category: doc.subject?.first,
+                            category: category,
                             title: doc.title,
                             author: doc.authorName?.first)
+                        bookItems.append(bookItem)
+                        group.leave()
                     }
-                    // Передаем список книг в ViewModel
-                    let viewModel = MainViewController.ViewModel(
-                        topBooks: bookItems,
-                        recentBooks: bookItems,
-                        books: booksList.works)
-                    self?.view?.update(with: viewModel)
-                case .failure(let error):
-                    print(error)
                 }
+                
+                group.notify(queue: .main) {
+                    completion(bookItems)
+                }
+            case .failure(let error):
+                print(error)
+                completion([])
             }
         }
     }
 
+    private func fetchBookDetails(bookKey: String, completion: @escaping (String?) -> Void) {
+        networkManager.sendRequest(request: BookDetailRequest(bookKey: bookKey)) { result in
+            switch result {
+            case .success(let bookDetail):
+                let category = bookDetail.subjects?.first
+                completion(category)
+            case .failure(let error):
+                print(error)
+                completion(nil)
+            }
+        }
+    }
 
+    private func updateView(with bookItems: [MainViewController.ViewModel.BookItem]) {
+        let viewModel = MainViewController.ViewModel(
+            topBooks: bookItems,
+            recentBooks: bookItems,
+            books: bookItems.map { DocsEntity(from: $0) }) // Преобразование в DocsEntity, если требуется
+        self.view?.update(with: viewModel)
+    }
+}

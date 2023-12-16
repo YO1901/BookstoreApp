@@ -30,20 +30,6 @@ struct DocsEntity: Decodable {
     let subject: [String]?
     let coverEditionKey: String?
     let averageRating: Double?
-
-//    enum CodingKeys: String, CodingKey {
-//        case key
-//        case title
-//        case editionCount = "edition_count"
-//        case firstPublishYear = "first_publish_year"
-//        case hasFulltext = "has_fulltext"
-//        case coverI = "cover_i"
-//        case language
-//        case authorName = "author_name"
-//        case subject
-//        case coverEditionKey = "cover_edition_key"
-//        case averageRating = "average_rating"
-//    }
     
     func coverURL(coverKey: CoverKey = .ID, coverSize: CoverSize = .M) -> URL? {
         guard let coverI, let url = URL(string: "https://covers.openlibrary.org/b/\(coverKey)/\(coverI)-\(coverSize).jpg") else {
