@@ -7,15 +7,16 @@
 
 import UIKit
 
-final class DefaultButton: UIView {
+    final class DefaultButton: UIView {
     
     private enum Layout {
         static let cornerRadius: CGFloat = 5
-        static let borderWidth: CGFloat = 2
+        static let borderWidth: CGFloat = 1
     }
-    
+        
     private let button = UIButton(type: .system)
     private var tapAction: (() -> Void)?
+        
     private var needBorder = false {
         didSet {
             setNeedsLayout()
@@ -64,6 +65,7 @@ final class DefaultButton: UIView {
             button.layer.frame = frame
             button.layer.borderColor = Colors.blackPrimary.cgColor
             button.layer.borderWidth = Layout.borderWidth
+            button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 7, bottom: 0, right: 7)
         } else {
             button.layer.frame = button.frame
             button.layer.borderWidth = .zero
@@ -83,6 +85,9 @@ extension DefaultButton: Configurable {
             case fill
             case fillGray
             case stroke
+            case onlyText
+            case search
+            case sorting
         }
         
         let title: String
@@ -91,7 +96,7 @@ extension DefaultButton: Configurable {
         let tapAction: () -> Void
         
         init(
-            title: String,
+            title: String = "",
             font: UIFont = .systemFont(ofSize: 20),
             type: ButtonType,
             tapAction: @escaping () -> Void
@@ -107,6 +112,7 @@ extension DefaultButton: Configurable {
         tapAction = model.tapAction
         button.setTitle(model.title, for: .normal)
         button.titleLabel?.font = model.font
+        
         switch model.type {
         case .fill:
             button.backgroundColor = Colors.blackPrimary
@@ -120,6 +126,17 @@ extension DefaultButton: Configurable {
             button.backgroundColor = Colors.grayPrimary
             needBorder = false
             button.setTitleColor(Colors.whitePrimary, for: .normal)
+        case .onlyText:
+            button.setTitleColor(Colors.blackPrimary, for: .normal)
+            needBorder = false
+        case .search:
+            button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            button.tintColor = Colors.blackPrimary
+            needBorder = false
+        case .sorting:
+            button.backgroundColor = Colors.whitePrimary
+            needBorder = true
+            button.setTitleColor(Colors.blackPrimary, for: .normal)
         }
     }
 }
