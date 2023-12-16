@@ -40,7 +40,7 @@ final class ListsPresenter: ListsViewOutput {
     
     private func loadData() {
         var items = [ViewModel.Item]()
-        lists = CoreDataService.shared.getLists()
+        lists = CoreDataService.shared.getLists().filter { $0.title != "Recent" }
         lists.enumerated().forEach {
             index, list in
             
