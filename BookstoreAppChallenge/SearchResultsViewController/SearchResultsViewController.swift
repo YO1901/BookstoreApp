@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class SearchResultsViewController: UIViewController {
+class SearchResultsViewController: ViewController {
     var books: [DocEntity] = [] // Данные о книгах, которые нужно отобразить
     var collectionView: UICollectionView!
 
@@ -58,9 +58,8 @@ extension SearchResultsViewController: UICollectionViewDataSource, UICollectionV
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // Здесь обработайте выбор книги, например:
-        // let book = books[indexPath.row]
-        // showBookDetail(for: book)
+        let book = books[indexPath.row]
+        navigationController?.pushViewController(BookRouter().makeScreen(doc: book), animated: true)
     }
 }
 

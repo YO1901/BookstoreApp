@@ -88,7 +88,7 @@ final class MainViewPresenter: MainViewPresenterProtocol {
                 var bookItems: [MainViewController.ViewModel.BookItem] = []
                 var docEntities: [DocEntity] = []
                 
-                let limitedWorks = Array(booksListEntity.works.prefix(1))
+                let limitedWorks = Array(booksListEntity.works.prefix(10))
                 limitedWorks.forEach { doc in
                     group.enter()
                     self?.fetchBookDetails(bookKey: doc.key) { category in
