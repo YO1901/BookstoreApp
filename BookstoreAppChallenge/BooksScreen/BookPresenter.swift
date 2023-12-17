@@ -92,7 +92,7 @@ final class BookPresenter: BookOutput {
         book.setValue(doc.title, forKey: #keyPath(OpenBook.title))
         book.setValue(doc.subject?.first, forKey: #keyPath(OpenBook.subject))
         book.setValue(doc.coverURL()?.absoluteString, forKey: #keyPath(OpenBook.imageURL))
-        book.setValue(doc.coverI ?? 0, forKey: #keyPath(OpenBook.coverI))
+        book.setValue(doc.cover ?? 0, forKey: #keyPath(OpenBook.coverI))
         book.setValue(doc.key, forKey: #keyPath(OpenBook.key))
         book.setValue(list, forKey: #keyPath(OpenBook.bookList))
         book.setValue(doc.ratingsAverage ?? 0, forKey: #keyPath(OpenBook.rating))

@@ -106,6 +106,7 @@ final class OnboardingViewController: UIViewController, OnboardingInput {
             
             let size = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(Layout.collectionHeight))
             let item = NSCollectionLayoutItem(layoutSize: size)
+            item.contentInsets = .init(top: 0, leading: 20, bottom: 0, trailing: 20)
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: size, subitems: [item])
             let section = NSCollectionLayoutSection(group: group)
             section.orthogonalScrollingBehavior = .groupPaging
@@ -126,7 +127,9 @@ extension OnboardingViewController: UICollectionViewDelegate, UICollectionViewDa
         }
         let item = items[indexPath.row]
         cell.update(with: .init(text: item.text, textAlignment: .center))
+        cell.backgroundColor = Colors.Background.lvl2
         return cell
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

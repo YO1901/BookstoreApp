@@ -25,11 +25,8 @@ final class BookRouter {
     }
     
     func openListsScreen(selectListClosure: @escaping (String) -> Void) {
-        guard let controller else {
-            return
-        }
-        let listsController = NavigationController(rootViewController: ListsRouter().makeScreen(selectListClosure))
-        controller.present(listsController, animated: true)
+        let vc = NavigationController(rootViewController: ListsRouter().makeScreen(selectListClosure))
+        controller?.present(vc, animated: true)
     }
     
     func dissmissPresented() {

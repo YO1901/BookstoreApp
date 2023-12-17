@@ -8,6 +8,13 @@ final class MainViewPresenter: MainViewPresenterProtocol {
     private let networkManager = NetworkManager()
     private var bookData: [BooksListRequest.Timeframe: ([MainViewController.ViewModel.BookItem], [DocEntity])] = [:]
     
+    func didTapSeeMoreButton() {
+        if let bookDataForWeek = self.bookData[.week] {
+            let books = bookDataForWeek.1 // Получаем массив DocEntity для "этой недели"
+            router?.navigateToBookListScreen(with: books, title: "Top Books")
+        }
+    }
+    
     func activate() {
         // Загружаем данные для всех временных периодов один раз и сохраняем их
         let timePeriods: [BooksListRequest.Timeframe] = [.week, .month, .year]
@@ -99,4 +106,17 @@ final class MainViewPresenter: MainViewPresenterProtocol {
             }
         }
     }
+    
+    func searchBooks(query: String) {
+            let request = SearchBookRequest(query: query)
+            networkManager.sendRequest(request: request) { [weak self] result in
+                switch result {
+                case .success(let response):
+                    self?.router?.navigateToSearchResultsScreen(with: response.docs)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
+    
 }

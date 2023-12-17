@@ -27,7 +27,7 @@ final class MainBookView: UIView {
     private let colorImage: UIImageView = {
         let cv = UIImageView()
         cv.contentMode = .scaleAspectFit
-        cv.backgroundColor = .black
+        cv.backgroundColor = Colors.blackPrimary
         cv.clipsToBounds = true
         return cv
     }()

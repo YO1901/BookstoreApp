@@ -15,6 +15,8 @@ protocol MainViewProtocol: AnyObject {
 
 // Output protocol
 protocol MainViewPresenterProtocol: AnyObject {
+    func didTapSeeMoreButton()
+    func searchBooks(query: String)
     var router: MainViewRouter? { get set }
     func activate()
     func switchToTimePeriod(_ timePeriod: BooksListRequest.Timeframe)

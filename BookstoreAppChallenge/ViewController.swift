@@ -31,6 +31,14 @@ class ViewController: UIViewController {
         }.store(in: &cancellables)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if loadingView.superview != nil {
+            loadingView.startAnimation()
+        }
+    }
+    
     func showLoading() {
         loadingView.backgroundColor = view.backgroundColor
         view.addSubview(loadingView)

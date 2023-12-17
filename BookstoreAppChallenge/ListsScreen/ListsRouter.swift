@@ -24,12 +24,14 @@ final class ListsRouter {
     }
     
     func openListScreen(listName: String) {
-        guard let controller else { return }
-        let vc = NavigationController(rootViewController: BookListRouter(flow: .list(title: listName)).makeScreen())
-        if let navController = controller as? UINavigationController {
+        let vc = BookListRouter(flow: .list(title: listName)).makeScreen()
+        if let navController = controller?.navigationController {
             navController.pushViewController(vc, animated: true)
+        }
+        else if let controller = controller as? UINavigationController {
+            controller.pushViewController(vc, animated: true)
         } else {
-            controller.present(vc, animated: true)
+            controller?.present(vc, animated: true)
         }
     }
 }
