@@ -7,6 +7,34 @@ final class MainViewPresenter: MainViewPresenterProtocol {
     weak var view: MainViewProtocol?
     private let networkManager = NetworkManager()
     private var bookData: [BooksListRequest.Timeframe: ([MainViewController.ViewModel.BookItem], [DocEntity])] = [:]
+    private var timePeriod: BooksListRequest.Timeframe = .week
+    private var recentBooks: [DocEntity] {
+        guard let recent = CoreDataService.shared.getRecentList().book?.array.compactMap({ $0 as? OpenBook }).sorted(by: { $0.addedDate > $1.addedDate }) else {
+            return []
+        }
+        return recent.map {
+            .init(
+                key: $0.key,
+                title: $0.title ?? "",
+                authorName: [$0.author ?? ""],
+                subject: [$0.subject ?? ""],
+                firstPublishYear: nil,
+                coverI: Int($0.coverI),
+                ratingsAverage: $0.rating,
+                description: $0.description
+            )
+        }
+    }
+    
+    init() {
+        CoreDataService.shared.recentObservers.append {
+            [weak self] in
+            
+            guard let self else { return }
+            
+            switchToTimePeriod(timePeriod)
+        }
+    }
     
     func didTapSeeMoreButton() {
         if let bookDataForWeek = self.bookData[.week] {
@@ -20,12 +48,15 @@ final class MainViewPresenter: MainViewPresenterProtocol {
         let timePeriods: [BooksListRequest.Timeframe] = [.week, .month, .year]
         timePeriods.forEach { timePeriod in
             fetchBooksList(for: timePeriod) { [weak self] bookItems, docEntities in
-                self?.bookData[timePeriod] = (bookItems, docEntities)
+                
+                guard let self else { return }
+                
+                bookData[timePeriod] = (bookItems, docEntities)
                 if timePeriod == .week { // Первоначальное отображение данных
-                    self?.view?.hideLoading()
-                    self?.view?.update(with: MainViewController.ViewModel(
+                    view?.hideLoading()
+                    view?.update(with: MainViewController.ViewModel(
                         topBooks: bookItems,
-                        recentBooks: bookItems,
+                        recentBooks: recentBooks,
                         books: docEntities
                     ), forTimePeriod: .week)
                 }
@@ -42,7 +73,7 @@ final class MainViewPresenter: MainViewPresenterProtocol {
         if let data = bookData[timePeriod] {
             self.view?.update(with: MainViewController.ViewModel(
                 topBooks: data.0,
-                recentBooks: data.0,
+                recentBooks: recentBooks,
                 books: data.1
             ), forTimePeriod: timePeriod)
         }
@@ -57,7 +88,7 @@ final class MainViewPresenter: MainViewPresenterProtocol {
                 var bookItems: [MainViewController.ViewModel.BookItem] = []
                 var docEntities: [DocEntity] = []
                 
-                let limitedWorks = Array(booksListEntity.works.prefix(10))
+                let limitedWorks = Array(booksListEntity.works.prefix(1))
                 limitedWorks.forEach { doc in
                     group.enter()
                     self?.fetchBookDetails(bookKey: doc.key) { category in
@@ -108,15 +139,17 @@ final class MainViewPresenter: MainViewPresenterProtocol {
     }
     
     func searchBooks(query: String) {
-            let request = SearchBookRequest(query: query)
-            networkManager.sendRequest(request: request) { [weak self] result in
-                switch result {
-                case .success(let response):
-                    self?.router?.navigateToSearchResultsScreen(with: response.docs)
-                case .failure(let error):
-                    print(error)
-                }
+        view?.showLoading()
+        let request = SearchBookRequest(query: query)
+        networkManager.sendRequest(request: request) { [weak self] result in
+            self?.view?.hideLoading()
+            switch result {
+            case .success(let response):
+                self?.router?.navigateToSearchResultsScreen(with: response.docs)
+            case .failure(let error):
+                print(error)
             }
         }
+    }
     
 }

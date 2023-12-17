@@ -47,11 +47,18 @@ final class MainViewController: ViewController {
         return loader
     }()
     
+    private lazy var searchBar = {
+        let search = SearchView()
+        search.searchAction = { [weak self] query in
+            self?.presenter.searchBooks(query: query)
+        }
+        return search
+    }()
+    
     private lazy var tableView: UITableView = {
         let tv = UITableView()
         tv.register(LabelButtonCell.self, forCellReuseIdentifier: "labelButtonCell")
         tv.register(SpaceCell.self, forCellReuseIdentifier: "spaceCell")
-        tv.register(SearchCell.self, forCellReuseIdentifier: "searchCell")
         //        tv.register(BookCell.self, forCellReuseIdentifier: "bookCell")
         tv.register(ButtonStackCell.self, forCellReuseIdentifier: "buttonStackCell")
         //        tv.register(BookCollectionViewCell.self, forCellReuseIdentifier: "bookCollectionCell")
@@ -80,10 +87,15 @@ final class MainViewController: ViewController {
         setupLoader()
         // Регистрация кастомной ячейки для UICollectionView в UITableView
         tableView.register(BooksCollectionViewCell.self, forCellReuseIdentifier: "BooksCollectionViewCell")
+        view.addSubview(searchBar)
+        searchBar.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalToSuperview()
+        }
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.bottom.leading.trailing.equalToSuperview()
-            make.top.equalToSuperview().inset(70)
+            make.top.equalTo(searchBar.snp.bottom)
         }
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
@@ -154,11 +166,6 @@ extension MainViewController: MainViewProtocol {
         
         self.viewModel = viewModel
         items.removeAll()
-        
-//        items.append(.wishTitle(
-//            modelView: .init(text: Titles.happyTitle, textFont: .systemFont(ofSize: 16)),
-//            modelButton: .init(type: .search, tapAction: didTapButtonWeek)))
-        items.append(.search)
         items.append(.space(item: .init(height: 15)))
         items.append(.topBooksTitle(
             modelView: .init(text: Titles.topBooksTitle, textFont: .systemFont(ofSize: 20)),
@@ -183,17 +190,6 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         let item = items[indexPath.row]
         
         switch item {
-//        case .wishTitle(item: let item):
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "labelButtonCell", for: indexPath) as! LabelButtonCell
-//            cell.update(modelView: item.modelView, modelButton: item.modelButton)
-//            cell.selectionStyle = .none
-//            return cell
-        case.search:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell", for: indexPath) as! SearchCell
-            cell.searchAction = { [weak self] query in
-                self?.presenter.searchBooks(query: query)
-            }
-            return cell
         case .space(item: let item):
             let cell = tableView.dequeueReusableCell(withIdentifier: "spaceCell", for: indexPath) as! SpaceCell
             cell.update(with: item)
@@ -227,8 +223,16 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         case .recentBooks:
             let cell = tableView.dequeueReusableCell(withIdentifier: "BooksCollectionViewCell", for: indexPath) as! BooksCollectionViewCell
-            let bookModels = books.map { MainBookView.Model(imageURL: $0.coverURL(), category: NSAttributedString(string: $0.subject?.first ?? ""), title: NSAttributedString(string: $0.title), author: NSAttributedString(string: $0.authorName?.first ?? "")) }
-            cell.configure(with: bookModels)
+            if let recent = viewModel?.recentBooks {
+                let bookModels = recent.map({ MainBookView.Model(imageURL: $0.coverURL(), category: NSAttributedString(string: $0.subject?.first ?? ""), title: NSAttributedString(string: $0.title ), author: NSAttributedString(string: $0.authorName?.first ?? "")) })
+                cell.configure(with: bookModels)
+                cell.books = recent
+                cell.onBookSelect = {
+                    [weak self] selectedBook in
+                    
+                    self?.presenter?.showBookDetail(for: selectedBook)
+                }
+            }
             cell.selectionStyle = .none
             return cell
         }
@@ -264,13 +268,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell.update(with: model)
         return cell
     }
-     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let searchCell = cell as? SearchCell {
-            DispatchQueue.main.async {
-                searchCell.searchTextField.becomeFirstResponder()
-            }
-        }
-    }
 }
 
 
@@ -286,7 +283,6 @@ extension MainViewController {
         
         enum Item {
 //            case wishTitle(modelView: UILabel.Model, modelButton: DefaultButton.Model)
-            case search
             case topBooksTitle(modelView: UILabel.Model, modelButton: DefaultButton.Model)
             case sortingButtons(modelButton1: DefaultButton.Model, modelButton2: DefaultButton.Model, modelButton3: DefaultButton.Model)
             case topBooks
@@ -296,9 +292,7 @@ extension MainViewController {
         }
         
         let topBooks: [BookItem]
-        let recentBooks: [BookItem]
+        let recentBooks: [DocEntity]
         let books: [DocEntity]
     }
 }
-
-

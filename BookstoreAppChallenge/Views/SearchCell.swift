@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchCell: UITableViewCell {
+final class SearchView: UIView {
     
     var searchAction: ((String) -> Void)?
     
@@ -16,17 +16,18 @@ class SearchCell: UITableViewCell {
         textField.placeholder = "Search title/author/ISBN no"
         textField.borderStyle = .roundedRect
         textField.returnKeyType = .search
+        textField.delegate = self
         return textField
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupViews()
-        searchTextField.delegate = self
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupViews()
     }
     
     private func setupViews() {
@@ -46,7 +47,7 @@ class SearchCell: UITableViewCell {
     }
 }
 
-extension SearchCell: UITextFieldDelegate {
+extension SearchView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder() // Dismiss the keyboard
         // Assuming your search action is here:
