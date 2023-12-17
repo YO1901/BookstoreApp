@@ -23,7 +23,7 @@ final class BookPresenter: BookOutput {
     }
     
     func activate() {
-        view?.showLoading()
+//        view?.showLoading()
         networkManager.sendRequest(request: BookRequest(key: doc.key)) {
             [weak self] result in
             
@@ -41,7 +41,7 @@ final class BookPresenter: BookOutput {
                     return "\(Double(Int(ratings * 100)) / 100) / 5"
                 }()
                 
-                view?.hideLoading()
+//                view?.hideLoading()
                 view?.update(
                     with: .init(
                         title: doc.title,

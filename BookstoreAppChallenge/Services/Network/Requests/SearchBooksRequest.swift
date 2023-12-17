@@ -20,23 +20,26 @@ struct SearchBookRequest: NetworkRequest {
     }
     
     var url: Alamofire.URLConvertible {
-        "https://openlibrary.org/search.json"
+        "https://openlibrary.org/search.json?q=\(query)"
     }
     
     var method: Alamofire.HTTPMethod {
         .get
     }
     
+//    var parameters: Alamofire.Parameters {
+//        var params: [String : Any] = [
+//            "q=": query.replacingOccurrences(of: " ", with: "+"),
+//            "fields": "title,author_name,subject,cover_i,first_publish_year",
+//            "limit": limit
+//        ]
+//        if let sort {
+//            params["sort"] = sort.rawValue
+//        }
+//        return params
+//    }
     var parameters: Alamofire.Parameters {
-        var params: [String : Any] = [
-            "q": query.replacingOccurrences(of: " ", with: "+"),
-            "fields": "title,author_name,subject,cover_i,first_publish_year",
-            "limit": limit
-        ]
-        if let sort {
-            params["sort"] = sort.rawValue
-        }
-        return params
+       [:]
     }
     
     let query: String
@@ -47,7 +50,7 @@ struct SearchBookRequest: NetworkRequest {
     init(
         query: String,
         sort: SortKey? = nil,
-        limit: Int = 15
+        limit: Int = 0
     ) {
         self.query = query
         self.sort = sort

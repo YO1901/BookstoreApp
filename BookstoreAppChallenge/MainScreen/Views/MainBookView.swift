@@ -49,7 +49,7 @@ final class MainBookView: UIView {
     }
     
     private func configure() {
-
+        
         addSubview(imageView)
         addSubview(colorImage)
         addSubview(textStack)
@@ -60,26 +60,26 @@ final class MainBookView: UIView {
         }
         
         categoryLabel.font = .systemFont(ofSize: 12)
-//        categoryLabel.textColor = .whitePrimary
+        //        categoryLabel.textColor = .whitePrimary
         titleLabel.font = .boldSystemFont(ofSize: 16)
         titleLabel.numberOfLines = 0
         authorLabel.font = .systemFont(ofSize: 14)
     }
     private func setupConstraints() {
-            // Assuming the imageView is the book cover and should take the full height of the view
-            imageView.snp.makeConstraints { make in
-                make.top.equalTo(12) // Adjust inset as needed
-                make.width.equalTo(91)
-                make.height.equalTo(134)
-                make.centerX.equalToSuperview()
-            }
-            
-            textStack.snp.makeConstraints { make in
-                make.top.equalTo(imageView.snp.bottom).inset(-10)
-//                make.width.equalToSuperview().inset(3)
-                make.height.width.equalTo(colorImage).inset(8)
-                make.centerX.equalTo(colorImage)
-            }
+        // Assuming the imageView is the book cover and should take the full height of the view
+        imageView.snp.makeConstraints { make in
+            make.top.equalTo(12) // Adjust inset as needed
+            make.width.equalTo(91)
+            make.height.equalTo(134)
+            make.centerX.equalToSuperview()
+        }
+        
+        textStack.snp.makeConstraints { make in
+            make.top.equalTo(imageView.snp.bottom).inset(-10)
+            //                make.width.equalToSuperview().inset(3)
+            make.height.width.equalTo(colorImage).inset(8)
+            make.centerX.equalTo(colorImage)
+        }
         
         colorImage.snp.makeConstraints { make in
             make.width.equalToSuperview()

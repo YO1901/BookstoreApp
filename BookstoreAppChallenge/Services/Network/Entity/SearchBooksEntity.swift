@@ -10,5 +10,5 @@ import NetworkService
 import Alamofire
 
 struct SearchBooksEntity: Decodable {    
-    let doc: [DocEntity]
+    let docs: [DocEntity]
 }
