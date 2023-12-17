@@ -32,6 +32,7 @@ final class MainViewController: ViewController {
     
     private var items = [ViewModel.Item]()
     private var books = [DocEntity]()
+    private var recent = [DocEntity]()
     private var viewModel: ViewModel?
     
     private lazy var button: DefaultButton = {

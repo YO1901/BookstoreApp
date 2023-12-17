@@ -25,8 +25,14 @@ class CoreDataService {
         }
         return container
     }()
+    
+    var recentObservers = [() -> Void]()
 
     lazy var managedContext: NSManagedObjectContext = self.storeContainer.viewContext
+    
+    deinit {
+        recentObservers = []
+    }
 
     func saveContext() {
         guard managedContext.hasChanges else { return }

@@ -80,6 +80,7 @@ final class BookPresenter: BookOutput {
                         }
                     )
                 )
+                addToRecent()
             case .failure(let error):
                 print(error)
             }
@@ -109,6 +110,17 @@ final class BookPresenter: BookOutput {
         }
         
         saveBook(list: list)
+    }
+    
+    private func addToRecent() {
+        let list = CoreDataService.shared.getRecentList()
+        let books = list.book?.compactMap { $0 as? OpenBook }
+        if let savedBook = books?.first(where: { $0.key == doc.key }) {
+            CoreDataService.shared.managedContext.delete(savedBook)
+        }
+        
+        saveBook(list: list)
+        CoreDataService.shared.recentObservers.forEach{ $0() }
     }
     
     private func addToList(_ title: String) {
