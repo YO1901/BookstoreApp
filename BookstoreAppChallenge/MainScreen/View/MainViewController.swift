@@ -32,6 +32,7 @@ final class MainViewController: ViewController {
     
     private var items = [ViewModel.Item]()
     private var books = [DocEntity]()
+    private var recent = [DocEntity]()
     private var viewModel: ViewModel?
     
     private lazy var button: DefaultButton = {
@@ -221,8 +222,9 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
             return cell
         case .recentBooks:
             let cell = tableView.dequeueReusableCell(withIdentifier: "BooksCollectionViewCell", for: indexPath) as! BooksCollectionViewCell
-            let bookModels = books.map { MainBookView.Model(imageURL: $0.coverURL(), category: NSAttributedString(string: $0.subject?.first ?? ""), title: NSAttributedString(string: $0.title), author: NSAttributedString(string: $0.authorName?.first ?? "")) }
-            cell.configure(with: bookModels)
+            if let bookModels = viewModel?.recentBooks.map({ MainBookView.Model(imageURL: $0.imageURL, category: NSAttributedString(string: $0.category ?? "No Category"), title: NSAttributedString(string: $0.title ?? ""), author: NSAttributedString(string: $0.author ?? "")) }) {
+                cell.configure(with: bookModels)
+            }
             return cell
         }
     }

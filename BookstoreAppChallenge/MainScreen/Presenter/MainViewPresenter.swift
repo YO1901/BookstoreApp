@@ -12,6 +12,17 @@ final class MainViewPresenter: MainViewPresenterProtocol {
     private var weekData: ([MainViewController.ViewModel.BookItem], [DocEntity]) = ([], [])
     private var monthData: ([MainViewController.ViewModel.BookItem], [DocEntity]) = ([], [])
     private var yearData: ([MainViewController.ViewModel.BookItem], [DocEntity]) = ([], [])
+    private var timePeriod: BooksListRequest.Timeframe = .week
+    
+    init() {
+        CoreDataService.shared.recentObservers.append {
+            [weak self] in
+            
+            guard let self else { return }
+            
+            switchToTimePeriod(timePeriod)
+        }
+    }
 
     // Запуск первоначальной загрузки данных
     func activate() {
@@ -43,9 +54,9 @@ final class MainViewPresenter: MainViewPresenterProtocol {
         }
     }
 
-
     // Обработка переключения между временными периодами
     func switchToTimePeriod(_ timePeriod: BooksListRequest.Timeframe) {
+        self.timePeriod = timePeriod
         switch timePeriod {
         case .week:
             updateView(with: weekData.0, DocEntities: weekData.1)
@@ -108,9 +119,17 @@ final class MainViewPresenter: MainViewPresenterProtocol {
     }
 
     private func updateView(with bookItems: [MainViewController.ViewModel.BookItem], DocEntities: [DocEntity]) {
+        let recent = CoreDataService.shared.getRecentList().book?.array.compactMap{ $0 as? OpenBook }.sorted(by: { $0.addedDate < $1.addedDate }) ?? []
         let viewModel = MainViewController.ViewModel(
             topBooks: bookItems,
-            recentBooks: bookItems,
+            recentBooks: recent.map {
+                .init(
+                    imageURL: URL(string: $0.imageURL ?? ""),
+                    category: $0.subject,
+                    title: $0.title,
+                    author: $0.author
+                )
+            },
             books: DocEntities
         )
         self.view?.update(with: viewModel)
