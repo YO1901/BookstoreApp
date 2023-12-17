@@ -25,6 +25,7 @@ struct DocEntity: Decodable {
     let coverI: Int?
     let coverId: Int?
     let ratingsAverage: Double?
+    let description: String?
     
     init(
         key: String,
@@ -34,7 +35,8 @@ struct DocEntity: Decodable {
         firstPublishYear: Int?,
         coverI: Int?,
         coverId: Int? = nil,
-        ratingsAverage: Double?
+        ratingsAverage: Double?,
+        description: String?
     ) {
         self.key = key
         self.title = title
@@ -44,6 +46,7 @@ struct DocEntity: Decodable {
         self.coverI = coverI
         self.coverId = coverId
         self.ratingsAverage = ratingsAverage
+        self.description = description
     }
     
     func coverURL(coverKey: CoverKey = .ID, coverSize: CoverSize = .M) -> URL? {

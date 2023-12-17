@@ -7,15 +7,17 @@
 
 // Input protocol
 protocol MainViewProtocol: AnyObject {
-    func update(with viewModel: MainViewController.ViewModel)
+    func update(with viewModel: MainViewController.ViewModel, 
+                forTimePeriod: BooksListRequest.Timeframe)
     func showLoading()
     func hideLoading()
 }
 
 // Output protocol
 protocol MainViewPresenterProtocol: AnyObject {
-    func fetchBooksList(for timePeriod: BooksListRequest.Timeframe, completion: @escaping ([MainViewController.ViewModel.BookItem], [DocEntity]) -> Void)
-    func fetchBooksList(for timePeriod: BooksListRequest.Timeframe)
+    var router: MainViewRouter? { get set }
     func activate()
-        func switchToTimePeriod(_ timePeriod: BooksListRequest.Timeframe)
+    func switchToTimePeriod(_ timePeriod: BooksListRequest.Timeframe)
+    func showBookDetail(for book: DocEntity)
 }
+

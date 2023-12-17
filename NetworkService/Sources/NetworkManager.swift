@@ -34,6 +34,10 @@ public final class NetworkManager {
             do {
                 let decoded = try request.decoder.decode(Request.Response.self, from: data)
                 completionHandler(.success(decoded))
+            } catch DecodingError.keyNotFound(let key, _) {
+                print("Отсутствует ключ: \(key.stringValue)")
+                // Можно обработать этот случай специально, например, возвращать частично заполненный объект или ошибку
+                completionHandler(.failure(NetworkError.decodingError))
             } catch {
                 print("Decoding error: \(error)")
                 completionHandler(.failure(NetworkError.decodingError))

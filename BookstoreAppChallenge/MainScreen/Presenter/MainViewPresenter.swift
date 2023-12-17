@@ -2,88 +2,83 @@ import UIKit
 import NetworkService
 
 final class MainViewPresenter: MainViewPresenterProtocol {
-
+    
     var router: MainViewRouter?
     weak var view: MainViewProtocol?
-    
     private let networkManager = NetworkManager()
+    private var bookData: [BooksListRequest.Timeframe: ([MainViewController.ViewModel.BookItem], [DocEntity])] = [:]
     
-    // Данные для каждого временного периода
-    private var weekData: ([MainViewController.ViewModel.BookItem], [DocEntity]) = ([], [])
-    private var monthData: ([MainViewController.ViewModel.BookItem], [DocEntity]) = ([], [])
-    private var yearData: ([MainViewController.ViewModel.BookItem], [DocEntity]) = ([], [])
-
-    // Запуск первоначальной загрузки данных
     func activate() {
-        view?.showLoading()
-
-        let dispatchGroup = DispatchGroup()
-
-        dispatchGroup.enter()
-        fetchBooksList(for: .week) { [weak self] (items, Doc) in
-            self?.weekData = (items, Doc)
-            dispatchGroup.leave()
-        }
-
-        dispatchGroup.enter()
-        fetchBooksList(for: .month) { [weak self] (items, Doc) in
-            self?.monthData = (items, Doc)
-            dispatchGroup.leave()
-        }
-
-        dispatchGroup.enter()
-        fetchBooksList(for: .year) { [weak self] (items, Doc) in
-            self?.yearData = (items, Doc)
-            dispatchGroup.leave()
-        }
-
-        dispatchGroup.notify(queue: .main) {
-            self.view?.hideLoading()
-            self.updateView(with: self.weekData.0 , DocEntities: self.weekData.1 )
-        }
-    }
-
-
-    // Обработка переключения между временными периодами
-    func switchToTimePeriod(_ timePeriod: BooksListRequest.Timeframe) {
-        switch timePeriod {
-        case .week:
-            updateView(with: weekData.0, DocEntities: weekData.1)
-        case .month:
-            updateView(with: monthData.0, DocEntities: monthData.1)
-        case .year:
-            updateView(with: yearData.0, DocEntities: yearData.1)
+        // Загружаем данные для всех временных периодов один раз и сохраняем их
+        let timePeriods: [BooksListRequest.Timeframe] = [.week, .month, .year]
+        timePeriods.forEach { timePeriod in
+            fetchBooksList(for: timePeriod) { [weak self] bookItems, docEntities in
+                self?.bookData[timePeriod] = (bookItems, docEntities)
+                if timePeriod == .week { // Первоначальное отображение данных
+                    self?.view?.hideLoading()
+                    self?.view?.update(with: MainViewController.ViewModel(
+                        topBooks: bookItems,
+                        recentBooks: bookItems,
+                        books: docEntities
+                    ), forTimePeriod: .week)
+                }
+            }
         }
     }
     
-    func fetchBooksList(for timePeriod: BooksListRequest.Timeframe) {
-           fetchBooksList(for: timePeriod) { [weak self] bookItems, DocEntities in
-               self?.updateView(with: bookItems, DocEntities: DocEntities)
-           }
-       }
+    func showBookDetail(for book: DocEntity) {
+        router?.navigateToBookDetailScreen(with: book)
+    }
+    
+    func switchToTimePeriod(_ timePeriod: BooksListRequest.Timeframe) {
+        // Используем уже загруженные данные для обновления интерфейса
+        if let data = bookData[timePeriod] {
+            self.view?.update(with: MainViewController.ViewModel(
+                topBooks: data.0,
+                recentBooks: data.0,
+                books: data.1
+            ), forTimePeriod: timePeriod)
+        }
+    }
     
     func fetchBooksList(for timePeriod: BooksListRequest.Timeframe, completion: @escaping ([MainViewController.ViewModel.BookItem], [DocEntity]) -> Void) {
+        view?.showLoading()
         networkManager.sendRequest(request: BooksListRequest(timeframe: timePeriod)) { [weak self] result in
             switch result {
             case .success(let booksListEntity):
                 let group = DispatchGroup()
                 var bookItems: [MainViewController.ViewModel.BookItem] = []
-
-                for doc in booksListEntity.works {
+                var docEntities: [DocEntity] = []
+                
+                let limitedWorks = Array(booksListEntity.works.prefix(10))
+                limitedWorks.forEach { doc in
                     group.enter()
                     self?.fetchBookDetails(bookKey: doc.key) { category in
                         let bookItem = MainViewController.ViewModel.BookItem(
                             imageURL: doc.coverURL(),
                             category: category,
                             title: doc.title,
-                            author: doc.authorName?.first)
+                            author: doc.authorName?.first
+                        )
                         bookItems.append(bookItem)
+                        let docEntity = DocEntity(
+                            key: doc.key,
+                            title: doc.title,
+                            authorName: doc.authorName,
+                            subject: category != nil ? [category!] : [],
+                            firstPublishYear: doc.firstPublishYear,
+                            coverI: doc.coverI,
+                            coverId: doc.coverId,
+                            ratingsAverage: doc.ratingsAverage,
+                            description: doc.description
+                        )
+                        docEntities.append(docEntity)
                         group.leave()
                     }
                 }
                 
                 group.notify(queue: .main) {
-                    completion(bookItems, booksListEntity.works)
+                    completion(bookItems, docEntities)
                 }
             case .failure(let error):
                 print(error)
@@ -91,7 +86,7 @@ final class MainViewPresenter: MainViewPresenterProtocol {
             }
         }
     }
-
+    
     private func fetchBookDetails(bookKey: String, completion: @escaping (String?) -> Void) {
         networkManager.sendRequest(request: BookDetailRequest(bookKey: bookKey)) { result in
             switch result {
@@ -103,14 +98,5 @@ final class MainViewPresenter: MainViewPresenterProtocol {
                 completion(nil)
             }
         }
-    }
-
-    private func updateView(with bookItems: [MainViewController.ViewModel.BookItem], DocEntities: [DocEntity]) {
-        let viewModel = MainViewController.ViewModel(
-            topBooks: bookItems,
-            recentBooks: bookItems,
-            books: DocEntities
-        )
-        self.view?.update(with: viewModel)
     }
 }

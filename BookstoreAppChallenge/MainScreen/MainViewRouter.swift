@@ -8,6 +8,7 @@
 import UIKit
 
 final class MainViewRouter {
+    
     func makeScreen() -> UIViewController {
         let controller = MainViewController()
         let presenter = MainViewPresenter()
@@ -18,4 +19,12 @@ final class MainViewRouter {
         
         return controller
     }
+    
+    func navigateToBookDetailScreen(with doc: DocEntity) {
+        guard let navigationController = SceneDelegate.shared.navigationController else { return }
+        let bookScreen = BookRouter().makeScreen(doc: doc)
+        navigationController.pushViewController(bookScreen, animated: true)
+    }
 }
+
+

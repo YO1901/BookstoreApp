@@ -21,7 +21,9 @@ class AppTabBarController: UITabBarController {
     }
     
     private func setupTabBarController() {
-        let homeViewController = MainViewRouter().makeScreen()
+        
+        let mainRouter = MainViewRouter()
+        let homeViewController = mainRouter.makeScreen()
         
         homeViewController.tabBarItem = UITabBarItem(
             title: "Home",
