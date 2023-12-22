@@ -8,20 +8,27 @@
 import UIKit
 import SnapKit
 
+private enum Titles {
+    static let happyTitle = "Happy Reading!"
+    static let topBooksTitle = "Top Books"
+    static let recentTitle = "Recent Books"
+    static let seeMoreBtn = "see more"
+    static let thisWeekBtn = "This Week"
+    static let thisMonthBtn = "This Month"
+    static let thisYearBtn = "This Year"
+    static let week = "week"
+    static let month = "month"
+    static let year = "year"
+    static let fatalError = "Could not dequeue BookCollectionViewCell"
+    static let spaceCell = "spaceCell"
+    static let labelButtonCell = "labelButtonCell"
+    static let buttonStackCell = "buttonStackCell"
+    static let booksCollectionViewCell = "BooksCollectionViewCell"
+    static let noCategory = "No Category"
+    static let bookCell = "bookCell"
+}
+
 final class MainViewController: ViewController {
-    
-    private enum Titles {
-        static let happyTitle = "Happy Reading!"
-        static let topBooksTitle = "Top Books"
-        static let recentTitle = "Recent Books"
-        static let seeMoreBtn = "see more"
-        static let thisWeekBtn = "This Week"
-        static let thisMonthBtn = "This Month"
-        static let thisYearBtn = "This Year"
-        static let week = "week"
-        static let month = "month"
-        static let year = "year"
-    }
     
     typealias BookCell = CollectionCell<MainBookView>
     typealias LabelButtonCell = LabelButtonTableViewCell<UILabel, DefaultButton>
@@ -53,6 +60,7 @@ final class MainViewController: ViewController {
         tv.delegate = self
         tv.dataSource = self
         tv.showsVerticalScrollIndicator = false
+        tv.allowsSelection = false
         tv.separatorStyle = .none
         tv.delaysContentTouches = false
         return tv
@@ -100,12 +108,13 @@ final class MainViewController: ViewController {
     }
     
     @objc func didTapButton(timePeriod: String) {
+        
         switch timePeriod {
-        case Titles.week:
+        case Titles.thisWeekBtn:
             presenter.switchToTimePeriod(.week)
-        case Titles.month:
+        case Titles.thisMonthBtn:
             presenter.switchToTimePeriod(.month)
-        case Titles.year:
+        case Titles.thisYearBtn:
             presenter.switchToTimePeriod(.year)
         case Titles.seeMoreBtn:
             presenter.didTapSeeMoreButton()
@@ -187,49 +196,74 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         
         switch item {
         case .space(item: let item):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "spaceCell", for: indexPath) as! SpaceCell
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: Titles.spaceCell,
+                for: indexPath) as! SpaceCell
             cell.update(with: item)
-            cell.selectionStyle = .none
             return cell
+            
         case .topBooksTitle(item: let item):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "labelButtonCell", for: indexPath) as! LabelButtonCell
-            cell.update(modelView: item.modelView, modelButton: item.modelButton)
-            cell.selectionStyle = .none
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: Titles.labelButtonCell,
+                for: indexPath) as! LabelButtonCell
+            cell.update(
+                modelView: item.modelView,
+                modelButton: item.modelButton)
             return cell
+            
         case .sortingButtons(item: let item):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "buttonStackCell", for: indexPath) as! ButtonStackTableViewCell
-            cell.update(modelButton1: item.modelButton1, modelButton2: item.modelButton2, modelButton3: item.modelButton3)
-            cell.selectionStyle = .none
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: Titles.buttonStackCell,
+                for: indexPath) as! ButtonStackTableViewCell
+            cell.update(
+                modelButton1: item.modelButton1,
+                modelButton2: item.modelButton2,
+                modelButton3: item.modelButton3)
             return cell
+            
         case .topBooks:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "BooksCollectionViewCell", for: indexPath) as! BooksCollectionViewCell
-            if let bookModels = viewModel?.topBooks.map({ MainBookView.Model(imageURL: $0.imageURL, category: NSAttributedString(string: $0.category ?? "No Category"), title: NSAttributedString(string: $0.title ?? ""), author: NSAttributedString(string: $0.author ?? "")) }) {
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: Titles.booksCollectionViewCell,
+                for: indexPath) as! BooksCollectionViewCell
+            if let bookModels = viewModel?.topBooks.map({ MainBookView.Model(
+                imageURL: $0.imageURL,
+                category: NSAttributedString(string: $0.category ?? Titles.noCategory),
+                title: NSAttributedString(string: $0.title ?? ""),
+                author: NSAttributedString(string: $0.author ?? "")) }) {
                 cell.configure(with: bookModels)
             }
             cell.books = self.books
             cell.onBookSelect = { [weak self] selectedBook in
                 self?.presenter?.showBookDetail(for: selectedBook)
             }
-            cell.selectionStyle = .none
             return cell
+            
         case .recentTitle(item: let item):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "labelButtonCell", for: indexPath) as! LabelButtonCell
-            cell.update(modelView: item.modelView, modelButton: item.modelButton)
-            cell.selectionStyle = .none
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: Titles.labelButtonCell,
+                for: indexPath) as! LabelButtonCell
+            cell.update(
+                modelView: item.modelView,
+                modelButton: item.modelButton)
             return cell
+            
         case .recentBooks:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "BooksCollectionViewCell", for: indexPath) as! BooksCollectionViewCell
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: Titles.booksCollectionViewCell,
+                for: indexPath) as! BooksCollectionViewCell
             if let recent = viewModel?.recentBooks {
-                let bookModels = recent.map({ MainBookView.Model(imageURL: $0.coverURL(), category: NSAttributedString(string: $0.subject?.first ?? ""), title: NSAttributedString(string: $0.title ), author: NSAttributedString(string: $0.authorName?.first ?? "")) })
+                let bookModels = recent.map({ MainBookView.Model(
+                    imageURL: $0.coverURL(),
+                    category: NSAttributedString(string: $0.subject?.first ?? ""),
+                    title: NSAttributedString(string: $0.title ),
+                    author: NSAttributedString(string: $0.authorName?.first ?? "")) })
                 cell.configure(with: bookModels)
                 cell.books = recent
                 cell.onBookSelect = {
                     [weak self] selectedBook in
-                    
                     self?.presenter?.showBookDetail(for: selectedBook)
                 }
             }
-            cell.selectionStyle = .none
             return cell
         }
     }
@@ -241,7 +275,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch items[indexPath.row] {
         case .topBooks:
-            return 270 // Высота BooksCollectionViewCell
+            return 270
         case .recentBooks:
             return 270
         default:
@@ -256,8 +290,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bookCell", for: indexPath) as? BookCell else {
-            fatalError("Could not dequeue BookCollectionViewCell")
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Titles.bookCell, for: indexPath) as? BookCell else {
+            fatalError(Titles.fatalError)
         }
         let book = books[indexPath.row]
         let model = MainBookView.Model(imageURL: book.coverURL(), category: NSAttributedString(string: book.subject?.first ?? ""), title: NSAttributedString(string: book.title), author: NSAttributedString(string: book.authorName?.first ?? ""))
@@ -278,7 +312,6 @@ extension MainViewController {
         }
         
         enum Item {
-            //            case wishTitle(modelView: UILabel.Model, modelButton: DefaultButton.Model)
             case topBooksTitle(modelView: UILabel.Model, modelButton: DefaultButton.Model)
             case sortingButtons(modelButton1: DefaultButton.Model, modelButton2: DefaultButton.Model, modelButton3: DefaultButton.Model)
             case topBooks
