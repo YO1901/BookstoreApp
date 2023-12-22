@@ -8,21 +8,24 @@
 import UIKit
 import SnapKit
 
-private extension CGFloat {
-    static let loaderDimention: CGFloat = 128
+private enum Titles {
+    static let happyTitle = "Happy Reading!"
+    static let topBooksTitle = "Top Books"
+    static let recentTitle = "Recent Books"
+    static let seeMoreBtn = "see more"
+    static let thisWeekBtn = "This Week"
+    static let thisMonthBtn = "This Month"
+    static let thisYearBtn = "This Year"
+    static let fatalError = "Could not dequeue BookCollectionViewCell"
+    static let spaceCell = "spaceCell"
+    static let labelButtonCell = "labelButtonCell"
+    static let buttonStackCell = "buttonStackCell"
+    static let booksCollectionViewCell = "BooksCollectionViewCell"
+    static let noCategory = "No Category"
+    static let bookCell = "bookCell"
 }
 
 final class MainViewController: ViewController {
-    
-    private enum Titles {
-        static let happyTitle = "Happy Reading!"
-        static let topBooksTitle = "Top Books"
-        static let recentTitle = "Recent Books"
-        static let seeMoreBtn = "see more"
-        static let thisWeekBtn = "This Week"
-        static let thisMonthBtn = "This Month"
-        static let thisYearBtn = "This Year"
-    }
     
     typealias BookCell = CollectionCell<MainBookView>
     typealias LabelButtonCell = LabelButtonTableViewCell<UILabel, DefaultButton>
@@ -35,18 +38,6 @@ final class MainViewController: ViewController {
     private var recent = [DocEntity]()
     private var viewModel: ViewModel?
     
-    private lazy var button: DefaultButton = {
-        let btn = DefaultButton()
-        return btn
-    }()
-    
-    private lazy var loader: UIActivityIndicatorView = {
-        let loader = UIActivityIndicatorView()
-        loader.style = .large
-        loader.color = .blue
-        return loader
-    }()
-    
     private lazy var searchBar = {
         let search = SearchView()
         search.searchAction = { [weak self] query in
@@ -57,16 +48,28 @@ final class MainViewController: ViewController {
     
     private lazy var tableView: UITableView = {
         let tv = UITableView()
-        tv.register(LabelButtonCell.self, forCellReuseIdentifier: "labelButtonCell")
-        tv.register(SpaceCell.self, forCellReuseIdentifier: "spaceCell")
-        //        tv.register(BookCell.self, forCellReuseIdentifier: "bookCell")
-        tv.register(ButtonStackCell.self, forCellReuseIdentifier: "buttonStackCell")
-        //        tv.register(BookCollectionViewCell.self, forCellReuseIdentifier: "bookCollectionCell")
+        tv.register(
+            LabelButtonCell.self,
+            forCellReuseIdentifier: Titles.labelButtonCell
+        )
+        tv.register(
+            SpaceCell.self, 
+            forCellReuseIdentifier: Titles.spaceCell
+        )
+        tv.register(
+            ButtonStackCell.self, 
+            forCellReuseIdentifier: Titles.buttonStackCell
+        )
+        tv.register(
+            BooksCollectionViewCell.self,
+            forCellReuseIdentifier: Titles.booksCollectionViewCell
+        )
         tv.backgroundColor = .clear
         tv.rowHeight = UITableView.automaticDimension
         tv.delegate = self
         tv.dataSource = self
         tv.showsVerticalScrollIndicator = false
+        tv.allowsSelection = false
         tv.separatorStyle = .none
         tv.delaysContentTouches = false
         return tv
@@ -74,7 +77,10 @@ final class MainViewController: ViewController {
     
     private lazy var collectionView: UICollectionView = {
         let cv = UICollectionView()
-        cv.register(BookCell.self, forCellWithReuseIdentifier: "bookCell")
+        cv.register(
+            BookCell.self,
+            forCellWithReuseIdentifier: Titles.bookCell
+        )
         cv.dataSource = self
         cv.delegate = self
         return cv
@@ -82,11 +88,22 @@ final class MainViewController: ViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        layout()
+        presenter.activate()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    private func layout() {
         view.backgroundColor = Colors.Background.lvl1
-        setupLoader()
-        // Регистрация кастомной ячейки для UICollectionView в UITableView
-        tableView.register(BooksCollectionViewCell.self, forCellReuseIdentifier: "BooksCollectionViewCell")
         view.addSubview(searchBar)
         searchBar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -100,42 +117,21 @@ final class MainViewController: ViewController {
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
         }
-        //        presenter.fetchBooksList(for: .week)
-        presenter.activate()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // To hide the navigation bar when the view is about to appear
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        // If you want to show the navigation bar on other screens when leaving this screen
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
-    
-    @objc func didTapButtonWeek() {
-        presenter.switchToTimePeriod(.week)
-    }
-    
-    @objc func didTapButtonMonth() {
-        presenter.switchToTimePeriod(.month)
-    }
-    @objc func didTapButtonYear() {
-        presenter.switchToTimePeriod(.year)
-    }
-    
-    @objc func didTapSeeMoreTopBooks() {
-        presenter.didTapSeeMoreButton()
-    }
-
-    private func setupLoader() {
-        view.addSubview(loader)
-        loader.snp.makeConstraints { make in
-            make.size.equalTo(CGFloat.loaderDimention)
-            make.center.equalToSuperview()
+    @objc func didTapButton(timePeriod: String) {
+        
+        switch timePeriod {
+        case Titles.thisWeekBtn:
+            presenter.switchToTimePeriod(.week, updateRecent: false)
+        case Titles.thisMonthBtn:
+            presenter.switchToTimePeriod(.month, updateRecent: false)
+        case Titles.thisYearBtn:
+            presenter.switchToTimePeriod(.year, updateRecent: false)
+        case Titles.seeMoreBtn:
+            presenter.didTapSeeMoreButton()
+        default:
+            break
         }
     }
     
@@ -146,44 +142,74 @@ final class MainViewController: ViewController {
         return NSAttributedString(string: text, attributes: [.foregroundColor: Colors.whitePrimary])
     }
     
-    func startLoader() {
-        loader.startAnimating()
-        loader.isHidden = false
-        tableView.isHidden = true
-    }
-    
-    func stopLoader() {
-        loader.stopAnimating()
-        tableView.isHidden = false
-        tableView.reloadData()
-    }
-    
 }
 
 extension MainViewController: MainViewProtocol {
     
-    func update(with viewModel: ViewModel, forTimePeriod: BooksListRequest.Timeframe) {
-        
+    func update(with viewModel: ViewModel, forTimePeriod: BooksListRequest.Timeframe, updateRecentBooks: Bool) {
         self.viewModel = viewModel
         items.removeAll()
+        
         items.append(.space(item: .init(height: 15)))
+        
         items.append(.topBooksTitle(
-            modelView: .init(text: Titles.topBooksTitle, textFont: .systemFont(ofSize: 20)),
-            modelButton: .init(title: Titles.seeMoreBtn, font: .systemFont(ofSize: 16), type: .onlyText, tapAction: didTapSeeMoreTopBooks)))
-        items.append(.sortingButtons(modelButton1: .init(title: Titles.thisWeekBtn, font: .systemFont(ofSize: 16), type: .sorting, tapAction: didTapButtonWeek), modelButton2: .init(title: Titles.thisMonthBtn, font: .systemFont(ofSize: 16), type: .sorting, tapAction: didTapButtonMonth), modelButton3: .init(title: Titles.thisYearBtn, font: .systemFont(ofSize: 16), type: .sorting, tapAction: didTapButtonYear)))
+            modelView: .init(
+                text: Titles.topBooksTitle,
+                textFont: .systemFont(ofSize: 20)),
+            modelButton: .init(
+                title: Titles.seeMoreBtn,
+                font: .systemFont(ofSize: 16),
+                type: .onlyText,
+                tapAction: { [weak self] in self?.didTapButton(
+                    timePeriod: Titles.seeMoreBtn) })))
+        
+        items.append(.sortingButtons(
+            modelButton1: .init(
+                title: Titles.thisWeekBtn,
+                font: .systemFont(ofSize: 16), type: .sorting,
+                tapAction: { [weak self] in self?.didTapButton(
+                    timePeriod: Titles.thisWeekBtn) }),
+            modelButton2: .init(
+                title: Titles.thisMonthBtn,
+                font: .systemFont(ofSize: 16), type: .sorting,
+                tapAction: { [weak self] in self?.didTapButton(
+                    timePeriod: Titles.thisMonthBtn) }),
+            modelButton3: .init(
+                title: Titles.thisYearBtn,
+                font: .systemFont(ofSize: 16),
+                type: .sorting, tapAction: { [weak self] in self?.didTapButton(
+                    timePeriod: Titles.thisYearBtn) })))
+        
         items.append(.topBooks)
+        
         items.append(.recentTitle(
-            modelView: .init(text: Titles.recentTitle, textFont: .systemFont(ofSize: 20)),
-            modelButton: .init(title: Titles.seeMoreBtn, font: .systemFont(ofSize: 16), type: .onlyText, tapAction: didTapButtonWeek)))
+            modelView: .init(
+                text: Titles.recentTitle,
+                textFont: .systemFont(ofSize: 20)),
+            modelButton: .init(
+                title: Titles.seeMoreBtn,
+                font: .systemFont(ofSize: 16), type: .onlyText,
+                tapAction: { [weak self] in self?.didTapButton(
+                    timePeriod: Titles.seeMoreBtn) })))
+        
         items.append(.recentBooks)
+        
         // Обновление данных книг
         self.books = viewModel.books
         
-        // Перезагрузка tableView, чтобы отобразить новые данные
-        tableView.reloadData()
+        if let topBooksIndex = items.firstIndex(where: { if case .topBooks = $0 { return true } else { return false } }) {
+            let indexPath = IndexPath(row: topBooksIndex, section: 0)
+            
+            if !updateRecentBooks {
+                // Обновляем только ячейку topBooks
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            } else {
+                // Обновляем всю таблицу
+                tableView.reloadData()
+            }
+        }
     }
 }
-
 
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -191,49 +217,74 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         
         switch item {
         case .space(item: let item):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "spaceCell", for: indexPath) as! SpaceCell
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: Titles.spaceCell,
+                for: indexPath) as! SpaceCell
             cell.update(with: item)
-            cell.selectionStyle = .none
             return cell
+            
         case .topBooksTitle(item: let item):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "labelButtonCell", for: indexPath) as! LabelButtonCell
-            cell.update(modelView: item.modelView, modelButton: item.modelButton)
-            cell.selectionStyle = .none
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: Titles.labelButtonCell,
+                for: indexPath) as! LabelButtonCell
+            cell.update(
+                modelView: item.modelView,
+                modelButton: item.modelButton)
             return cell
+            
         case .sortingButtons(item: let item):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "buttonStackCell", for: indexPath) as! ButtonStackTableViewCell
-            cell.update(modelButton1: item.modelButton1, modelButton2: item.modelButton2, modelButton3: item.modelButton3)
-            cell.selectionStyle = .none
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: Titles.buttonStackCell,
+                for: indexPath) as! ButtonStackTableViewCell
+            cell.update(
+                modelButton1: item.modelButton1,
+                modelButton2: item.modelButton2,
+                modelButton3: item.modelButton3)
             return cell
+            
         case .topBooks:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "BooksCollectionViewCell", for: indexPath) as! BooksCollectionViewCell
-            if let bookModels = viewModel?.topBooks.map({ MainBookView.Model(imageURL: $0.imageURL, category: NSAttributedString(string: $0.category ?? "No Category"), title: NSAttributedString(string: $0.title ?? ""), author: NSAttributedString(string: $0.author ?? "")) }) {
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: Titles.booksCollectionViewCell,
+                for: indexPath) as! BooksCollectionViewCell
+            if let bookModels = viewModel?.topBooks.map({ MainBookView.Model(
+                imageURL: $0.imageURL,
+                category: NSAttributedString(string: $0.category ?? Titles.noCategory),
+                title: NSAttributedString(string: $0.title ?? ""),
+                author: NSAttributedString(string: $0.author ?? "")) }) {
                 cell.configure(with: bookModels)
             }
-            cell.books = self.books // Передайте массив книг
+            cell.books = self.books
             cell.onBookSelect = { [weak self] selectedBook in
                 self?.presenter?.showBookDetail(for: selectedBook)
             }
-            cell.selectionStyle = .none
             return cell
+            
         case .recentTitle(item: let item):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "labelButtonCell", for: indexPath) as! LabelButtonCell
-            cell.update(modelView: item.modelView, modelButton: item.modelButton)
-            cell.selectionStyle = .none
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: Titles.labelButtonCell,
+                for: indexPath) as! LabelButtonCell
+            cell.update(
+                modelView: item.modelView,
+                modelButton: item.modelButton)
             return cell
+            
         case .recentBooks:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "BooksCollectionViewCell", for: indexPath) as! BooksCollectionViewCell
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: Titles.booksCollectionViewCell,
+                for: indexPath) as! BooksCollectionViewCell
             if let recent = viewModel?.recentBooks {
-                let bookModels = recent.map({ MainBookView.Model(imageURL: $0.coverURL(), category: NSAttributedString(string: $0.subject?.first ?? ""), title: NSAttributedString(string: $0.title ), author: NSAttributedString(string: $0.authorName?.first ?? "")) })
+                let bookModels = recent.map({ MainBookView.Model(
+                    imageURL: $0.coverURL(),
+                    category: NSAttributedString(string: $0.subject?.first ?? ""),
+                    title: NSAttributedString(string: $0.title ),
+                    author: NSAttributedString(string: $0.authorName?.first ?? "")) })
                 cell.configure(with: bookModels)
                 cell.books = recent
                 cell.onBookSelect = {
                     [weak self] selectedBook in
-                    
                     self?.presenter?.showBookDetail(for: selectedBook)
                 }
             }
-            cell.selectionStyle = .none
             return cell
         }
     }
@@ -245,7 +296,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch items[indexPath.row] {
         case .topBooks:
-            return 270 // Высота BooksCollectionViewCell
+            return 270
         case .recentBooks:
             return 270
         default:
@@ -260,11 +311,19 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bookCell", for: indexPath) as? BookCell else {
-            fatalError("Could not dequeue BookCollectionViewCell")
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: Titles.bookCell,
+            for: indexPath) as? BookCell else {
+            fatalError(Titles.fatalError)
         }
         let book = books[indexPath.row]
-        let model = MainBookView.Model(imageURL: book.coverURL(), category: NSAttributedString(string: book.subject?.first ?? ""), title: NSAttributedString(string: book.title), author: NSAttributedString(string: book.authorName?.first ?? ""))
+        let model = MainBookView.Model(
+            imageURL: book.coverURL(),
+            category: NSAttributedString(
+                string: book.subject?.first ?? ""),
+            title: NSAttributedString(string: book.title),
+            author: NSAttributedString(
+                string: book.authorName?.first ?? ""))
         cell.update(with: model)
         return cell
     }
@@ -282,11 +341,20 @@ extension MainViewController {
         }
         
         enum Item {
-//            case wishTitle(modelView: UILabel.Model, modelButton: DefaultButton.Model)
-            case topBooksTitle(modelView: UILabel.Model, modelButton: DefaultButton.Model)
-            case sortingButtons(modelButton1: DefaultButton.Model, modelButton2: DefaultButton.Model, modelButton3: DefaultButton.Model)
+            case topBooksTitle(
+                modelView: UILabel.Model,
+                modelButton: DefaultButton.Model
+            )
+            case sortingButtons(
+                modelButton1: DefaultButton.Model,
+                modelButton2: DefaultButton.Model,
+                modelButton3: DefaultButton.Model
+            )
             case topBooks
-            case recentTitle(modelView: UILabel.Model, modelButton: DefaultButton.Model)
+            case recentTitle(
+                modelView: UILabel.Model,
+                modelButton: DefaultButton.Model
+            )
             case recentBooks
             case space(item: SpaceView.Model)
         }
