@@ -32,7 +32,7 @@ final class MainViewPresenter: MainViewPresenterProtocol {
             
             guard let self else { return }
             
-            switchToTimePeriod(timePeriod)
+            switchToTimePeriod(timePeriod, updateRecent: true)
         }
     }
     
@@ -68,14 +68,23 @@ final class MainViewPresenter: MainViewPresenterProtocol {
         router?.navigateToBookDetailScreen(with: book)
     }
     
-    func switchToTimePeriod(_ timePeriod: BooksListRequest.Timeframe) {
+    func switchToTimePeriod(_ timePeriod: BooksListRequest.Timeframe, updateRecent: Bool) {
         // Используем уже загруженные данные для обновления интерфейса
         if let data = bookData[timePeriod] {
-            self.view?.update(with: MainViewController.ViewModel(
-                topBooks: data.0,
-                recentBooks: recentBooks,
-                books: data.1
-            ), forTimePeriod: timePeriod)
+            
+            if updateRecent {
+                self.view?.update(with: MainViewController.ViewModel(
+                    topBooks: data.0,
+                    recentBooks: recentBooks,
+                    books: data.1
+                ), forTimePeriod: timePeriod)
+            } else {
+                self.view?.update(with: MainViewController.ViewModel(
+                    topBooks: data.0,
+                    recentBooks: recentBooks,
+                    books: data.1
+                ), forTimePeriod: timePeriod, updateRecentBooks: false)
+            }
         }
     }
     

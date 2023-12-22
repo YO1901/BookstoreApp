@@ -16,9 +16,6 @@ private enum Titles {
     static let thisWeekBtn = "This Week"
     static let thisMonthBtn = "This Month"
     static let thisYearBtn = "This Year"
-    static let week = "week"
-    static let month = "month"
-    static let year = "year"
     static let fatalError = "Could not dequeue BookCollectionViewCell"
     static let spaceCell = "spaceCell"
     static let labelButtonCell = "labelButtonCell"
@@ -51,10 +48,22 @@ final class MainViewController: ViewController {
     
     private lazy var tableView: UITableView = {
         let tv = UITableView()
-        tv.register(LabelButtonCell.self, forCellReuseIdentifier: "labelButtonCell")
-        tv.register(SpaceCell.self, forCellReuseIdentifier: "spaceCell")
-        tv.register(ButtonStackCell.self, forCellReuseIdentifier: "buttonStackCell")
-        tv.register(BooksCollectionViewCell.self, forCellReuseIdentifier: "BooksCollectionViewCell")
+        tv.register(
+            LabelButtonCell.self,
+            forCellReuseIdentifier: Titles.labelButtonCell
+        )
+        tv.register(
+            SpaceCell.self, 
+            forCellReuseIdentifier: Titles.spaceCell
+        )
+        tv.register(
+            ButtonStackCell.self, 
+            forCellReuseIdentifier: Titles.buttonStackCell
+        )
+        tv.register(
+            BooksCollectionViewCell.self,
+            forCellReuseIdentifier: Titles.booksCollectionViewCell
+        )
         tv.backgroundColor = .clear
         tv.rowHeight = UITableView.automaticDimension
         tv.delegate = self
@@ -68,7 +77,10 @@ final class MainViewController: ViewController {
     
     private lazy var collectionView: UICollectionView = {
         let cv = UICollectionView()
-        cv.register(BookCell.self, forCellWithReuseIdentifier: "bookCell")
+        cv.register(
+            BookCell.self,
+            forCellWithReuseIdentifier: Titles.bookCell
+        )
         cv.dataSource = self
         cv.delegate = self
         return cv
@@ -111,11 +123,11 @@ final class MainViewController: ViewController {
         
         switch timePeriod {
         case Titles.thisWeekBtn:
-            presenter.switchToTimePeriod(.week)
+            presenter.switchToTimePeriod(.week, updateRecent: false)
         case Titles.thisMonthBtn:
-            presenter.switchToTimePeriod(.month)
+            presenter.switchToTimePeriod(.month, updateRecent: false)
         case Titles.thisYearBtn:
-            presenter.switchToTimePeriod(.year)
+            presenter.switchToTimePeriod(.year, updateRecent: false)
         case Titles.seeMoreBtn:
             presenter.didTapSeeMoreButton()
         default:
@@ -134,7 +146,7 @@ final class MainViewController: ViewController {
 
 extension MainViewController: MainViewProtocol {
     
-    func update(with viewModel: ViewModel, forTimePeriod: BooksListRequest.Timeframe) {
+    func update(with viewModel: ViewModel, forTimePeriod: BooksListRequest.Timeframe, updateRecentBooks: Bool) {
         self.viewModel = viewModel
         items.removeAll()
         
@@ -185,8 +197,17 @@ extension MainViewController: MainViewProtocol {
         // Обновление данных книг
         self.books = viewModel.books
         
-        // Перезагрузка tableView, чтобы отобразить новые данные
-        tableView.reloadData()
+        if let topBooksIndex = items.firstIndex(where: { if case .topBooks = $0 { return true } else { return false } }) {
+            let indexPath = IndexPath(row: topBooksIndex, section: 0)
+            
+            if !updateRecentBooks {
+                // Обновляем только ячейку topBooks
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            } else {
+                // Обновляем всю таблицу
+                tableView.reloadData()
+            }
+        }
     }
 }
 
@@ -290,11 +311,19 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Titles.bookCell, for: indexPath) as? BookCell else {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: Titles.bookCell,
+            for: indexPath) as? BookCell else {
             fatalError(Titles.fatalError)
         }
         let book = books[indexPath.row]
-        let model = MainBookView.Model(imageURL: book.coverURL(), category: NSAttributedString(string: book.subject?.first ?? ""), title: NSAttributedString(string: book.title), author: NSAttributedString(string: book.authorName?.first ?? ""))
+        let model = MainBookView.Model(
+            imageURL: book.coverURL(),
+            category: NSAttributedString(
+                string: book.subject?.first ?? ""),
+            title: NSAttributedString(string: book.title),
+            author: NSAttributedString(
+                string: book.authorName?.first ?? ""))
         cell.update(with: model)
         return cell
     }
@@ -312,10 +341,20 @@ extension MainViewController {
         }
         
         enum Item {
-            case topBooksTitle(modelView: UILabel.Model, modelButton: DefaultButton.Model)
-            case sortingButtons(modelButton1: DefaultButton.Model, modelButton2: DefaultButton.Model, modelButton3: DefaultButton.Model)
+            case topBooksTitle(
+                modelView: UILabel.Model,
+                modelButton: DefaultButton.Model
+            )
+            case sortingButtons(
+                modelButton1: DefaultButton.Model,
+                modelButton2: DefaultButton.Model,
+                modelButton3: DefaultButton.Model
+            )
             case topBooks
-            case recentTitle(modelView: UILabel.Model, modelButton: DefaultButton.Model)
+            case recentTitle(
+                modelView: UILabel.Model,
+                modelButton: DefaultButton.Model
+            )
             case recentBooks
             case space(item: SpaceView.Model)
         }
